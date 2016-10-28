@@ -1,0 +1,4 @@
+<FilesMatch "\.(htaccess|php|log)$">
+    Order Allow,Deny
+    Deny from all
+</FilesMatch>

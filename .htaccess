@@ -1,0 +1,27 @@
+# impedisce la visualizzazione dei file nelle directory
+Options -Indexes
+
+#Preveiene la vulnerabilità httpoxy
+<IfModule mod_headers.c>
+    RequestHeader unset Proxy
+</IfModule>
+
+<IfModule mod_rewrite.c>
+
+    # previene problema /index
+    <IfModule mod_negotiation.c>
+        Options -MultiViews
+    </IfModule>
+    
+    # attiva url rewrite
+    RewriteEngine On
+
+    # attiva il rewrite se:
+    # il file richiesto non è una directory
+    RewriteCond %{REQUEST_FILENAME} !-d
+    # il file richiesto non è un file
+    RewriteCond %{REQUEST_FILENAME} !-f
+    # attiva il rewrite sul valore $_GET assegnato alla pagina index.php 
+    RewriteRule ^([A-Za-z0-9-/._]+)$ index.php?url=$1 [L]
+    
+</IfModule>
