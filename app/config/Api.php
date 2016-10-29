@@ -7,7 +7,6 @@
      */
      
     use Core\Config;
-    use Helpers\Dashboard;
     
     /**
      * API
