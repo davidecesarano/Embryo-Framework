@@ -1,2 +1,2 @@
-# Embryo-Framework
-Embryo is a simple MVC PHP Framework for building web applications.
+# Embryo
+Embryo è un framework MVC per lo sviluppo di applicazioni web in PHP.
