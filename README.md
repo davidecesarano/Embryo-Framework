@@ -16,7 +16,7 @@ Per gli sviluppatori che desiderano utilizzare Embryo, avere conoscenze di progr
 L'installazione di Embryo si sviluppa nei seguenti passi:
 
 1. [Scaricare il framework](https://github.com/davidecesarano/Embryo-Framework/archive/master.zip).
-2. Estrarre il pacchetto in una cartella in locale.
+2. Scompattare il pacchetto in una cartella in locale.
 3. Eseguire [composer](https://getcomposer.org/) nella cartella in cui è presente il progetto e lanciare il comando `composer install`. A questo punto verrà creata la cartella `vendor` con le dipendenze.
 4. Caricare i file del framework sul server in remoto.
 
