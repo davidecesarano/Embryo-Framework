@@ -18,9 +18,7 @@
             'bootstrap'   => 'bootstrap',
             'datatables'  => 'datatables/media',
             'fontawesome' => 'font-awesome',
-            'jquery'      => 'jquery',
-            'moment'      => 'moment',
-            'tinymce'     => 'tinymce'
+            'jquery'      => 'jquery'
         ),
         
         /**
