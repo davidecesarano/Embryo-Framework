@@ -9,17 +9,9 @@
      * @author Davide Cesarano
      */
      
-    use \Exception;
+    use Core\Config;
     
-    class Widget{
-        
-        /**
-         * @var array $widgets 
-         */
-        public static $widgets = [
-            '\\Controllers\\Widget\\Page',
-            '\\Controllers\\Widget\\Dashboard'
-        ];
+    class Widget {
         
         /**
          * Invoca funzione nei controllers dei
@@ -31,7 +23,9 @@
          */
         public static function __callStatic($name, $params){
             
-            foreach(self::$widgets as $widget){
+            $widgets = Config::get('widgets');
+            
+            foreach($widgets as $widget){
                 
                 if(class_exists($widget)){
                     
