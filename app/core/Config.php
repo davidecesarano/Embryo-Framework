@@ -50,59 +50,55 @@
          *
          * @example config::get('app', 'meta.title')
          * @example config::get('app', 'meta')
+         * @example config::get('app')
          * @param string $name 
-         * @param mixed $value
+         * @param mixed|null $value
          * @return mixed
          * @throws exception
          */
-        public static function get($name, $value){
+        public static function get($name, $value = null){
             
             if(isset(static::$settings[$name])){
-            
-                if(strpos($value, '.') !== false){
+                
+                if($value){
                     
-                    $segment = explode('.', $value);
-                    $array = $segment[0];
-                    $key = $segment[1];
-                    
-                    if(isset(static::$settings[$name][$array])){
-                    
-                        if(array_key_exists($key, static::$settings[$name][$array])){
-                            return static::$settings[$name][$array][$key];
+                    if(strpos($value, '.') !== false){
+                        
+                        $segment = explode('.', $value);
+                        $array = $segment[0];
+                        $key = $segment[1];
+                        
+                        if(isset(static::$settings[$name][$array])){
+                        
+                            if(array_key_exists($key, static::$settings[$name][$array])){
+                                return static::$settings[$name][$array][$key];
+                            }else{
+                                throw new Exception("L'impostazione <strong>$key</strong> dell'impostazione di <strong>$array</strong> non esiste!");
+                            }
+                            
                         }else{
-                            throw new Exception("L'impostazione <strong>$key</strong> dell'impostazione di <strong>$array</strong> non esiste!");
+                            throw new Exception("L'impostazione <strong>$array</strong> per la configurazione <strong>$name</strong> non esiste!");
                         }
                         
                     }else{
-                        throw new Exception("L'impostazione <strong>$array</strong> per la configurazione <strong>$name</strong> non esiste!");
+                        
+                        if(array_key_exists($value, static::$settings[$name])){
+                            return static::$settings[$name][$value];
+                        }else{
+                            throw new Exception("L'impostazione <strong>$value</strong> per la configurazione <strong>$name</strong> non esiste!");
+                        }
+                        
+                        
                     }
                     
                 }else{
-                    
-                    if(array_key_exists($value, static::$settings[$name])){
-                        return static::$settings[$name][$value];
-                    }else{
-                        throw new Exception("L'impostazione <strong>$value</strong> per la configurazione <strong>$name</strong> non esiste!");
-                    }
-                    
-                    
+                    return static::$settings[$name];
                 }
                 
             }else{
                 throw new Exception("La configurazione <strong>$name</strong> non esiste!");
             }
         
-        }
-        
-        /**
-         * Restitutisce tutte le impostazioni 
-         * per una specifica configurazione
-         *
-         * @param string $name 
-         * @return array
-         */
-        public static function all($name){
-            return static::$settings[$name];
         }
         
     }
