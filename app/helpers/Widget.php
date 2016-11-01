@@ -17,7 +17,6 @@
          * Invoca funzione nei controllers dei
          * widgets 
          *
-         * @param array self::$widgets
          * @param string $name
          * @param array $params
          */
