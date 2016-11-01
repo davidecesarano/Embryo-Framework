@@ -48,6 +48,7 @@
     require FOLDER_CONFIG.'/Api.php';
     require FOLDER_CONFIG.'/Alias.php';
     require FOLDER_CONFIG.'/Middlewares.php';
+    require FOLDER_CONFIG.'/Widgets.php';
     
     /**
      * ------------------------------------------------------------
