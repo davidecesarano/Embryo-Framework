@@ -1,8 +1,8 @@
 {
-    "name": "davidecesarano/Embryo-Framework",
+    "name": "davidecesarano/embryo-framework",
     "type": "project",
     "description": "Embryo is a simple MVC PHP Framework for building web applications.",
-    "homepage": "https://github.com/davidecesarano/Embryo-Framework",
+    "homepage": "https://github.com/davidecesarano/embryo-framework",
     "license": "MIT",
     "authors": [
         {
