@@ -1,4 +1,16 @@
 {
+    "name": "davidecesarano/Embryo-Framework",
+    "type": "project",
+    "description": "Embryo is a simple MVC PHP Framework for building web applications.",
+    "homepage": "https://github.com/davidecesarano/Embryo-Framework",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Davide Cesarano",
+            "email": "davide.cesarano@unipegaso.it",
+            "role": "Developer"
+        }
+    ],
 	"require": {
         "php": ">=5.5.0",
         "robloach/component-installer": "*",
