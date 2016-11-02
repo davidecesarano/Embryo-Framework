@@ -541,7 +541,7 @@
             $middleware_array = (is_array($general)) ? $general : array($general);
             
             // routes middleware nel file core/Config.php
-            $middlewares = Config::all('middlewares');
+            $middlewares = Config::get('middlewares');
             
             // gruppo di middleware
             if($group && is_array($group)){
