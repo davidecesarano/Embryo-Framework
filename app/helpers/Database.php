@@ -7,77 +7,104 @@
 	 */
 	
 	use PDO;
-	use \Core\Error;
+    use PDOException;
+	use Core\Error;
 	
-	class Database extends PDO{
+	class Database {
 		
-		/**
-		 * @var array $instances
-		 */
-		protected static $instances = array();
-		
-		/**
+        /**
+         * @var obj $dbh 
+         */
+        private $dbh;
+        
+        /**
+         * @var obj $stmt 
+         */
+        private $stmt;
+        
+        /**
+         * @var string $sql 
+         */
+        private $sql;
+        
+        /**
 		 * Connessione al database MySQL
-		 *
-		 * @return boolean
+         *
+         * @param array $database
+         * @return obj
 		 */
-		public static function get($database = array()){
-			
-            // database
-            $engine   = $database['engine']; 
-            $host     = $database['host'];
-            $name     = $database['name'];
-            $user     = $database['user']; 
-            $password = $database['password'];
+        public function __construct($database = array()){
             
-			// verifica se è già connesso 
-			if(isset(self::$instances[$name])){
-				return self::$instances[$name];
-			}
-			
-			try{
-			
-				// connessione
-				$dsn = $engine.':dbname='.$name.";host=".$host; 
-				$instance = new Database($dsn, $user, $password);
-				$instance->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-				
-				// imposta instanza
-				self::$instances[$name] = $instance;
-				return $instance;
-				
-			}catch(\PDOException $e){
-				
-				// errore
-				Error::exceptionHandler($e);
-				
-			}
-				
-		}
+            if(is_array($database)){
+                
+                // database
+                $engine   = $database['engine']; 
+                $host     = $database['host'];
+                $name     = $database['name'];
+                $user     = $database['user']; 
+                $password = $database['password'];
+                $dsn      = $engine.':dbname='.$name.";host=".$host; 
+                $options  = array(
+                    PDO::ATTR_PERSISTENT => true,
+                    PDO::ATTR_ERRMODE    => PDO::ERRMODE_EXCEPTION
+                );
+                
+                try{
+
+                    // connessione
+                    $this->dbh = new PDO($dsn, $user, $password, $options);
+                    
+                }catch(PDOException $e){
+                    
+                    // errore
+                    Error::exceptionHandler($e);
+                    
+                }
+                
+            }else{
+                throw new Exception("Formato database non valido!");
+            }
+
+        }
 		
 		/**
 		 * Esegue la query
 		 *
 		 * @example $this->query('SELECT * FROM table')
-		 * @param string $sql SQL query
+		 * @param string $sql
 		 * @return this
 		 */
 		public function query($query){
 			
 			$this->sql = $query;
-			$this->sth = $this->prepare($this->sql);
-			return $this;
+            $this->stmt = $this->dbh->prepare($this->sql);
+            return $this;
 			
 		}
-		
-		/**
-		 * Esegue il bindValue
+        
+        /**
+         * Esegue il bindValue su valore singolo 
+         *
+         * @example $this->value(array('key' => 'value'))
+		 * @param string $param
+		 * @param mixed $value
+		 * @return this
+         */
+        public function value($param, $value){
+           
+            $this->stmt->bindValue(":$param", $value);
+            return $this; 
+  
+        }
+        
+        /**
+		 * Esegue il bindValue su valori multipli
 		 *
-		 * @example $this->value(array('key' => 'value'))
+		 * @example $this->values(array('key' => 'value'))
 		 * @param array $values bindValue
 		 * @return this
 		 */
-		public function values($values){
+		public function values($values = array()){
 			
 			foreach($values as $key => $value){
 				
@@ -85,136 +112,93 @@
 					
 					// se il parametro non è un array esegue
 					// il bindValue
-					$this->sth->bindValue(":$key", $value);
+					$this->value($key, $value);
 				
 				}else{
 					
 					// se il parametro è un array (utile per WHERE IN())
 					// cicla il bindValue con chiave diversa
 					foreach($value as $k => $v){
-						$this->sth->bindValue("$k", $v);
+						$this->value($k, $v);
 					}
 					
 				}
 				
 			}
-			return $this;
+            return $this;
 			
 		}
-		
-		/**
+        
+        /**
 		 * Esegue la query
 		 *
 		 * @return boolean
 		 */
 		public function execute(){
-			return ($this->sth->execute()) ? true : false;
+			return $this->stmt->execute();
 		}
-		
-		/**
-		 * Estrae una singola riga
-		 *
-		 * @return object/boolean
-		 */
-		public function getSingle(){
-			
-            try{
-                
-                // esegui
-                $execute = $this->sth->execute();
-                
-                // crea oggetti
-                return ($execute) ? $this->sth->fetch(PDO::FETCH_OBJ) : false;
-                
-            }catch(PDOException $e){
-				
-				// errori
-				Error::database($e);
-				
-			}
-			
-		}
-		
-		/**
-		 * Genera un array di oggetti
-		 *
-		 * @return array/object|boolean
-		 */
-		public function getArray(){
-			
-			try{
-				
-				// esegui
-				$execute = $this->sth->execute();
-				
-                if($execute){
-                
-                    // crea array di oggetti
-                    $obj = array();
-                    while($result = $this->sth->fetch(PDO::FETCH_OBJ)){
-                        $obj[] = $result;
-                    }
-                    return $obj;
-                    
-                }else{
-                    return false;
-                }
-				
-			}catch(PDOException $e){
-				
-				// errori
-				Error::database($e);
-				
-			}
-			
-		}
-		
-		/**
-		 * Genera un array associativo/numerico
-		 *
-		 * @return array|boolean
-		 */
-		public function getFetchAll(){
-			
-			try{
-				
-				// esegui
-				$execute = $this->sth->execute();
-				
-                // crea array
-                return ($execute) ? $this->sth->fetchAll() : false;
-			
-			}catch(PDOException $e){
-				
-				// errori
-				Error::database($e);
-				
-			}
-			
-		}
+        
+        /**
+         * Restituisce una riga 
+         *
+         * @return obj 
+         */
+        public function single(){
+            
+            $this->execute();
+            return $this->stmt->fetch(PDO::FETCH_OBJ);
+            
+        }
+        
+         /**
+         * Restituisce più righe
+         *
+         * @return array|obj 
+         */
+        public function all(){
+            
+            $this->execute();
+            return $this->stmt->fetchAll(PDO::FETCH_OBJ);
+            
+        }
 		
 		/**
 		 * Restituisce il numero delle righe
 		 *
 		 * @return int
 		 */
-		public function getRowCount(){
+		public function rowCount(){
 		
-			// esegui
-			$execute = $this->sth->execute();
+			$this->execute();
+			return $this->stmt->rowCount();
 			
-			// restituisce numero
-			return ($execute) ? $this->sth->rowCount() : 0;
-			
-		}
-		
-		/**
+        }
+        
+        /**
+         * Restituisce l'ultimo id inserito 
+         *
+         * @return int 
+         */
+        public function lastInsertId(){
+            return $this->dbh->lastInsertId();  
+        }
+        
+        /**
+         * Esegue il debug della query e dei parametri 
+         *
+         * @return string 
+         */
+        public function debug(){
+            return $this->stmt->debugDumpParams();
+        }
+        
+        /**
 		 * Inserisce righe
 		 *
 		 * @example $this->insert('table_name', array('name' => $name))
 		 * @param string $table
 		 * @param array $data
-		 * @return int|boolean this|false - ultimo id inserito|false
+		 * @return int|bool
 		 */
 		public function insert($table, $data){
 			
@@ -223,28 +207,23 @@
 			$values = ':'.implode(", :", array_keys($data));
 			
 			// query
-			$sth = $this->prepare("INSERT INTO ".$table." (".$names.") VALUES (".$values.")");
+			$this->query("INSERT INTO $table ($names) VALUES ($values)");
 			
 			// valori
-			foreach($data as $key => $value){
-				$sth->bindValue(":$key", $value);
-			}
-			
-			// esegui
-			$execute = $sth->execute();
+			$this->values($data);
 			
 			// esito
-			if($execute) return $this->lastInsertId();
+			return ($this->execute()) ? $this->lastInsertId() : false;
 		
 		}
-		
-		/**
+        
+        /**
 		 * Aggiorna campi
 		 *
 		 * @example $this->update('table_name', array('name' => $name), array('id' => $id))
 		 * @param string $table
 		 * @param array $data
-		 * @param string $where_data
+		 * @param array $where_data
 		 * @return boolean
 		 */
 		public function update($table, $data, $where_data){
@@ -253,34 +232,29 @@
 			ksort($data);
 			$fields = NULL;
 			foreach($data as $key => $value){
-				$fields .= "`$key`=:$key,";
+				$fields .= "$key = :$key,";
 			}
 			$fields = rtrim($fields, ',');
 			
 			// where
 			$where = '';
 			foreach($where_data as $key => $value){
-				$where .= "`$key`=:$key,";
+				$where .= "$key = :$key,";
 			}
 			$where = rtrim($where, ',');
 			
 			// query
-			$sth = $this->prepare("UPDATE $table SET $fields WHERE $where");
+			$this->query("UPDATE $table SET $fields WHERE $where");
 			
 			// valori
-			foreach($data as $key => $value){
-				$sth->bindValue(":$key", $value);
-			}
-			
-			// esegui
-			$execute = $sth->execute();
+			$this->values($data);
 			
 			// esito
-			if($execute) return true;
+			return ($this->execute()) ? true : false;
 		
 		}
-		
-		/**
+        
+        /**
 		 * Elimina righe 
 		 *
 		 * @param string $table
@@ -292,49 +266,19 @@
 			// where
 			$where = '';
 			foreach($data as $key => $value){
-				$where .= "`$key`=:$key,";
+				$where .= "$key = :$key,";
 			}
 			$where = rtrim($where, ',');
 			
 			// query
-			$sth = $this->prepare("DELETE FROM $table WHERE $where");
+			$this->query("DELETE FROM $table WHERE $where");
 			
 			// valori
-			foreach($data as $key => $value){
-				$sth->bindValue(":$key", $value);
-			}
-			
-			// esegui
-			$execute = $sth->execute();
-			
+			$this->values($data);
+
 			// esito
-			if($execute) return true;
+			return ($this->execute()) ? true : false;
 			
-		}
-		
-		/**
-		 * Crea Tabella
-		 *
-		 * @param string $sql
-		 * @return boolean
-		 */
-		public function createTable($sql){
-			
-			// esegui
-			$execute = $this->exec($sql);
-			
-			// esito
-			if($execute) return true;
-			
-		}
-		
-		/**
-		 * Utility per il debug 
-		 *
-		 * @return string this
-		 */
-		public function debug(){
-			return $this->sql;			
 		}
 		
 	}
