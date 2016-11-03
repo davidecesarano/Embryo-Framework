@@ -25,7 +25,7 @@
 		 * @return object $this->db
 		 */		
 		public function database($database){
-			$this->db = Database::get($database);
+			$this->db = new Database($database);
 		}
 		
 		/**
