@@ -22,6 +22,6 @@ Options -Indexes
     # il file richiesto non è un file
     RewriteCond %{REQUEST_FILENAME} !-f
     # attiva il rewrite sul valore $_GET assegnato alla pagina index.php 
-    RewriteRule ^([A-Za-z0-9-/._]+)$ index.php?url=$1 [L]
+    RewriteRule ^(.*)$ index.php?url=$1 [QSA,L]
     
 </IfModule>

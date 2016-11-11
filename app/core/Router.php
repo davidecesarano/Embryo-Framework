@@ -15,6 +15,13 @@
 	
 	class Router {
 		
+        /**
+         * Pattern dell'istruzione 
+         *
+         * @var string $pattern_route 
+         */
+        private $pattern_ruote = '([A-Za-z0-9-\/._:?&=]+)';
+        
 		/**
 		 * Pattern dei filtri della
 		 * richiesta
@@ -221,7 +228,7 @@
 		public function route($route){
 			
             // verifica formato
-			if(preg_match('/^([A-Za-z0-9-\/._:]+)$/', $route) || $route == ''){
+			if(preg_match('/^'.$this->pattern_ruote.'$/', $route) || $route == ''){
                 
                 // verifica se l'istruzione è stata inserita in un gruppo
                 if(!empty($this->groups)){
@@ -268,7 +275,17 @@
 		 * @return string
 		 */
 		public function request(){
-			return (isset($_GET['url'])) ? filter_var(rtrim($_GET['url'], '/'), FILTER_SANITIZE_URL) : 'index';
+			
+            if($_SERVER['QUERY_STRING'] !== ''){
+                    
+                $request = preg_replace('/[&]/', '?', $_SERVER['QUERY_STRING'], 1);
+                $request = preg_replace('/url=/', '', $request, 1);
+                return filter_var(rtrim($request, '/'), FILTER_SANITIZE_URL);
+
+            }else{
+                return 'index';
+            }
+            
 		}
 		
 		/**
@@ -286,16 +303,16 @@
 				
 				// se l'istruzione è stato trovata...
 				if(preg_match($this->getPattern($route), $this->request())){
-					
+
 					// segnala route trovato
 					$this->found = true;
 					
 					// array URI
-					$request_array = explode('/', $this->request());
+					$request_array = preg_split("/(\/|=|&|[?])/", $this->request());
 					
 					// array route 
-					$route_array = explode('/', $route);
-                    
+					$route_array = preg_split("/(\/|=|&|[?])/", $route);
+
                     // verifica metodo richiesta HTTP
                     $this->checkMethod($this->methods[$key]);
                     
@@ -594,8 +611,8 @@
             $last_key_route_array = key($route_array);
 
             // se l'ultimo filtro è di tipo :url...
-            if($last_value_route_array == $route_array[$position] && $last_key_route_array == $position){
-                
+            if($last_value_route_array == $route_array[$position] && $last_key_route_array == $position && $last_value_route_array == ':url'){
+               
                 // unisce array richiesta 
                 $implode = '';
                 for($i=$position; $i<count($request_array); $i++){
@@ -738,7 +755,13 @@
 		 * @return string
 		 */
 		public function getPattern($route){
-			return '#^'.str_replace(array_keys($this->filters), $this->filters, $route).'$#';
+			
+            $pattern = str_replace('/', '\/', $route);
+            $pattern = str_replace('?', '[?]', $pattern);
+            $pattern = str_replace('&', '[&]', $pattern);
+            $pattern = str_replace(array_keys($this->filters), $this->filters, $pattern);
+            return '/^'.$pattern.'$/';
+            
 		}
         
         /**
