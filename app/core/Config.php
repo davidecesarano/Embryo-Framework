@@ -1,12 +1,12 @@
 <?php namespace Core;
     
     /**
-	 * Config
-	 *
-	 * Setta e invoca le configurazioni dell'applicazione.
-	 *
-	 * @author Davide Cesarano
-	 */
+     * Config
+     *
+     * Setta e invoca le configurazioni dell'applicazione.
+     *
+     * @author Davide Cesarano
+     */
     
     use \Exception;
     
