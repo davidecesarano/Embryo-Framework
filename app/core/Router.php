@@ -280,6 +280,7 @@
                     
                 $request = preg_replace('/[&]/', '?', $_SERVER['QUERY_STRING'], 1);
                 $request = preg_replace('/url=/', '', $request, 1);
+                $request = preg_replace('/[?]_=([0-9]+)/', '', $request, 1);
                 return filter_var(rtrim($request, '/'), FILTER_SANITIZE_URL);
 
             }else{
