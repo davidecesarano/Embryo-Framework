@@ -105,7 +105,7 @@
          * @return this
          */
         public function post($route, $callback){
-           $this->add('POST', $route, $callback);
+            $this->add('POST', $route, $callback);
         }
         
         /**
@@ -129,7 +129,7 @@
          * @return this
          */
         public function any($route, $callback){
-           $this->add('ANY', $route, $callback);            
+            $this->add('ANY', $route, $callback);            
         }
         
         /**
@@ -141,7 +141,7 @@
          * @return this
          */
         public function ajaxPost($route, $callback){
-           $this->add('AJAXPOST', $route, $callback);            
+            $this->add('AJAXPOST', $route, $callback);            
         }
         
         /**
@@ -153,7 +153,7 @@
          * @return this
          */
         public function ajaxGet($route, $callback){
-           $this->add('AJAXGET', $route, $callback);            
+            $this->add('AJAXGET', $route, $callback);            
         }
         
         /**
@@ -283,7 +283,7 @@
                 $request = preg_replace('/[?]_=([0-9]+)/', '', $request, 1);
                 $request = preg_replace('/[&]_=([0-9]+)/', '', $request, 1);
                 return filter_var(rtrim($request, '/'), FILTER_SANITIZE_URL);
-
+                
             }else{
                 return 'index';
             }
@@ -305,7 +305,7 @@
                 
                 // se l'istruzione è stato trovata...
                 if(preg_match($this->getPattern($route), $this->request())){
-
+                    
                     // segnala route trovato
                     $this->found = true;
                     
@@ -314,13 +314,13 @@
                     
                     // array route 
                     $route_array = preg_split("/(\/|=|&|[?])/", $route);
-
+                    
                     // verifica metodo richiesta HTTP
                     $this->checkMethod($this->methods[$key]);
                     
                     // conversione filtri
                     $this->convertFilter($route_array, $request_array);
-
+                    
                     // invoca una chiusura o un oggetto
                     $this->invoke($this->callback[$key]);
                     
