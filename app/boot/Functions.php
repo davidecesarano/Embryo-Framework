@@ -15,13 +15,13 @@
      * @return mixed
      */
 
-	function debug($var){
-		
-		echo "<pre>";
-			print_r($var);
-		echo "</pre>";		
-		
-	}
+    function debug($var){
+        
+        echo "<pre>";
+            print_r($var);
+        echo "</pre>";		
+        
+    }
     
     /**
      * Ambiente di sviluppo

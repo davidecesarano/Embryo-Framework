@@ -30,11 +30,11 @@
      * ------------------------------------------------------------
      */
      
-	if(!file_exists(FOLDER_VENDOR.'/autoload.php')){
-		die('File autoload.php non presente nella cartella vendor!');
-	}else{
-		require FOLDER_VENDOR.'/autoload.php';
-	}
+    if(!file_exists(FOLDER_VENDOR.'/autoload.php')){
+        die('File autoload.php non presente nella cartella vendor!');
+    }else{
+        require FOLDER_VENDOR.'/autoload.php';
+    }
     
     /**
      * ------------------------------------------------------------
