@@ -1,4 +1,5 @@
-<FilesMatch "\.(htaccess|php|html|js)$">
-    Order Allow,Deny
-    Deny from all
+deny from all
+<FilesMatch "\.(doc|docx|xls|xlsx|ppt|pps|pdf|png|jpg|jpeg|gif|bmp|svg|rar|zip|wav|mp3|mp4|avi|flv|mpg|mpeg)$">
+    order deny,allow
+    allow from all
 </FilesMatch>
