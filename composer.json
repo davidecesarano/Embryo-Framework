@@ -20,8 +20,7 @@
         "datatables/datatables": "1.10.12",
         "davidecesarano/gapi": "dev-master",
 		"phpmailer/phpmailer": "dev-master",
-        "firephp/firephp-core": "dev-master",
-        "tecnickcom/tcpdf": "dev-master"
+        "firephp/firephp-core": "dev-master"
     },
 	"autoload": {
 		"psr-4": {
@@ -53,8 +52,7 @@
             "./vendor/libs/{$name}": [
                 "davidecesarano/gapi", 
                 "phpmailer/phpmailer",
-                "firephp/firephp-core",
-                "tecnickcom/tcpdf"
+                "firephp/firephp-core"
             ]
         }
     },
