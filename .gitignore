@@ -1,3 +1,5 @@
 # Framework
 /vendor/
+app/logs/*
+!app/logs/.gitkeep 
 composer.lock
