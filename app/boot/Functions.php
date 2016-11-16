@@ -167,3 +167,15 @@
     function meta_charset(){
         return Config::get('app', 'meta.charset');
     }
+    
+    /**
+     * Redirect 
+     *
+     * @param string $page
+     */
+    function redirect($page){
+        
+        header('Location: '.site_url($page));
+		exit;
+        
+    }
