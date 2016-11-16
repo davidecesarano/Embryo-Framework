@@ -29,15 +29,6 @@
         }
         
         /**
-         * Verifica se la connessione è riuscita o fallita
-         *
-         * @return boolean
-         */
-        public function connection(){
-            return (is_null($this->db)) ? false : true;
-        }
-        
-        /**
          * Carica il modello
          *
          * @param string $name Nome del modello
