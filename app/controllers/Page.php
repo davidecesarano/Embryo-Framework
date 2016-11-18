@@ -6,7 +6,6 @@
 	 * @author Davide Cesarano
 	 */
 	
-	use Core\Config;
 	use Core\Controller;
 	
 	class Page extends Controller{
