@@ -95,7 +95,7 @@
      * @param string $path
      * @return string 
      */
-    function template_admin_url($path = null){
+    function template_admin_url($path){
         return site_url(FOLDER_TEMPLATE_ADMIN.'/'.Config::get('app', 'template.admin').'/assets/'.$path);
     }
     
@@ -115,7 +115,7 @@
      * @param string $path
      * @return string 
      */
-    function template_admin_folder(){
+    function template_admin_folder($path){
         return FOLDER_TEMPLATE_ADMIN.'/'.Config::get('app', 'template.admin').'/views/'.$path;
     }
     
