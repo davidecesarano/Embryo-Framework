@@ -32,32 +32,32 @@
      * ------------------------------------------------------------
      * CARTELLE TEMPLATE
      *
-     * @const FOLDER_DASHBOARD
-     * @const FOLDER_PUBLIC
+     * @const FOLDER_TEMPLATE_ADMIN
+     * @const FOLDER_TEMPLATE_PUBLIC
      * ------------------------------------------------------------
      */
-    define('FOLDER_DASHBOARD', 'app/templates/dashboard');
-    define('FOLDER_PUBLIC', 'app/templates/public');
+    define('FOLDER_TEMPLATE_ADMIN', 'app/templates/dashboard');
+    define('FOLDER_TEMPLATE_PUBLIC', 'app/templates/public');
     
     /**
      * ------------------------------------------------------------
      * CARTELLE VENDOR
      *
      * @const FOLDER_VENDOR
-     * @const FOLDER_ASSETS
-     * @const FOLDER_LIBS
+     * @const FOLDER_VENDOR_ASSETS
+     * @const FOLDER_VENDOR_LIBS
      * ------------------------------------------------------------
      */
     
     define('FOLDER_VENDOR', 'vendor');
-    define('FOLDER_ASSETS', 'vendor/assets');
-    define('FOLDER_LIBS', 'vendor/libs');
+    define('FOLDER_VENDOR_ASSETS', 'vendor/assets');
+    define('FOLDER_VENDOR_LIBS', 'vendor/libs');
     
     /**
      * ------------------------------------------------------------
      * CARTELLE PUBLIC
      *
-     * @const FOLDER_THEMES
+     * @const FOLDER_PUBLIC
      * @const FOLDER_UPLOADS
      * @const FOLDER_DOCS
      * @const FOLDER_IMAGES
@@ -65,7 +65,7 @@
      * ------------------------------------------------------------
      */
     
-    define('FOLDER_THEMES', 'public/themes');
+    define('FOLDER_PUBLIC', 'public');
     define('FOLDER_UPLOADS', 'public/uploads');
     define('FOLDER_DOCS', 'public/uploads/docs');
     define('FOLDER_IMAGES', 'public/uploads/images');
