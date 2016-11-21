@@ -1,10 +1,10 @@
 		</div>
 
 		<!-- jQuery -->
-		<script type="text/javascript" src="<?php echo Asset::component('jquery')->file('jquery.min.js'); ?>"></script>
+		<script type="text/javascript" src="<?php echo vendor_url('jquery/jquery.min.js'); ?>"></script>
 		
 		<!-- Bootstrap -->
-		<script src="<?php echo Asset::component('bootstrap')->js('bootstrap.min'); ?>"></script>
+		<script src="<?php echo vendor_url('bootstrap/js/bootstrap.min.js'); ?>"></script>
 	
 	</body>
 	

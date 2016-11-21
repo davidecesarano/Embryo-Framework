@@ -8,7 +8,7 @@
 		<title><?php echo $title; ?></title>
 
 		<!-- Bootstrap -->
-		<link rel="stylesheet" href="<?php echo Asset::component('bootstrap')->css('bootstrap.min'); ?>">
+		<link rel="stylesheet" href="<?php echo vendor_url('bootstrap/css/bootstrap.min.css'); ?>">
 
 		<!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
 		<!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
