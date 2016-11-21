@@ -5,7 +5,7 @@
 	</div>
 	<p class="lead">
 		Spiacente, la pagina che stai cercando non esiste.<br />
-		Questo contenuto può essere cambiato in <code><?php echo folder_template_public(); ?>/views/404.php</code><br /> 
+		Questo contenuto può essere cambiato in <code><?php echo folder_views_template('404.php'); ?></code><br /> 
 	</p>
 	<hr />
 	<p>Torna alla <a href="<?php echo site_url(); ?>">Home Page</a>.</p>

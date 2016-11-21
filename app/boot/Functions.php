@@ -70,9 +70,9 @@
     }
     
     /**
-     * Url del sito
+     * Url
      *
-     * @example http://www.mywebsite.com
+     * @param string $path
      * @return string 
      */
     function site_url($path = null){
@@ -80,47 +80,43 @@
     }
     
     /**
-     * Url del template
+     * Url template frontend
      *
-     * @example http://www.mywebsite.com/public/themes/[default]
+     * @param string $path
      * @return string 
      */
-    function site_theme_public(){
-        return SITE_URL.'/'.FOLDER_THEMES.'/'.Config::get('app', 'template.public');
+    function template_url($path){
+        return site_url(FOLDER_PUBLIC.'/'.Config::get('app', 'template.public').'/assets/'.$path);
     }
     
     /**
-     * Url del template
+     * Url template backend
      *
-     * @example http://www.mywebsite.com/public/themes/[default]
+     * @param string $path
      * @return string 
      */
-    function site_template_public(){
-        return SITE_URL.'/'.FOLDER_PUBLIC.'/'.Config::get('app', 'template.public');
+    function template_admin_url($path = null){
+        return site_url(FOLDER_DASHBOARD.'/'.Config::get('app', 'template.admin').'/assets/'.$path);
     }
     
     /**
-     * Path del template
+     * Path template frontend
      *
-     * @example public/themes/[default]
+     * @param string $path
      * @return string 
      */
-    function folder_template_public(){
-        return FOLDER_PUBLIC.'/'.Config::get('app', 'template.public');
+    function folder_views_template($path){
+        return FOLDER_PUBLIC.'/'.Config::get('app', 'template.public').'/views/'.$path;
     }
     
     /**
-     * Url della dashboard
+     * Path template backend
      *
-     * @example http://www.mywebsite.com/app/templates/dashboard/[default]
+     * @param string $path
      * @return string 
      */
-    function site_template_admin(){
-        return SITE_URL.'/'.FOLDER_DASHBOARD.'/'.Config::get('app', 'template.admin');
-    }
-    
-    function folder_template_admin(){
-        return FOLDER_DASHBOARD.'/'.Config::get('app', 'template.admin');
+    function folder_views_template_admin(){
+        return FOLDER_DASHBOARD.'/'.Config::get('app', 'template.admin').'/views/'.$path;
     }
     
     /**
