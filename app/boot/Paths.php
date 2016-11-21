@@ -13,7 +13,7 @@
      * ------------------------------------------------------------
      */
     define('SITE_PROTOCOL', ((!empty($_SERVER['HTTPS']) && $_SERVER['HTTPS'] != 'off') || $_SERVER['SERVER_PORT'] == 443) ? "https://" : "http://");
-    define('SITE_FOLDER', dirname($_SERVER['PHP_SELF']));
+    define('SITE_FOLDER', (dirname($_SERVER['PHP_SELF']) == '\\' || dirname($_SERVER['PHP_SELF']) == '/') ? '' : dirname($_SERVER['PHP_SELF']));
     define('SITE_PORT', $_SERVER['SERVER_PORT']);
     define('SITE_URL', (SITE_PORT != 80) ? rtrim(SITE_PROTOCOL.$_SERVER['SERVER_NAME'].':'.SITE_PORT.SITE_FOLDER, '/') : rtrim(SITE_PROTOCOL.$_SERVER['SERVER_NAME'].SITE_FOLDER, '/'));
     define('SITE_BASE_DIR', getcwd());
