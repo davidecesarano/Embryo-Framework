@@ -179,3 +179,16 @@
 		exit;
         
     }
+    
+    /**
+     * JSON 
+     *
+     * @param array $data
+     * @return json
+     */
+    public function json($data){
+            
+        header('Content-Type: application/json');
+        print json_encode($data, JSON_PRETTY_PRINT);
+        
+    }
