@@ -54,9 +54,9 @@
             
             // include il file del template
             if($end == 'public' || $end == null){
-                $template = folder_views_template($name.'.php');
+                $template = template_folder($name.'.php');
             }elseif($end == 'dashboard'){
-                $template = folder_views_template_admin($name.'.php');
+                $template = template_admin_folder($name.'.php');
             }
 
             if(file_exists($template)){
@@ -77,7 +77,7 @@
             
             // imposta variabili
             extract($this->vars);
-            $template = folder_views_template($name.'.php');
+            $template = template_folder($name.'.php');
                 
             if(file_exists($template)){
                 require $template;
@@ -97,7 +97,7 @@
             
             // imposta variabili
             extract($this->vars);
-            $template = folder_views_template_admin($name.'.php');
+            $template = template_admin_folder($name.'.php');
 
             if(file_exists($template)){
                 require $template;

@@ -86,7 +86,7 @@
      * @return string 
      */
     function template_url($path){
-        return site_url(FOLDER_PUBLIC.'/'.Config::get('app', 'template.public').'/assets/'.$path);
+        return site_url(FOLDER_TEMPLATE_PUBLIC.'/'.Config::get('app', 'template.public').'/assets/'.$path);
     }
     
     /**
@@ -96,7 +96,7 @@
      * @return string 
      */
     function template_admin_url($path = null){
-        return site_url(FOLDER_DASHBOARD.'/'.Config::get('app', 'template.admin').'/assets/'.$path);
+        return site_url(FOLDER_TEMPLATE_ADMIN.'/'.Config::get('app', 'template.admin').'/assets/'.$path);
     }
     
     /**
@@ -105,8 +105,8 @@
      * @param string $path
      * @return string 
      */
-    function folder_views_template($path){
-        return FOLDER_PUBLIC.'/'.Config::get('app', 'template.public').'/views/'.$path;
+    function template_folder($path){
+        return FOLDER_TEMPLATE_PUBLIC.'/'.Config::get('app', 'template.public').'/views/'.$path;
     }
     
     /**
@@ -115,8 +115,18 @@
      * @param string $path
      * @return string 
      */
-    function folder_views_template_admin(){
-        return FOLDER_DASHBOARD.'/'.Config::get('app', 'template.admin').'/views/'.$path;
+    function template_admin_folder(){
+        return FOLDER_TEMPLATE_ADMIN.'/'.Config::get('app', 'template.admin').'/views/'.$path;
+    }
+    
+    /**
+     * Url cartella dipendenze
+     *
+     * @param string $path
+     * @return string 
+     */
+    function vendor_url($path){
+        return site_url(FOLDER_VENDOR_ASSETS.'/'.$path);
     }
     
     /**
