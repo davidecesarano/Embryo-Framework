@@ -182,7 +182,19 @@
     function redirect($page){
         
         header('Location: '.site_url($page));
-		exit;
+        exit;
+        
+    }
+    
+    /**
+     * Redirect dominio esterno
+     *
+     * @param string $url
+     */
+    function redirect_to($url){
+        
+        header('Location: '.$url);
+        exit;
         
     }
     
