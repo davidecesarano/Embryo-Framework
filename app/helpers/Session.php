@@ -8,8 +8,6 @@
 	 * @author Davide Cesarano
 	 */
 	
-	use Helpers\Url;
-	
 	class Session{
 		
 		/**
@@ -81,7 +79,7 @@
 			session_destroy();
 			
 			// redirect
-			Url::redirect($redirect);
+			redirect($redirect);
 		
 		}
 	
