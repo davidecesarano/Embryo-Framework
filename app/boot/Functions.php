@@ -210,3 +210,29 @@
         print json_encode($data, JSON_PRETTY_PRINT);
         
     }
+    
+    /**
+     * Crea una password criptata
+     *
+     * @example hash_create('md5', 'password', 'token');
+     * @param string $algo
+     * @param string $password
+     * @param string $token
+     * @return string
+     */
+    function password_crypt($password, $token){
+        
+        $ctx = hash_init('sha256', HASH_HMAC, $token);
+        hash_update($ctx, $password);
+        return hash_final($ctx);
+        
+    }
+    
+    /** 
+     * Crea un token di 32 caratteri
+     *
+     * @return string
+     */
+    function token(){
+        return bin2hex(openssl_random_pseudo_bytes(16));
+    }
