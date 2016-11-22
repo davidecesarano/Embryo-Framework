@@ -236,3 +236,26 @@
     function token(){
         return bin2hex(openssl_random_pseudo_bytes(16));
     }
+    
+    /**
+     * Estrapola un tot di parole da una stringa  
+     *
+     * @param string $string 
+     * @param int $length 
+     * @return string $excerpt
+     */
+    function shorten($string, $length){
+            
+        if(strlen($string) > $length){
+            
+            $excerpt   = substr($string, 0, $length-3);
+            $lastSpace = strrpos($excerpt, ' ');
+            $excerpt   = substr($excerpt, 0, $lastSpace);
+            $excerpt  .= '...';
+       
+        }else{
+            $excerpt = $string;
+        }
+        return $excerpt;
+        
+    }
