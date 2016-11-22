@@ -12,20 +12,9 @@
     Config::set('alias', array(
         
         /**
-         * Assets delle dipendenze
-         */
-        'assets' => array(
-            'bootstrap'   => 'bootstrap',
-            'datatables'  => 'datatables/media',
-            'fontawesome' => 'font-awesome',
-            'jquery'      => 'jquery'
-        ),
-        
-        /**
          * Helpers
          */
         'helpers' => array(
-            'Asset'   => 'Helpers\Asset',
             'Date'    => 'Helpers\Date',
             'Session' => 'Helpers\Session',
             'Text'    => 'Helpers\Text',
