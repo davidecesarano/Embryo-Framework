@@ -17,7 +17,6 @@
         'helpers' => array(
             'Date'    => 'Helpers\Date',
             'Session' => 'Helpers\Session',
-            'Text'    => 'Helpers\Text',
             'Token'   => 'Helpers\Token',
             'Widget'  => 'Helpers\Widget'
         )
