@@ -1,20 +1,20 @@
 <?php namespace Core;
-    
-    /**
-     * Router 
-     *
-     * Consente la creazione di percorsi url attraverso i quali è
-     * possibile invocare una chiusura (funzione) o un controller.
-     *
-     * @author Davide Cesarano
-     */
-    
-    use \Exception;
+	
+	/**
+	 * Router 
+	 *
+	 * Consente la creazione di percorsi url attraverso i quali è
+	 * possibile invocare una chiusura (funzione) o un controller.
+	 *
+	 * @author Davide Cesarano
+	 */
+	
+	use \Exception;
     use Core\Config;
     use Helpers\Request;
-    
-    class Router {
-        
+	
+	class Router {
+		
         /**
          * Pattern dell'istruzione 
          *
@@ -22,32 +22,32 @@
          */
         private $pattern_ruote = '([A-Za-z0-9-\/._:?&=]+)';
         
-        /**
-         * Pattern dei filtri della
-         * richiesta
-         *
-         * @var array $filters
-         */
-        private $filters = array(
-            ':url' => '([A-Za-z0-9-\/_]+)',
-            ':id'  => '([0-9]+)'
-        );
-        
-        /**
-         * Array delle istruzioni
-         *
-         * @var array $routes
-         */
-        private $routes = array();
-        
-        /**
-         * Array delle azioni da svolgere: possono 
-         * invocare una chiusura o un oggetto
-         *
-         * @var array $callback
-         */
-        private $callback = array();
-        
+		/**
+		 * Pattern dei filtri della
+		 * richiesta
+		 *
+		 * @var array $filters
+		 */
+		private $filters = array(
+			':url' => '([A-Za-z0-9-\/_]+)',
+			':id'  => '([0-9]+)'
+		);
+		
+		/**
+		 * Array delle istruzioni
+		 *
+		 * @var array $routes
+		 */
+		private $routes = array();
+		
+		/**
+		 * Array delle azioni da svolgere: possono 
+		 * invocare una chiusura o un oggetto
+		 *
+		 * @var array $callback
+		 */
+		private $callback = array();
+		
         /**
          * Array dei metodi delle
          * richieste HTTP 
@@ -72,40 +72,40 @@
          */
         private $middlewares = array();
         
-        /**
-         * Segnala istruzione trovata
+		/**
+		 * Segnala istruzione trovata
          * per la specifica richiesta HTTP
-         *
-         * @var boolena $found
-         */
-        private $found = false;
+		 *
+		 * @var boolena $found
+		 */
+		private $found = false;
         
         /**
-         * Parametri da passare al metodo
+		 * Parametri da passare al metodo
          * ottenuti tramite i filtri delle
          * istruzioni
-         *
-         * @var array $params 
-         */
-        private $params = array();
-        
-        /**
-         * Controller 
-         *
-         * @var string $controller 
-         */
-        private $controller;
+		 *
+		 * @var array $params 
+		 */
+		private $params = array();
+		
+		/**
+		 * Controller 
+		 *
+		 * @var string $controller 
+		 */
+		private $controller;
         
         /**
          * Crea route con metodo richiesta
          * HTTP di tipo POST
          *
          * @param string $route
-         * @param string $callback
-         * @return this
+		 * @param string $callback
+		 * @return this
          */
         public function post($route, $callback){
-            $this->add('POST', $route, $callback);
+           $this->add('POST', $route, $callback);
         }
         
         /**
@@ -113,8 +113,8 @@
          * HTTP di tipo GET
          *
          * @param string $route
-         * @param string $callback
-         * @return this
+		 * @param string $callback
+		 * @return this
          */
         public function get($route, $callback){
             $this->add('GET', $route, $callback);
@@ -125,11 +125,11 @@
          * HTTP di tipo POST o GET
          *
          * @param string $route
-         * @param string $callback
-         * @return this
+		 * @param string $callback
+		 * @return this
          */
         public function any($route, $callback){
-            $this->add('ANY', $route, $callback);            
+           $this->add('ANY', $route, $callback);            
         }
         
         /**
@@ -137,11 +137,11 @@
          * HTTP di tipo POST e AJAX
          *
          * @param string $route
-         * @param string $callback
-         * @return this
+		 * @param string $callback
+		 * @return this
          */
         public function ajaxPost($route, $callback){
-            $this->add('AJAXPOST', $route, $callback);            
+           $this->add('AJAXPOST', $route, $callback);            
         }
         
         /**
@@ -149,37 +149,37 @@
          * HTTP di tipo GET e AJAX
          *
          * @param string $route
-         * @param string $callback
-         * @return this
+		 * @param string $callback
+		 * @return this
          */
         public function ajaxGet($route, $callback){
-            $this->add('AJAXGET', $route, $callback);            
+           $this->add('AJAXGET', $route, $callback);            
         }
         
         /**
-         * Crea route
-         *
-         * @param string $route
-         * @param string $callback
-         * @return this
-         */
-        public function add($method, $route, $callback){
-            
+		 * Crea route
+		 *
+		 * @param string $route
+		 * @param string $callback
+		 * @return this
+		 */
+		public function add($method, $route, $callback){
+			
             $this->method($method);
-            $this->route($route);
-            $this->callback($callback);
-        
+			$this->route($route);
+			$this->callback($callback);
+		
         }
         
         /**
-         * Crea un gruppo di istruzioni
-         *
-         * @param string $prefix
-         * @param array $callback
-         * @return array $this->groups
-         */
-        public function group($prefix, $callback){
-            
+		 * Crea un gruppo di istruzioni
+		 *
+		 * @param string $prefix
+		 * @param array $callback
+		 * @return array $this->groups
+		 */
+		public function group($prefix, $callback){
+			
             // crea prefisso
             array_push($this->groups, $prefix);
             
@@ -204,31 +204,31 @@
             
             // ripristina route successivi
             array_pop($this->groups);
-            
-        }
+			
+		}
         
         /**
-         * Metodo richiesta HTTP
-         *
-         * @param string $method
-         * @return this
-         */
+		 * Metodo richiesta HTTP
+		 *
+		 * @param string $method
+		 * @return this
+		 */
         public function method($method){
             $this->methods[] = $method;
         }
         
         /**
-         * Istruzione
-         *
-         * @param string $route 
-         * @param array $this->groups 
-         * @return array $this->routes
-         * @throws exception
-         */
-        public function route($route){
-            
+		 * Istruzione
+		 *
+		 * @param string $route 
+		 * @param array $this->groups 
+		 * @return array $this->routes
+		 * @throws exception
+		 */
+		public function route($route){
+			
             // verifica formato
-            if(preg_match('/^'.$this->pattern_ruote.'$/', $route) || $route == ''){
+			if(preg_match('/^'.$this->pattern_ruote.'$/', $route) || $route == ''){
                 
                 // verifica se l'istruzione è stata inserita in un gruppo
                 if(!empty($this->groups)){
@@ -242,10 +242,10 @@
                 $this->routes[] = ($route == '') ? 'index' : $route;
                 
             }else{
-                throw new Exception("Formato route <strong>$route</strong> non compatibile!");
-            }
-            
-        }
+				throw new Exception("Formato route <strong>$route</strong> non compatibile!");
+			}
+			
+		}
         
         /**
          * Risposta 
@@ -268,14 +268,14 @@
    
         }
 
-        /**
-         * Ottiene URI
-         *
-         * @param array $_GET['url']
-         * @return string
-         */
-        public function request(){
-            
+		/**
+		 * Ottiene URI
+		 *
+		 * @param array $_GET['url']
+		 * @return string
+		 */
+		public function request(){
+			
             if($_SERVER['QUERY_STRING'] !== ''){
                     
                 $request = preg_replace('/[&]/', '?', $_SERVER['QUERY_STRING'], 1);
@@ -283,58 +283,58 @@
                 $request = preg_replace('/[?]_=([0-9]+)/', '', $request, 1);
                 $request = preg_replace('/[&]_=([0-9]+)/', '', $request, 1);
                 return filter_var(rtrim($request, '/'), FILTER_SANITIZE_URL);
-                
+
             }else{
                 return 'index';
             }
-        
-        }
-        
-        /**
-         * Esegue route
-         *
-         * @param array $this->request
-         * @param array $this->routes
-         * @return mixed
-         * @throws exception
-         */
-        public function execute(){	
             
-            // trova l'istruzione per la richiesta
-            foreach($this->routes as $key => $route){
-                
-                // se l'istruzione è stato trovata...
-                if(preg_match($this->getPattern($route), $this->request())){
-                    
-                    // segnala route trovato
-                    $this->found = true;
-                    
-                    // array URI
-                    $request_array = preg_split("/(\/|=|&|[?])/", $this->request());
-                    
-                    // array route 
-                    $route_array = preg_split("/(\/|=|&|[?])/", $route);
-                    
+		}
+		
+		/**
+		 * Esegue route
+		 *
+		 * @param array $this->request
+		 * @param array $this->routes
+		 * @return mixed
+		 * @throws exception
+		 */
+		public function execute(){	
+            
+			// trova l'istruzione per la richiesta
+			foreach($this->routes as $key => $route){
+				
+				// se l'istruzione è stato trovata...
+				if(preg_match($this->getPattern($route), $this->request())){
+
+					// segnala route trovato
+					$this->found = true;
+					
+					// array URI
+					$request_array = preg_split("/(\/|=|&|[?])/", $this->request());
+					
+					// array route 
+					$route_array = preg_split("/(\/|=|&|[?])/", $route);
+
                     // verifica metodo richiesta HTTP
                     $this->checkMethod($this->methods[$key]);
                     
-                    // conversione filtri
+					// conversione filtri
                     $this->convertFilter($route_array, $request_array);
-                    
-                    // invoca una chiusura o un oggetto
-                    $this->invoke($this->callback[$key]);
-                    
-                    // ferma la ricerca
-                    break;
-                    
-                }
-                
-            }
-            
-            // se il route non esiste genera errore
-            $this->error();
-            
-        }
+
+					// invoca una chiusura o un oggetto
+					$this->invoke($this->callback[$key]);
+					
+					// ferma la ricerca
+					break;
+					
+				}
+				
+			}
+			
+			// se il route non esiste genera errore
+			$this->error();
+			
+		}
         
         /**
          * Verifica il metodo della richiesta HTTP 
@@ -502,50 +502,50 @@
         }
         
         /**
-         * Invoca un controller 
-         *
-         * @example $router->add('test', 'class@method');
-         * @param string $callback
-         * @param array $this->params
-         */
-        public function getController($callback){
-            
+		 * Invoca un controller 
+		 *
+		 * @example $router->add('test', 'class@method');
+		 * @param string $callback
+		 * @param array $this->params
+		 */
+		public function getController($callback){
+			
             // controller e action
             $controller = explode('@', $callback);
             $class = $controller[0];
-            $method = $controller[1];
-            
-            // carica classe controller
-            $this->getClassController($class);
-            
+			$method = $controller[1];
+			
+			// carica classe controller
+			$this->getClassController($class);
+			
             // carica method action
-            $this->getAction($method, $this->params);
-            
-        }
-        
-        /**
-         * Invoca una closure (funzione)
-         *
-         * @example $router->add('test', function($param){ echo $param; });
-         * @param $callback
-         * @param array $this->params
-         */
-        public function getClosure($callback){
+			$this->getAction($method, $this->params);
+			
+		}
+		
+		/**
+		 * Invoca una closure (funzione)
+		 *
+		 * @example $router->add('test', function($param){ echo $param; });
+		 * @param $callback
+		 * @param array $this->params
+		 */
+		public function getClosure($callback){
 
             if(!empty($this->params)){
-                
-                // presenza di parametri
-                call_user_func_array($callback, $this->params);
-                return;
-                
-            }else{
-                
-                // assenza di parametri
-                call_user_func($callback);
-            
-            }
-        
-        }
+				
+				// presenza di parametri
+				call_user_func_array($callback, $this->params);
+				return;
+				
+			}else{
+				
+				// assenza di parametri
+				call_user_func($callback);
+			
+			}
+		
+		}
         
         /**
          * Invoca un middleware 
@@ -581,14 +581,36 @@
             if(is_array($middleware_array)){
                 
                 foreach($middleware_array as $name){
-                   
-                    // ricava classe middleware e azione
-                    $middleware = explode('@', $middlewares[$name]);
-                    $class = $middleware[0];
-                    $method = $middleware[1];
+
+                    if(strpos($name, ':') !== false) {
+ 
+                        // cerca middleware
+                        $middleware_name = explode(':', $name);
+                        $middleware_search = $middleware_name[0];
+                        $middleware_filtered = array_filter(array_keys($middlewares), function($key) use($middleware_search){
+                            if(preg_match('/^'.$middleware_search.':([a-zA-Z0-9_])+/', $key)){
+                               return $key;
+                            }
+                        });
+                        
+                        // ricava classe middleware, azione e parametro
+                        $middleware = explode('@', $middlewares[current($middleware_filtered)]);
+                        $class = $middleware[0];
+                        $method = $middleware[1];
+                        $param = $middleware_name[1];
                     
+                    }else{
+                        
+                        // ricava classe middleware e azione
+                        $middleware = explode('@', $middlewares[$name]);
+                        $class = $middleware[0];
+                        $method = $middleware[1];
+                        $param = null;
+                        
+                    }
+
                     // carica classe middleware e metodo
-                    $this->getClassMiddleware($class, $method);
+                    $this->getClassMiddleware($class, $method, $param);
                     
                 }
             
@@ -599,14 +621,14 @@
         }
         
         /**
-         * Assegna parametri 
-         *
-         * @param array $route_array 
-         * @param array $request_array
-         * @param int $position
-         * @return array $this->params
-         */
-        public function setParam($route_array, $request_array, $position){ 
+		 * Assegna parametri 
+		 *
+		 * @param array $route_array 
+		 * @param array $request_array
+		 * @param int $position
+		 * @return array $this->params
+		 */
+		public function setParam($route_array, $request_array, $position){ 
             
             // ultimo filtro
             $last_value_route_array = end($route_array);
@@ -625,24 +647,24 @@
                 // inserisce parametro
                 array_push($this->params, $url);
                 
-            }else{
+			}else{
                 
                 // inserisce paramentro
                 array_push($this->params, $request_array[$position]);
+			
+			}
             
-            }
-            
-        }
+		}
 
         /**
-         * Carica il controller
-         *
-         * @param string $name
-         * @return object $this->controller
-         * @throws exception
-         */
-        public function getClassController($name){
-            
+		 * Carica il controller
+		 *
+		 * @param string $name
+		 * @return object $this->controller
+		 * @throws exception
+		 */
+		public function getClassController($name){
+			
             // verifica presenza namespace
             if(strstr($name, '\\')){ 
                 
@@ -657,31 +679,31 @@
                 $controller = ucfirst($name);
             }
             
-            // classe
-            $class = 'Controllers\\'.$controller;
-            
-            // carica classe se esiste
-            if(class_exists($class)){
-                $this->controller = new $class;
-            }else{
-                throw new Exception("Il controller <strong>$class</strong> non esiste!");					
-            }			
-            
-        }
-        
-        /**
-         * Carica l'azione e il parametro
-         *
-         * @param string $action
-         * @param array|null $params
-         * @return object $this->controller->{$action}($param_1, $param_2, ...)
-         * @throws exception
-         */
-        public function getAction($action, $params = null){
-            
-            // carica metodo (azione) se esiste
-            if(method_exists($this->controller, $action)){
-                
+			// classe
+			$class = 'Controllers\\'.$controller;
+			
+			// carica classe se esiste
+			if(class_exists($class)){
+				$this->controller = new $class;
+			}else{
+				throw new Exception("Il controller <strong>$class</strong> non esiste!");					
+			}			
+			
+		}
+		
+		/**
+		 * Carica l'azione e il parametro
+		 *
+		 * @param string $action
+		 * @param array|null $params
+		 * @return object $this->controller->{$action}($param_1, $param_2, ...)
+		 * @throws exception
+		 */
+		public function getAction($action, $params = null){
+			
+			// carica metodo (azione) se esiste
+			if(method_exists($this->controller, $action)){
+				
                 // se i parametri non esistono...
                 if(empty($this->params)){
                     
@@ -695,21 +717,21 @@
                 
                 }
                     
-            }else{
-                throw new Exception("Il metodo <strong>$action</strong> non esiste!");
-            }
-        
-        }
+			}else{
+				throw new Exception("Il metodo <strong>$action</strong> non esiste!");
+			}
+		
+		}
         
         /**
-         * Carica il middleware
-         *
-         * @param string $name
-         * @param string $action
-         * @return object
-         * @throws exception
-         */
-        public function getClassMiddleware($name, $action){
+		 * Carica il middleware
+		 *
+		 * @param string $name
+		 * @param string $action
+		 * @return object
+		 * @throws exception
+		 */
+        public function getClassMiddleware($name, $action, $param = null){
             
             // classe
             $class = 'Middleware\\'.$name;
@@ -718,24 +740,24 @@
             if(class_exists($class)){
             
                 $middleware = new $class;
-                $middleware->{$action}();
+                $middleware->{$action}($param);
             
             }else{
                 throw new Exception("Il middleware <strong>$name</strong> non esiste!");
             }
             
         }
-        
-        /**
-         * Se il route non esiste 
-         * genera un errore 
-         *
-         * @param boolean $this->found
-         * @thorws exception 
-         */
-        public function error(){
-            if(!$this->found) $this->error404('Route non trovato!');
-        }
+		
+		/**
+		 * Se il route non esiste 
+		 * genera un errore 
+		 *
+		 * @param boolean $this->found
+		 * @thorws exception 
+		 */
+		public function error(){
+			if(!$this->found) $this->error404('Route non trovato!');
+		}
         
         /**
          * Genera errore 404
@@ -743,28 +765,28 @@
          * @param string|null $msg 
          */
         public function error404($msg = null){
-            
+			
             $controller = new Controller;
-            $controller->loadError404($msg);
-        
-        }
-        
-        /**
-         * Ottiene il pattern del filtro
-         * utilizzato nel route
-         *
-         * @param string $route
-         * @return string
-         */
-        public function getPattern($route){
-            
+			$controller->loadError404($msg);
+		
+		}
+		
+		/**
+		 * Ottiene il pattern del filtro
+		 * utilizzato nel route
+		 *
+		 * @param string $route
+		 * @return string
+		 */
+		public function getPattern($route){
+			
             $pattern = str_replace('/', '\/', $route);
             $pattern = str_replace('?', '[?]', $pattern);
             $pattern = str_replace('&', '[&]', $pattern);
             $pattern = str_replace(array_keys($this->filters), $this->filters, $pattern);
             return '/^'.$pattern.'$/';
             
-        }
+		}
         
         /**
          * Ottiene controller e action specifici
@@ -806,5 +828,5 @@
             return ($router->request() === $value) ? true : false;
             
         }
-        
-    }
+		
+	}
