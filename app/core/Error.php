@@ -57,6 +57,9 @@
                 chmod($file, 0777);
                 file_put_contents($file, $log);
                 
+                // email
+                if(Config::get('app', 'errors.email') === true) self::sendEmail($log);
+                
             }
             
         }
@@ -146,10 +149,7 @@
                     
                     // log
                     self::write($report);
-                    
-                    // email
-                    if(Config::get('app', 'errors.email') === true) self::sendEmail($report);
-                    
+
                     // messaggio
                     self::message($typename.' - '.$description);
                     
@@ -209,9 +209,6 @@
                     
                     // log
                     self::write($report);
-                    
-                    // email
-                    if(Config::get('app', 'errors.email') === true) self::sendEmail($report);
                     
                     // messaggio
                     self::message(self::errorType($error['type']).' - '.$error['message']);
@@ -302,13 +299,13 @@
         public static function sendEmail($log){
             
             $mail = new Mail;
-            $mail->setFrom('', 'Administrator');
-            $mail->addReplyTo('', 'Administrator');
+            $mail->account(Config::get('email', 'administrator'));
+            $mail->setFrom(Config::get('email', 'administrator.username'), 'Administrator');
             $mail->addAddress(Config::get('app', 'errors.email_to'), 'Administrator');
-            $mail->Subject('Errore sul sito '.title());
+            $mail->Subject = 'Ops, si è verificato un errore!';
             $body = "Report errore:<br />";
             $body .= str_replace("\n", "<br />", $log);
-            $mail->Body($body);
+            $mail->Body = $body;
             $mail->send();			
             
         }
