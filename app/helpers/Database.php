@@ -135,7 +135,18 @@
 		 * @return boolean
 		 */
 		public function execute(){
-			return $this->stmt->execute();
+			
+            try{
+            
+                $execute = $this->stmt->execute();
+                if(!$execute){
+                    throw new PDOException(0);
+                }
+                
+            }catch(PDOException $e){
+                return $e;
+            }
+                
 		}
         
         /**
@@ -212,8 +223,11 @@
 			// valori
 			$this->values($data);
 			
-			// esito
-			return ($this->execute()) ? $this->lastInsertId() : false;
+			// esegui
+			$this->execute();
+            
+            // ultimo id inserito
+            return $this->lastInsertId();
 		
 		}
         
@@ -249,8 +263,8 @@
 			// valori
 			$this->values($data);
 			
-			// esito
-			return ($this->execute()) ? true : false;
+			// esegui
+			$this->execute();
 		
 		}
         
@@ -276,8 +290,8 @@
 			// valori
 			$this->values($data);
 
-			// esito
-			return ($this->execute()) ? true : false;
+			// esegui
+			$this->execute();
 			
 		}
 		
