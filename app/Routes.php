@@ -1,7 +1,6 @@
 <?php 
     
     use Core\Router;
-    use Helpers\Result;
     
     $router = new Router;
 			
