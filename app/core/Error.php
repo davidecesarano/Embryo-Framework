@@ -78,10 +78,7 @@
             $report = self::exceptionReport($exception);
             
             // log
-            self::write($report); 
-            
-            // email
-            if(Config::get('app', 'errors.email') === true) self::sendEmail($report);
+            self::write($report);
             
             // messaggio
             self::message($exception->getMessage());
