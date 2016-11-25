@@ -37,20 +37,6 @@
         'timezone' => 'Europe/Rome',
         
         /**
-         * Debug
-         */
-        'debug' => 'development',
-        
-        /**
-         * Errori
-         */
-        'errors' => array(
-            'email'    => false,
-            'email_to' => '',
-            'display'  => true
-        ),
-        
-        /**
          * Modalità "in manutenzione"
          */
         'maintenance' => 0

@@ -28,7 +28,7 @@
      */
     function enviroment(){
         
-        switch(Config::get('app', 'debug')){
+        switch(Config::get('error', 'debug')){
             case 'development':
                 error_reporting(E_ALL);
                 ini_set('display_errors', 1);

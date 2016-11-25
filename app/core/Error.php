@@ -23,7 +23,7 @@
          */
         public static function message($text = null){
             
-            if(!$text || Config::get('app', 'errors.display') === false){
+            if(!$text || Config::get('error', 'display') === false){
                 echo "<h1>Si &egrave; verificato un errore!</h1>";
             }else{
                 echo '<p>'.$text.'</p>';
@@ -58,7 +58,7 @@
                 file_put_contents($file, $log);
                 
                 // email
-                if(Config::get('app', 'errors.email') === true) self::sendEmail($log);
+                if(Config::get('error', 'email') === true) self::sendEmail($log);
                 
             }
             
@@ -208,7 +208,7 @@
                     self::write($report);
                     
                     // messaggio
-                    self::message(self::errorType($error['type']).' - '.$error['message']);
+                    self::message('<strong>'.self::errorType($error['type']).'</strong>: '.$error['message'].' in <strong>'.$error['file'].'</strong> on line <strong>'.$error['line'].'</strong>');
                 
             }
             
@@ -298,7 +298,7 @@
             $mail = new Mail;
             $mail->account(Config::get('email', 'administrator'));
             $mail->setFrom(Config::get('email', 'administrator.username'), 'Administrator');
-            $mail->addAddress(Config::get('app', 'errors.email_to'), 'Administrator');
+            $mail->addAddress(Config::get('error', 'email_to'), 'Administrator');
             $mail->Subject = 'Ops, si è verificato un errore!';
             $body = "Report errore:<br />";
             $body .= str_replace("\n", "<br />", $log);

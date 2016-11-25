@@ -38,24 +38,11 @@
     
     /**
      * ------------------------------------------------------------
-     * CONFIG	
-     * ------------------------------------------------------------
-     */
-    
-    require FOLDER_CONFIG.'/Database.php';
-    require FOLDER_CONFIG.'/Email.php';
-    require FOLDER_CONFIG.'/App.php';
-    require FOLDER_CONFIG.'/Api.php';
-    require FOLDER_CONFIG.'/Alias.php';
-    require FOLDER_CONFIG.'/Middlewares.php';
-    require FOLDER_CONFIG.'/Widgets.php';
-    
-    /**
-     * ------------------------------------------------------------
      * AMBIENTE DI SVILUPPO	
      * ------------------------------------------------------------
      */
-     
+    
+    require FOLDER_CONFIG.'/Error.php';
     enviroment();
     
     /**
@@ -67,6 +54,20 @@
     register_shutdown_function('Core\Error::shutdownHandler');
     set_error_handler('Core\Error::errorHandler');
     set_exception_handler('Core\Error::exceptionHandler');
+    
+    /**
+     * ------------------------------------------------------------
+     * CONFIG	
+     * ------------------------------------------------------------
+     */
+     
+    require FOLDER_CONFIG.'/Database.php';
+    require FOLDER_CONFIG.'/Email.php';
+    require FOLDER_CONFIG.'/App.php';
+    require FOLDER_CONFIG.'/Api.php';
+    require FOLDER_CONFIG.'/Alias.php';
+    require FOLDER_CONFIG.'/Middlewares.php';
+    require FOLDER_CONFIG.'/Widgets.php';
 
     /**
      * ------------------------------------------------------------
