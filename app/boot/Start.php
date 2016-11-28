@@ -68,7 +68,8 @@
     require FOLDER_CONFIG.'/Alias.php';
     require FOLDER_CONFIG.'/Middlewares.php';
     require FOLDER_CONFIG.'/Widgets.php';
-
+    require FOLDER_CONFIG.'/Session.php';
+    
     /**
      * ------------------------------------------------------------
      * ALIAS CLASSI 'HELPERS'
@@ -91,7 +92,7 @@
      * ------------------------------------------------------------
      */
     
-    Token::set();
+    Token::set('public');
     
     /**
      * ------------------------------------------------------------

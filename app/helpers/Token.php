@@ -6,41 +6,34 @@
 	 * @author Davide Cesarano
 	 */
 	
+	use Core\Config;
 	use Helpers\Session;
-    use \Exception;
 	
-	class Token{
+	class Token {
         
 		/**
-		 * Genera token con relativa scadenza (30 minuti)
-         * salvandoli in una sessione
+		 * Genera token
 		 *
 		 * @return array
 		 */
-		public static function set(){
-            
-            $max_time = 30 * 60;
-            $token = self::get();
-            $token_time = self::get('token_time');
-            
-            if((($max_time + $token_time) <= time()) || empty($token)){
+		public static function set($name){
+
+            if(!Session::get('token_'.$name)){
                 
-                Session::set('token', md5(uniqid(mt_rand(), true)));
-                Session::set('token_time', time());
+                $origin = $_SERVER['REMOTE_ADDR'].$_SERVER['HTTP_USER_AGENT'];
+                $salt = random_string();
+                $hash = base64_encode(time() . hash_crypt($origin, $salt));
                 
+                Session::set('token_'.$name.'_salt', $salt);
+                Session::set('token_'.$name, $hash);
+            
             }
+            return Session::get('token_'.$name);
 		
         }
-		
-		/**
-		 * Ottiene il token creato e
-		 * salvato in una sessione
-		 *
-		 * @param string $name
-		 * @return string 
-		 */
-		public static function get($name = null){
-			return ($name) ? Session::get($name) : Session::get('token');
+        
+        public static function get($name){
+            return (Session::get('token_'.$name)) ? Session::get('token_'.$name) : false;
         }
 		
 		/**
@@ -48,10 +41,34 @@
 		 *
 		 * @param string $name
 		 * @param string $token
+		 * @param int|null $timelife
 		 * @return boolean 
 		 */
-		public static function is_valid($token){
-			return ($token === self::get());
+		public static function is_valid($name, $token, $timelife = null){
+
+            if(Session::get('token_'.$name) && Session::get('token_'.$name.'_salt') && $token != ''){
+                
+                $origin = $_SERVER['REMOTE_ADDR'].$_SERVER['HTTP_USER_AGENT'];
+                $salt = Session::get('token_'.$name.'_salt');
+                $hash = Session::get('token_'.$name);
+                
+                $token_decoded = base64_decode($token);
+                $token_time = substr($token_decoded, 0, 10);
+                $token_hash = substr($token_decoded, 10);
+                
+                if($timelife){
+                    
+                    $limit = time() - ($timelife * 24);
+                    return ($token_time > $limit) ? true : false;
+                    
+                }
+                
+                return ($token_hash === hash_crypt($origin, $salt)) ? true : false;
+                
+            }else{
+                return false;
+            }
+            
 		}        
 		
 	}

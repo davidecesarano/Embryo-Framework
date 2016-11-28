@@ -40,7 +40,7 @@
          */
         public static function write($log){
             
-            $name = date('Y_m_d').'.log';
+            $name = 'log_'.date('Y_m_d');
             $file = SITE_BASE_DIR.'/'.FOLDER_LOGS.'/'.$name;
             
             if(file_exists($file)){
@@ -208,7 +208,7 @@
                     self::write($report);
                     
                     // messaggio
-                    self::message('<strong>'.self::errorType($error['type']).'</strong>: '.$error['message'].' in <strong>'.$error['file'].'</strong> on line <strong>'.$error['line'].'</strong>');
+                    self::message(self::errorType($error['type']).' - '.$error['message']);
                 
             }
             

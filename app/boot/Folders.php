@@ -10,7 +10,9 @@
      * @const FOLDER_CONTROLLERS
      * @const FOLDER_CORE
      * @const FOLDER_HELPERS
+     * @const FOLDER_STORAGE
      * @const FOLDER_LOGS
+     * @const FOLDER_SESSIONS
      * @const FOLDER_MODELS
      * @const FOLDER_TEMPLATES
      * @const FOLDER_DASHBOARD
@@ -24,8 +26,10 @@
     define('FOLDER_CONTROLLERS', 'app/controllers');
     define('FOLDER_CORE', 'app/core');
     define('FOLDER_HELPERS', 'app/helpers');
-    define('FOLDER_LOGS', 'app/logs');
     define('FOLDER_MODELS', 'app/models');
+    define('FOLDER_STORAGE', 'app/storage');
+    define('FOLDER_LOGS', 'app/storage/logs');
+    define('FOLDER_SESSIONS', 'app/storage/sessions');
     define('FOLDER_TEMPLATES', 'app/templates');
     
     /**
