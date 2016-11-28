@@ -199,6 +199,24 @@
     }
     
     /**
+     * Riconosce se si tratta di una pagina
+     * interna o di un link esterno e restituisce
+     * il relativo valore 
+     *
+     * @param string $path 
+     * @return string
+     */
+    function to_url($path){
+        
+        if(strpos($path, '//') === false){
+            return site_url($path);
+        }else{
+            return $path;
+        }
+        
+    }
+    
+    /**
      * JSON 
      *
      * @param array $data
@@ -212,28 +230,26 @@
     }
     
     /**
-     * Crea una password criptata
+     * Crea una stringa criptata di 64 caratteri
      *
-     * @example hash_create('md5', 'password', 'token');
-     * @param string $algo
-     * @param string $password
-     * @param string $token
+     * @param string $string
+     * @param string $salt
      * @return string
      */
-    function password_crypt($password, $token){
+    function hash_crypt($string, $salt){
         
-        $ctx = hash_init('sha256', HASH_HMAC, $token);
-        hash_update($ctx, $password);
+        $ctx = hash_init('sha256', HASH_HMAC, $salt);
+        hash_update($ctx, $string);
         return hash_final($ctx);
         
     }
     
     /** 
-     * Crea un token di 32 caratteri
+     * Crea una stringa di 32 caratteri
      *
      * @return string
      */
-    function token(){
+    function random_string(){
         return bin2hex(openssl_random_pseudo_bytes(16));
     }
     
