@@ -1,8 +1,4 @@
 # Framework
 /vendor/
-app/storage/logs/*
-!app/storage/logs/.gitkeep
-app/storage/sessions/*
-!app/storage/sessions/.gitkeep  
 composer.lock
 alias.txt
