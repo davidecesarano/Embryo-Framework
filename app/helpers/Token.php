@@ -49,21 +49,27 @@
             if(Session::get('token_'.$name) && Session::get('token_'.$name.'_salt') && $token != ''){
                 
                 $origin = $_SERVER['REMOTE_ADDR'].$_SERVER['HTTP_USER_AGENT'];
-                $salt = Session::get('token_'.$name.'_salt');
-                $hash = Session::get('token_'.$name);
+                $salt_session = Session::get('token_'.$name.'_salt');
+                $token_session = Session::get('token_'.$name);
                 
-                $token_decoded = base64_decode($token);
+                $token_decoded = base64_decode($token_session);
                 $token_time = substr($token_decoded, 0, 10);
                 $token_hash = substr($token_decoded, 10);
                 
-                if($timelife){
-                    
-                    $limit = time() - ($timelife * 24);
-                    return ($token_time > $limit) ? true : false;
-                    
-                }
+                if($token_session == $token){
                 
-                return ($token_hash === hash_crypt($origin, $salt)) ? true : false;
+                    if($timelife){
+                        
+                        $limit = time() - ($timelife * 24);
+                        return ($token_time > $limit) ? true : false;
+                        
+                    }
+                    
+                    return ($token_hash == hash_crypt($origin, $salt_session)) ? true : false;
+                
+                }else{
+                    return false;
+                }
                 
             }else{
                 return false;
