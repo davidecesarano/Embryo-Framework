@@ -141,7 +141,10 @@
                 $execute = $this->stmt->execute();
                 if(!$execute){
                     throw new PDOException(0);
+                }else{
+                    return true;
                 }
+                
                 
             }catch(PDOException $e){
                 return $e;
@@ -264,7 +267,7 @@
             $this->values($data);
             
             // esegui
-            $this->execute();
+            return $this->execute();
         
         }
         
@@ -291,7 +294,7 @@
             $this->values($data);
 
             // esegui
-            $this->execute();
+            return $this->execute();
             
         }
         
