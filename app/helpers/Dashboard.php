@@ -52,14 +52,22 @@
             
             $database = Config::get('database', 'local.name');
             $setting_class = '\Models\Dashboard\Setting';
-
+            
+            $active = false;
             if(class_exists($setting_class) && $database != ''){
                 
                 $model = new \Models\Dashboard\Setting;
                 $option = $model->getOption($name);
-                return $option->value;
+                if($option){
+                    
+                    $active = true;
+                    return $option->value;
+                    
+                }
                 
-            }else{
+            }
+            
+            if(!$active){
                 
                 if(array_key_exists($name, static::$default_setting)){
                     return static::$default_setting[$name];
