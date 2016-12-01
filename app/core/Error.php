@@ -10,7 +10,7 @@
      */
     
     use Core\Config;
-    use Core\Controller;
+    use Core\View;
     use Helpers\Mail;
     
     class Error {		
@@ -308,14 +308,64 @@
         }
         
         /**
-         * Genera errore 404 
+         * Genera errore 403 - Forbidden 
          *
          * @param string|null $msg
          */
-        public static function getError404($msg = null){
+        public static function get403($msg = null){
             
-            $controller = new Controller;
-            $controller->loadError404($msg);
+            header($_SERVER["SERVER_PROTOCOL"].' 403 Forbidden');
+            header('Status: 403 Forbidden');
+            header('Connection: Close');
+            
+            // vista
+            $view = new View;
+            
+            // variabili seo
+            $view->title = 'Accesso negato - '.title();
+            $view->keywords = '';
+            $view->description = '';
+            
+            // messaggio
+            $view->type = 'Accesso negato!';
+            $view->message = $msg;
+            
+            // template
+            $view->render('error');
+            
+            // esci
+            exit;
+            
+        }
+        
+        /**
+         * Genera errore 404 - Not found
+         *
+         * @param string|null $msg
+         */
+        public static function get404($msg = null){
+            
+            header($_SERVER["SERVER_PROTOCOL"].' 404 Not Found');
+            header('Status: 404 Not Found');
+            header('Connection: Close');
+            
+            // vista
+            $view = new View;
+            
+            // variabili seo
+            $view->title = 'Pagina non trovata - '.title();
+            $view->keywords = '';
+            $view->description = '';
+            
+            // messaggio
+            $view->type = 'Pagina non trovata!';
+            $view->message = $msg;
+            
+            // template
+            $view->render('error');
+            
+            // esci
+            exit;
             
         }
         

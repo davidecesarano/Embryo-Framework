@@ -9,13 +9,6 @@
 	use Core\Controller;
 	
 	class Page extends Controller{
-		
-		/**
-		 * Attiva Controller
-		 */
-		public function __construct(){
-			parent::__construct();
-		}
         
         /**
 		 * Home Page

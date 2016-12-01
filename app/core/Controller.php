@@ -12,6 +12,7 @@
     
     use \Exception;
     use Core\Config;
+    use Core\Error;
     use Core\View;
     
     class Controller{
@@ -78,21 +79,7 @@
          * @param mixed $message
          */
         public function loadError404($message = null){
-            
-            // variabili seo
-            $this->view->title = 'Pagina non disponibile - '.title();
-            $this->view->keywords = '';
-            $this->view->description = '';
-            
-            // messaggio
-            $this->view->message = $message;
-            
-            // template
-            $this->loadView('404');
-            
-            // esci
-            exit;
-        
+            Error::get404($message);
         }
     
     }
