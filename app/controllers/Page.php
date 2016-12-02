@@ -21,7 +21,7 @@
 			$this->view->description = description();
 			
 			// template
-			$this->loadVieW('home');
+			$this->loadView('home');
 			
 		}
         
@@ -36,7 +36,7 @@
 			$this->view->description = description();
 			
 			// template
-			$this->loadVieW('pages/single');
+			$this->loadView('pages/single');
 			
 		}
         
