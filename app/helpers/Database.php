@@ -8,9 +8,15 @@
     
     use PDO;
     use PDOException;
+    use Core\Config;
     use Core\Error;
     
     class Database {
+        
+        /**
+         * @var array $instance
+         */
+        private static $instance = [];
         
         /**
          * @var obj $dbh 
@@ -23,17 +29,14 @@
         private $stmt;
         
         /**
-         * @var string $sql 
-         */
-        private $sql;
-        
-        /**
          * Connessione al database MySQL
          *
          * @param array $database
          * @return obj
          */
-        public function __construct($database = array()){
+        public function __construct($config_name){
+            
+            $database = Config::get('database', $config_name);
             
             if(is_array($database)){
                 
@@ -68,6 +71,22 @@
         }
         
         /**
+         * Crea e/o invoca una connessione 
+         *
+         * @param string|null $name
+         */
+        public static function connection($name = null){
+            
+            $name = ($name) ? $name : 'local';
+            
+            if(!isset(self::$instance[$name])){
+                self::$instance[$name] = new Database($name);
+            }
+            return self::$instance[$name];
+            
+        }
+        
+        /**
          * Esegue la query
          *
          * @example $this->query('SELECT * FROM table')
@@ -76,8 +95,7 @@
          */
         public function query($query){
             
-            $this->sql = $query;
-            $this->stmt = $this->dbh->prepare($this->sql);
+            $this->stmt = $this->dbh->prepare($query);
             return $this;
             
         }

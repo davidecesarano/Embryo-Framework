@@ -24,8 +24,8 @@
          * @param array $database
          * @return object $this->db
          */		
-        public function database($database){
-            $this->db = new Database($database);
+        public function database($database = null){
+            $this->db = Database::connection($database);
         }
         
         /**
