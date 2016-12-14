@@ -93,7 +93,7 @@
             }elseif($this->config['driver'] == 'database'){
                 
                 
-                $this->db = new Database(Config::get('database', 'local'));
+                $this->db = Database::connection();
                 $this->table = $this->config['table'];
                 
                 
