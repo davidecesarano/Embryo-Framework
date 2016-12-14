@@ -12,31 +12,9 @@
      * Y = Anno (es. 2016)
      *
      * @author Davide Cesarano
-     * @todo da rivedere
      */
     
-    use DateTime;
-    use DateTimeZone;
-    
-    class Date extends DateTime {
-        
-        public static function get($date = null){
-            
-            setlocale(LC_TIME, 'ita', 'it_IT.utf8');
-             
-            $datetimezone = new DateTimeZone('Europe/Rome');
-            
-            if($date){
-                $datetime = new DateTime($date);
-            }else{
-                $datetime = new DateTime();
-            }
-            return $datetime->setTimezone($datetimezone);
-        }
-        
-        public function format($format){
-            return $this->format($format);
-        }
+    class Date {
         
         /**
          * Crea diversi formati di date 
