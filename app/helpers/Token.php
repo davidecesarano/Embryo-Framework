@@ -1,26 +1,26 @@
 <?php namespace Helpers;
 
-	/**
-	 * Token
+    /**
+     * Token
      *
-	 * @author Davide Cesarano
-	 */
-	
-	use Core\Config;
-	use Helpers\Session;
-	
-	class Token {
+     * @author Davide Cesarano
+     */
+    
+    use Helpers\Session;
+    
+    class Token {
         
-		/**
-		 * Genera token
-		 *
-		 * @return array
-		 */
-		public static function set($name){
+        /**
+         * Genera token
+         *
+         * @param string $name
+         * @return array
+         */
+        public static function set($name){
 
             if(!Session::get('token_'.$name)){
                 
-                $origin = $_SERVER['REMOTE_ADDR'].$_SERVER['HTTP_USER_AGENT'];
+                $origin = self::origin();
                 $salt = random_string();
                 $hash = base64_encode(time() . hash_crypt($origin, $salt));
                 
@@ -29,26 +29,41 @@
             
             }
             return Session::get('token_'.$name);
-		
+        
         }
         
+        /**
+         * Ottiene contenuto token 
+         *
+         * @param string $name
+         * @return string|boolean 
+         */
         public static function get($name){
             return (Session::get('token_'.$name)) ? Session::get('token_'.$name) : false;
         }
-		
-		/**
-		 * Verifica se il token è valido
-		 *
-		 * @param string $name
-		 * @param string $token
-		 * @param int|null $timelife
-		 * @return boolean 
-		 */
-		public static function is_valid($name, $token, $timelife = null){
+        
+        /**
+         * Ottiene un valore per la composizione del token 
+         *
+         * @return string 
+         */
+        public static function origin(){
+            return $_SERVER['REMOTE_ADDR'].user_agent();
+        }
+        
+        /**
+         * Verifica se il token è valido
+         *
+         * @param string $name
+         * @param string $token
+         * @param int|null $timelife
+         * @return boolean 
+         */
+        public static function is_valid($name, $token, $timelife = null){
 
             if(Session::get('token_'.$name) && Session::get('token_'.$name.'_salt') && $token != ''){
                 
-                $origin = $_SERVER['REMOTE_ADDR'].$_SERVER['HTTP_USER_AGENT'];
+                $origin = self::origin();
                 $salt_session = Session::get('token_'.$name.'_salt');
                 $token_session = Session::get('token_'.$name);
                 
@@ -75,6 +90,6 @@
                 return false;
             }
             
-		}        
-		
-	}
+        }        
+        
+    }
