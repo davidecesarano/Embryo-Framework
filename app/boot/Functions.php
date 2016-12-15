@@ -24,6 +24,21 @@
     }
     
     /**
+     * Informazioni sul browser del client 
+     *
+     * @return string 
+     */
+    function user_agent(){
+        
+        if(isset($_SERVER['HTTP_USER_AGENT'])){
+            return $_SERVER['HTTP_USER_AGENT'];
+        }else{
+            return 'Other';
+        }
+        
+    }
+    
+    /**
      * Ambiente di sviluppo
      */
     function enviroment(){
@@ -63,10 +78,6 @@
             
         }
         
-    }
-    
-    function maintenance(){
-            
     }
     
     /**
