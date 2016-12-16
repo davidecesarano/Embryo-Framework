@@ -12,9 +12,9 @@
     class ArrObj {
         
         /**
-		 * @var array $vars
-		 */
-		public $array = array();
+         * @var array $vars
+         */
+        public $array = array();
 
         /**
          * Crea array
@@ -35,35 +35,39 @@
         }        
         
         /**
-         * Aggiunge campo all'array 
+         * Aggiunge elemento all'array 
+         *
+         * @param string $value
+         * @return array 
+         */
+        public function push($value){
+            array_push($this->array, $value);
+        }
+        
+        /**
+         * Aggiunge array all'array 
          *
          * @param array $array 
          * @return array 
          */
-        public function push($array){
+        public function pushArray($array){
             
-            foreach($this->array as $key => $value){
+            if(!$this->is_multi()){
+                $this->array = array_merge_recursive($this->array, $array);
+            }else{
                 
-                /*if(is_array($value)){
-                    
+                foreach($this->array as $key => $value){
                     foreach($array as $k => $v){
                         $this->array[$key][$k] = $v;
                     }
-                    
-                }else{*/
-                    
-                    foreach($array as $k => $v){
-                        $this->array[$k] = $v;
-                    }
-                    
-                //}
-            
+                }
+                
             }
-  
+            
         }
         
         /**
-         * Aggiunge campo all'array da un oggetto (classe) 
+         * Aggiunge elemento all'array da un oggetto 
          * esterno il cui parametro della funzione è 
          * contenuto nell'array
          *
@@ -73,14 +77,40 @@
          * @param mixed $obj
          * @return array
          */
-        public function pushObjectInArray($name, $class, $method, $obj){
+        public function pushInnerObject($name, $class, $method, $param){
             
             foreach($this->array as $key => $value){
+                
                 if(is_array($value)){
-                    $this->array[$key][$name] = $class->{$method}($value[$obj]);  
+                    $this->array[$key][$name] = $class->{$method}($value[$param]);  
                 }else{
-                    $this->array[$name] = $class->{$method}($value[$obj]);
+                    $this->array[$name] = $class->{$method}($value[$param]);
                 }
+                
+            }
+            
+        }
+        
+        /**
+         * Aggiunge elemento all'array da un oggetto 
+         * esterno
+         *
+         * @param mixed $name 
+         * @param object $class
+         * @param string $method 
+         * @param mixed $obj
+         * @return array
+         */
+        public function pushOuterObject($name, $class, $method, $param = null){
+            
+            foreach($this->array as $key => $value){
+                
+                if(is_array($value)){
+                    $this->array[$key][$name] = $class->{$method}($param);  
+                }else{
+                    $this->array[$name] = $class->{$method}($param);
+                }
+                
             }
             
         }
@@ -125,23 +155,6 @@
         
         }
         
-        public function pagination($page){
-            
-            $total = count($this->array); //total items in array    
-            $limit  = 4; //per page    
-            $totalPages  = ceil($total/$limit); //calculate total pages
-            $page = max($page, 1); //get 1 page when $_GET['page'] <= 0
-            $page = min($page, $totalPages); //get last page when $_GET['page'] > $totalPages
-            $offset = ($page - 1) * $limit;
-            if($offset < 0 ) $offset = 0;
-            return array_slice($this->array, $offset, $limit);
-            
-        }
-        
-        public function slice($start, $end){
-            return array_slice($this->array, $start, $end);
-        }
-        
         /**
          * Verifica se l'array è multidimensionale
          *
@@ -149,9 +162,31 @@
          */
         public function is_multi(){
             
-            rsort($this->array);
-            return isset($this->array[0]) && is_array($this->array[0]);
+            if(count($this->array) == count($this->array, COUNT_RECURSIVE)){
+                return false;
+            }else{
+                return true;
+            }
             
+        }
+        
+        /**
+         * Restituisce array singolo da array
+         * multidimensionale con una chiave 
+         *
+         * @return array 
+         */
+        public function getSingle(){
+            
+            if(count($this->array) == 1){
+               
+                $key = array_keys($this->array);
+                return $this->array[$key[0]];
+            
+            }else{
+                return $this->array;
+            }
+        
         }
         
         /**
@@ -170,21 +205,13 @@
          * @return object/array 
          */
         public function getObjects(){
-            return json_decode(json_encode($this->array));
-        }
-        
-        //
-        public function getSingle(){
             
-            if(count($this->array) == 1){
-               
-                $key = array_keys($this->array);
-                return $this->array[$key[0]];
-            
+            if($this->is_multi()){
+                return json_decode(json_encode($this->array));
             }else{
-                return $this->array;
+                return (object) $this->array;
             }
-        
+            
         }
         
     }
