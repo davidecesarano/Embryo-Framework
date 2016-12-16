@@ -17,7 +17,7 @@
         "mnsami/composer-custom-directory-installer": "1.1.*",
         "components/bootstrap": "3.3.7",
         "components/font-awesome": "4.7.0",
-        "datatables/datatables": "1.10.12",
+        "datatables/datatables": "1.10.13",
         "davidecesarano/gapi": "dev-master",
         "phpmailer/phpmailer": "dev-master",
         "firephp/firephp-core": "dev-master"
