@@ -1,14 +1,14 @@
 <?php namespace Helpers;
 
-	/** 
-	 * File 
-	 *
-	 * @author Davide Cesarano
-	 */
-	
+    /** 
+     * File 
+     *
+     * @author Davide Cesarano
+     */
+    
     use Helpers\ArrObj;
     
-	class File {
+    class File {
         
         /**
          * @var array $file
@@ -82,17 +82,23 @@
          */
         public function checkName($name){
             
-            // operazioni sul nome del file
-            $extension = $this->getExtension($name);
-            $name = $this->removeExtension($extension, $name);
-            $name = str_replace(' ', '-', $name);
-            $name = str_replace('.', '-', $name);
-            $name = preg_replace('/[^A-Za-z0-9\-_]/', '', $name);
+            if($name != ''){
             
-            // controllo esistenza
-            $file_path = $this->destination.'/'.$name.$extension;
+                // operazioni sul nome del file
+                $extension = $this->getExtension($name);
+                $name = $this->removeExtension($extension, $name);
+                $name = str_replace(' ', '-', $name);
+                $name = str_replace('.', '-', $name);
+                $name = preg_replace('/[^A-Za-z0-9\-_]/', '', $name);
+                
+                // controllo esistenza
+                $file_path = $this->destination.'/'.$name.$extension;
+                
+                return (!file_exists($file_path)) ? $name.$extension : $name.'_'.rand().$extension;
             
-            return (!file_exists($file_path)) ? $name.$extension : $name.'_'.rand().$extension;
+            }else{
+                return '';
+            }
             
         }
         
@@ -112,7 +118,9 @@
                 for($i=0; $i<=count($this->file['name']); $i++){
                     
                     $name = $this->checkName($this->file['name'][$i]);
-                    move_uploaded_file($this->file['tmp_name'][$i], $this->destination.'/'.$name);
+                    if($name != ''){
+                        move_uploaded_file($this->file['tmp_name'][$i], $this->destination.'/'.$name);
+                    }
                     
                 }
                 
@@ -120,7 +128,9 @@
                 
                 $name = $this->checkName($this->file['name']);
                 $this->name = $name;
-                move_uploaded_file($this->file['tmp_name'], $this->destination.'/'.$name);
+                if($name != ''){
+                    move_uploaded_file($this->file['tmp_name'], $this->destination.'/'.$name);
+                }
                 
             }
         
