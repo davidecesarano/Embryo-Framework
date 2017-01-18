@@ -30,8 +30,8 @@
          * @var array $filters
          */
         private $filters = array(
-            ':url' => '([A-Za-z0-9-\/_]+)',
-            ':id'  => '([0-9]+)'
+            ':url'  => '([A-Za-z0-9-\/_.]+)',
+            ':id'   => '([0-9]+)'
         );
         
         /**
@@ -796,7 +796,7 @@
             
             $request_uri = $_SERVER['REQUEST_URI'];
             $query_string = $_SERVER['QUERY_STRING'];
-            $user_agent = $_SERVER['HTTP_USER_AGENT'];
+            $user_agent = user_agent();
 
             if(
                 stripos($request_uri, 'eval(') || 
@@ -887,11 +887,11 @@
          * @param string $action 
          * @param array|null $params
          */
-        public static function redirect($name, $action, $params = null){
+        public static function redirect($controller, $action, $params = null){
             
             $router = new Router;
-            $router->getController($name);
-            $router->getAction($action, $params);
+            $router->getClassController($controller);
+            $router->getAction($action, $params = null);
             exit;
             
         }
