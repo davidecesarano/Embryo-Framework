@@ -36,9 +36,8 @@
         /**
          * Crea chiave/valore nell'array $_SESSION
          *
-         * @param string $key (es. = 'loggedIn')
-         * @param boolean $value (es. = true)
-         * @return array $_SESSION[$key]
+         * @param mixed $key
+         * @param mixed $value
          */
         public static function set($key, $value){
             $_SESSION[$key] = $value;
@@ -47,11 +46,21 @@
         /**
          * Ottiene chiave/valore dell'array $_SESSION
          *
-         * @param string $key (es. = 'loggedIn')
-         * @return array $_SESSION[$key]
+         * @param mixed $key
+         * @return string
          */
         public static function get($key){
             if(isset($_SESSION[$key])) return $_SESSION[$key];
+        }
+        
+        /**
+         * Verifica se la chiave dell'array $_SESSION esiste
+         *
+         * @param mixed $key
+         * @return boolean
+         */
+        public static function exists($key){
+            return (isset($_SESSION[$key])) ? true : false;
         }
         
         /**
@@ -59,7 +68,6 @@
          * alla pagina login
          * 
          * @param string|null $redirect
-         * @return void
          */
         public static function destroy($redirect = null){
             
