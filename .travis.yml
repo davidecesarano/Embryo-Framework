@@ -9,4 +9,7 @@ php:
   - hhvm
   - nightly
 
+before_script:
+  - composer install
+  
 script: phpunit index.php
