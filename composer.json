@@ -19,8 +19,8 @@
         "components/font-awesome": "4.7.0",
         "datatables/datatables": "1.10.13",
         "davidecesarano/gapi": "dev-master",
-        "phpmailer/phpmailer": "dev-master",
-        "firephp/firephp-core": "dev-master"
+        "phpmailer/phpmailer": "v5.2.22",
+        "phpunit/phpunit": "5.7.8"
     },
     "autoload": {
         "psr-4": {
@@ -52,7 +52,7 @@
             "./vendor/libs/{$name}": [
                 "davidecesarano/gapi", 
                 "phpmailer/phpmailer",
-                "firephp/firephp-core"
+                "phpunit/phpunit"
             ]
         }
     },
