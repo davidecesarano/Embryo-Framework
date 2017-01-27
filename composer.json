@@ -19,8 +19,7 @@
         "components/font-awesome": "4.7.0",
         "datatables/datatables": "1.10.13",
         "davidecesarano/gapi": "dev-master",
-        "phpmailer/phpmailer": "v5.2.22",
-        "phpunit/phpunit": "5.7.8"
+        "phpmailer/phpmailer": "v5.2.22"
     },
     "autoload": {
         "psr-4": {
@@ -51,8 +50,7 @@
         "installer-paths": {
             "./vendor/libs/{$name}": [
                 "davidecesarano/gapi", 
-                "phpmailer/phpmailer",
-                "phpunit/phpunit"
+                "phpmailer/phpmailer"
             ]
         }
     },
