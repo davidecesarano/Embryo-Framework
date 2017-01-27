@@ -11,5 +11,10 @@ php:
 
 before_script:
   - composer install
+  - composer require atoum/atoum
   
-script: phpunit index.php
+script: vendor/bin/atoum
+
+notifications:
+  on_success: never
+  on_failure: always
