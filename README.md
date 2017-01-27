@@ -1,5 +1,5 @@
 # Embryo
-[![Dependency Status](https://www.versioneye.com/user/projects/5814b830d33a7126ff24ee66/badge.svg?style=flat-square)](https://www.versioneye.com/user/projects/5814b830d33a7126ff24ee66) [![Build Status](https://travis-ci.org/davidecesarano/Embryo-Framework.svg?branch=master)](https://travis-ci.org/davidecesarano/Embryo-Framework)
+[![Packagist](https://img.shields.io/packagist/v/davidecesarano/embryo-framework.svg?style=flat-square)](https://packagist.org/packages/davidecesarano/embryo-framework) [![Dependency Status](https://www.versioneye.com/user/projects/5814b830d33a7126ff24ee66/badge.svg?style=flat-square)](https://www.versioneye.com/user/projects/5814b830d33a7126ff24ee66) [![Travis](https://img.shields.io/travis/davidecesarano/Embryo-Framework.svg?style=flat-square)](https://travis-ci.org/davidecesarano/Embryo-Framework)
 
 ### Cos'è Embryo?
 Embryo è un framework MVC per lo sviluppo di applicazioni web in PHP.
