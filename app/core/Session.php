@@ -51,16 +51,18 @@
             );
             
             // imposta parametri da php.ini
-            ini_set('session.auto_start', 0);
-            ini_set('session.gc_probability', 1);
-            ini_set('session.gc_divisor', 100);
-            ini_set('session.save_path', $this->config['path']);
-            ini_set('session.gc_maxlifetime', $this->config['timelife']);
-            ini_set('session.use_cookies', 1);
-            ini_set('session.use_only_cookies', 1);
-            ini_set('session.use_trans_sid', 0);
-            ini_set('session.hash_function', 1);
-            ini_set('session.hash_bits_per_character', 5);
+            ini_set('session.auto_start',               0);
+            ini_set('session.gc_probability',           1);
+            ini_set('session.gc_divisor',               100);
+            ini_set('session.save_path',                $this->config['path']);
+            ini_set('session.gc_maxlifetime',           $this->config['timelife']);
+            ini_set('session.referer_check',            '');
+            ini_set('session.use_cookies',              1);
+            ini_set('session.use_only_cookies',         1);
+            ini_set('session.use_trans_sid',            0);
+            ini_set('session.hash_function',            1);
+            ini_set('session.hash_bits_per_character',  5);
+            ini_set('session.cookie_httponly',          1);
             
             // disabilita client/proxy caching
             session_cache_limiter('nocache');
