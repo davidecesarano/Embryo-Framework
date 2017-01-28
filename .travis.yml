@@ -9,9 +9,8 @@ php:
 
 before_script:
   - composer install
-  - composer require atoum/atoum
   
-script: vendor/bin/atoum
+script: phpunit --stderr
 
 notifications:
   on_success: never
