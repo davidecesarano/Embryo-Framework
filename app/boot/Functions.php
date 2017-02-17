@@ -58,7 +58,17 @@
         
     }
     
-     /**
+    /**
+     * Fuso orario
+     */
+    function setTimezone(){
+        
+        date_default_timezone_set(Config::get('app', 'time.zone'));
+        setlocale(LC_TIME, Config::get('app', 'time.locale'), Config::get('app', 'time.encode'));
+        
+    }
+    
+    /**
      * Alias per le classi 'Helpers' utilizzate
      * nei file del template
      *
