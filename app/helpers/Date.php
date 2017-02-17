@@ -25,9 +25,6 @@
          */
         public static function create($date, $output){
             
-            // lingua
-            setlocale(LC_TIME, 'ita', 'it_IT.utf8');
-            
             // output
             switch($output){
                 case 'l, d F Y':
