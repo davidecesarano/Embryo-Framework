@@ -9,6 +9,7 @@
      *
      * @author Davide Cesarano 
      */
+    use \Exception;
     use Core\Config;
     use Helpers\Database;
     
@@ -30,12 +31,20 @@
         protected $table;
         
         /**
+         * @var string $path 
+         */
+        protected $path;
+        
+        /**
          * Avvia handler e imposta parametri
          */
         public function __construct(){
             
             // configurazioni
             $this->config = Config::get('session');
+            
+            // cartella
+            $this->path = SITE_BASE_DIR.'/'.FOLDER_SESSIONS;
             
             // verifiche sulle configurazioni
             $this->init();
@@ -54,7 +63,7 @@
             ini_set('session.auto_start',               0);
             ini_set('session.gc_probability',           1);
             ini_set('session.gc_divisor',               100);
-            ini_set('session.save_path',                $this->config['path']);
+            ini_set('session.save_path',                $this->path);
             ini_set('session.gc_maxlifetime',           $this->config['timelife']);
             ini_set('session.referer_check',            '');
             ini_set('session.use_cookies',              1);
@@ -86,7 +95,7 @@
             
             if($this->config['driver'] == 'files'){
                 
-                if(!is_dir($this->config['path'])){
+                if(!is_dir($this->path)){
                     throw new Exception("Configurazione non valida!");
                 }else{
                     return true;
@@ -153,7 +162,7 @@
             
             if($this->config['driver'] == 'files'){
                 
-                $file = $this->config['path'].'/'.$this->config['name'].'_'.$id;
+                $file = $this->path.'/'.$this->config['name'].'_'.$id;
                 if(file_exists($file)){
                     return file_get_contents($file);
                 }
@@ -184,7 +193,7 @@
 
             if($this->config['driver'] == 'files'){
             
-                $file = $this->config['path'].'/'.$this->config['name'].'_'.$id;
+                $file = $this->path.'/'.$this->config['name'].'_'.$id;
                 return file_put_contents($file, $data) === false ? false : true;
                 
             }elseif($this->config['driver'] == 'database'){
@@ -219,7 +228,7 @@
             
             if($this->config['driver'] == 'files'){
                 
-                $file = $this->config['path'].'/'.$this->config['name'].'_'.$id;
+                $file = $this->path.'/'.$this->config['name'].'_'.$id;
                 if(file_exists($file)){
                     @unlink($file);
                 }
@@ -250,7 +259,7 @@
             
             if($this->config['driver'] == 'files'){
             
-                $files = $this->config['path'].'/'.$this->config['name'].'_*';
+                $files = $this->path.'/'.$this->config['name'].'_*';
                 foreach(glob($files) as $file){
                     if(filemtime($file) + $maxlifetime < time() && file_exists($file)){
                         unlink($file);
