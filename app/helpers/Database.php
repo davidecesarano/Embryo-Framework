@@ -36,7 +36,7 @@
          */
         public function __construct($config_name){
             
-            $database = Config::get('database', $config_name);
+            $database = Config::$files['database'][$config_name];
             
             if(is_array($database)){
                 
