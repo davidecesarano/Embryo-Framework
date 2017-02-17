@@ -7,18 +7,20 @@
      * @author Davide Cesarano
      */
     
-    use Core\Config;
-    
-    Config::set('alias', array(
+    return [
         
-        /**
-         * Helpers
-         */
-        'helpers' => array(
-            'Date'    => 'Helpers\Date',
-            'Session' => 'Helpers\Session',
-            'Token'   => 'Helpers\Token',
-            'Widget'  => 'Helpers\Widget'
-        )
+        'alias' => [
+        
+            /**
+             * Helpers
+             */
+            'helpers' => [
+                'Date'     => 'Helpers\Date',
+                'Session'  => 'Helpers\Session',
+                'Token'    => 'Helpers\Token',
+                'Widget'   => 'Helpers\Widget'
+            ]
+            
+        ]
     
-    ));
+    ];

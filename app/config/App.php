@@ -5,40 +5,46 @@
      *
      * @author Davide Cesarano
      */
-     
-    use Core\Config;
     
-    Config::set('app', array(
+    return [
         
-        /**
-         * Temi
-         */
-        'template' => array(
-            'public' => 'default',
-            'admin'  => 'default'
-        ),
+        'app' => [
+            
+            /**
+             * Configurazioni: files|database
+             */
+            'driver' => 'files',
+            
+            /**
+             * Temi
+             */
+            'template' => [
+                'public' => 'default',
+                'admin'  => 'default'
+            ],
+            
+            /**
+             * Meta tag
+             */
+            'meta' => [
+                'title'       => 'Embryo',
+                'keywords'    => '',
+                'description' => '',
+                'language'    => 'it',
+                'charset'     => 'utf-8',
+                'robots'      => 'index, follow',
+                'author'      => ''
+            ],
+            
+            /**
+             * Time
+             */
+            'time' => [
+                'zone'   => 'Europe/Rome',
+                'locale' => 'ita',
+                'encode' => 'it_IT.utf8'
+            ]
         
-        /**
-         * Meta tag
-         */
-        'meta' => array(
-            'title'       => 'Embryo',
-            'keywords'    => '',
-            'description' => '',
-            'language'    => 'it',
-            'charset'     => 'utf-8',
-            'robots'      => 'index, follow',
-            'author'      => ''
-        ),
-        
-        /**
-         * Timezone
-         */
-        'timezone' => 'Europe/Rome',
-        
-        /**
-         * Modalità "in manutenzione"
-         */
-        'maintenance' => 0
-        
-    ));
+        ]
+    
+    ];

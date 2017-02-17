@@ -6,19 +6,18 @@
      * @author Davide Cesarano
      */
      
-    use Core\Config;
-    
-    /**
-     * Database
-     */
-    Config::set('database', array(
+    return [
         
-        'local' => array(
-            'engine'   => 'mysql',
-            'host'     => 'localhost',
-            'name'     => '',
-            'user'     => '',  
-            'password' => ''
-        )
+        'database' => [
+        
+            'local' => [
+                'engine'   => 'mysql',
+                'host'     => '',
+                'name'     => '',
+                'user'     => '',  
+                'password' => ''
+            ]
+            
+        ]
 
-    ));
+    ];

@@ -5,28 +5,27 @@
      *
      * @author Davide Cesarano
      */
-     
-    use Core\Config;
+
+    return [
     
-    /**
-     * API
-     */
-    Config::set('api', array(
+        'api' => [
         
-        /**
-         * Google Analytics
-         */
-        'ga' => array(
-            'profile_id'      => '',
-            'service_account' => '',
-            'service_key'     => ''
-        ),
+            /**
+             * Google Analytics
+             */
+            'ga' => [
+                'profile_id'      => '',
+                'service_account' => '',
+                'service_key'     => ''
+            ],
+            
+            /**
+             * Facebook
+             */
+            'facebook' => [
+                'app_id' => ''
+            ]
+            
+        ]
         
-        /**
-         * Facebook
-         */
-        'facebook' => array(
-            'app_id' => ''
-        )
-        
-    ));
+    ];

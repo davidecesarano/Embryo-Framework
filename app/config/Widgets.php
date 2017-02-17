@@ -7,10 +7,10 @@
      * @author Davide Cesarano 
      */
     
-    use Core\Config;
-    
-    Config::set('widgets', array(
+    return [ 
         
-    ));
-    
-    
+        'widgets' => [
+            
+        ]
+        
+    ];

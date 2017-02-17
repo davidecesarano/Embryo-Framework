@@ -7,8 +7,10 @@
      * @author Davide Cesarano 
      */
     
-    use Core\Config;
-    
-    Config::set('middlewares', array(
+    return [ 
         
-    ));
+        'middlewares' => [
+            
+        ]
+        
+    ];

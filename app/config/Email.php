@@ -6,18 +6,17 @@
      * @author Davide Cesarano 
      */
     
-    use Core\Config;
-    
-    Config::set('email', array(
+    return [
         
-        /**
-         * Administrator 
-         */
-        'administrator' => array(
-            'host'     => '',
-            'port'     => '',
-            'username' => '',
-            'password' => ''
-        )
+        'email' => [
+
+            'administrator' => [
+                'host'     => '',
+                'port'     => '',
+                'username' => '',
+                'password' => ''
+            ]
+            
+        ]
     
-    ));
+    ];

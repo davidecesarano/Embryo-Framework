@@ -10,12 +10,14 @@
      * @author Davide Cesarano
      */
      
-    use Core\Config;
-    
-    Config::set('session', array(
-        'driver'    => 'files',
-        'name'      => 'embryo_sess',
-        'path'      => SITE_BASE_DIR.'/'.FOLDER_SESSIONS,
-        'timelife'  => 3600,
-        'table'     => 'mvc_sessions'
-    ));
+    return [
+        
+        'session' => [
+            'driver'    => 'files',
+            'name'      => 'embryo_sess',
+            'timelife'  => 3600,
+            'table'     => ''
+            
+        ]
+        
+    ];

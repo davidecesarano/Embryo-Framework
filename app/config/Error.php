@@ -6,12 +6,13 @@
      * @author Davide Cesarano
      */
      
-    use Core\Config;
-    use Helpers\Dashboard;
+    return [
+        
+        'error' => [
+            'send_email'    => 0,
+            'send_email_to' => '',
+            'display'       => 1,
+            'debug'         => 'development'
+        ]
     
-    Config::set('error', array(
-        'email'    => false,
-        'email_to' => '',
-        'display'  => true,
-        'debug'    => 'development'
-    ));
+    ];
