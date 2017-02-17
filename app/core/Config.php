@@ -9,13 +9,29 @@
      */
     
     use \Exception;
+    use Helpers\Database;
     
     class Config {
         
         /**
-         * @var array $settings 
+         * @var array $files 
          */
-        protected static $settings = array();
+        public static $files = array();
+        
+        /**
+         * @var array $database 
+         */
+        public static $database = array();
+        
+        /**
+         * @var array $setting 
+         */
+        public static $setting = array();
+        
+        /**
+         * @var string $model
+         */
+        protected static $model = '\Models\Dashboard\Setting';
         
         /**
          * Setta un'impostazione
@@ -24,22 +40,33 @@
          * @param array $values
          * @return array
          */
-        public static function set($name, $values){
+        public static function set(){
             
-            static::$settings[$name] = array();
-            foreach($values as $key => $value){
+            // recupera configurazioni dai file
+            foreach(glob(FOLDER_CONFIG.'/*.php') as $file) {
+                static::$files += include $file;
+            }
+            
+            if(static::$files['app']['driver'] == 'files'){
                 
-                if(!is_array($value)){
-                    static::$settings[$name][$key] = $value;
+                // configurazioni file
+                static::$setting = static::$files;
+            
+            }elseif(static::$files['app']['driver'] == 'database'){
+                
+                if(class_exists(static::$model)){
+                    
+                    // configurazioni database
+                    $model = new static::$model;
+                    static::$database = $model->listAllOptions();
+                    static::$setting = array_replace_recursive(static::$files, static::$database);
+                    
                 }else{
-                    
-                    foreach($value as $k => $v){
-                        static::$settings[$name][$key][$k] = $v;
-                    }
-                    
+                    throw new Exception("La classe <strong>".static::$model."</strong> non esiste!");
                 }
                 
-                
+            }else{
+                throw new Exception("Il driver delle configurazioni non &egrave; impostato correttamente!");
             }
             
         }
@@ -57,8 +84,8 @@
          * @throws exception
          */
         public static function get($name, $value = null){
-            
-            if(isset(static::$settings[$name])){
+
+            if(isset(static::$setting[$name])){
                 
                 if($value){
                     
@@ -68,10 +95,10 @@
                         $array = $segment[0];
                         $key = $segment[1];
                         
-                        if(isset(static::$settings[$name][$array])){
+                        if(isset(static::$setting[$name][$array])){
                         
-                            if(array_key_exists($key, static::$settings[$name][$array])){
-                                return static::$settings[$name][$array][$key];
+                            if(array_key_exists($key, static::$setting[$name][$array])){
+                                return static::$setting[$name][$array][$key];
                             }else{
                                 throw new Exception("L'impostazione <strong>$key</strong> dell'impostazione di <strong>$array</strong> non esiste!");
                             }
@@ -82,8 +109,8 @@
                         
                     }else{
                         
-                        if(array_key_exists($value, static::$settings[$name])){
-                            return static::$settings[$name][$value];
+                        if(array_key_exists($value, static::$setting[$name])){
+                            return static::$setting[$name][$value];
                         }else{
                             throw new Exception("L'impostazione <strong>$value</strong> per la configurazione <strong>$name</strong> non esiste!");
                         }
@@ -92,13 +119,13 @@
                     }
                     
                 }else{
-                    return static::$settings[$name];
+                    return static::$setting[$name];
                 }
                 
             }else{
                 throw new Exception("La configurazione <strong>$name</strong> non esiste!");
             }
-        
+            
         }
         
     }
