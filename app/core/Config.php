@@ -29,6 +29,11 @@
         public static $setting = array();
         
         /**
+         * @var string $table
+         */
+        protected static $table = 'mvc_options';
+        
+        /**
          * @var string $model
          */
         protected static $model = '\Models\Dashboard\Setting';
@@ -125,6 +130,20 @@
             }else{
                 throw new Exception("La configurazione <strong>$name</strong> non esiste!");
             }
+            
+        }
+        
+        /**
+         * Verifica se esiste un'installazione della Dashboard 
+         *
+         * @return boolean 
+         */
+        public static function dashboard_exists(){
+            
+            $table = static::$table;
+            $db = Database::connection();
+            $obj = $db->query("SHOW TABLES LIKE '$table'")->rowCount();
+            return ($obj > 0) ? true : false;
             
         }
         
