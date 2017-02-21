@@ -156,6 +156,30 @@
         }
         
         /**
+         * Cerca elemento simile (LIKE %value%) nel valore di un array
+         *
+         * @param mixed $key 
+         * @param mixed $value
+         * @return array 
+         */
+        public function search($key, $value){
+            
+            $arr = array();
+            
+            if($this->is_multi()){
+                
+                foreach ($this->array as $k => $v) {
+                    if(stripos($v[$key], $value) !== FALSE) {
+                        array_push($arr, $v);
+                    }
+                }
+            
+            }
+            return $arr;
+        
+        }
+        
+        /**
          * Verifica se l'array è multidimensionale
          *
          * @return boolean
