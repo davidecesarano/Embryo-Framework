@@ -54,7 +54,6 @@
                 
                 // crea
                 touch($file);
-                chmod($file, 0777);
                 file_put_contents($file, $log);
                 
                 // email
