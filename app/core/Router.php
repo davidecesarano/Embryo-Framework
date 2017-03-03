@@ -236,7 +236,15 @@
                     
                     // assegna un prefisso all'istruzione
                     foreach($this->groups as $group){
-                        $route = ($route == '') ? $group : $group.'/'.$route;
+                        
+                        if($route == ''){
+                            $route = $group;
+                        }elseif(substr($route, 0, 1) === '?'){
+                            $route = $group.$route;
+                        }else{
+                            $route = $group.'/'.$route;
+                        }
+                        
                     }
                 
                 }
