@@ -1,6 +1,6 @@
 <?php
     
-    class BootEmbryoTest extends \PHPUnit_Framework_TestCase {
+    class BootEmbryoTest extends \PHPUnit\Framework\TestCase {
         
         public function setUp(){
             parent::setUp();
