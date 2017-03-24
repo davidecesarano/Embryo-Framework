@@ -24,9 +24,9 @@
             * Il simbolo @ prima del nome della 
             * variabile/funzione equivale a:
             * if(isset($var)){
-            * 	$var_2 = $var;
+            *   $var_2 = $var;
             * }else{
-            * 	$var_2 = null;
+            *   $var_2 = null;
             * }
             */  
             @session_start();
@@ -62,6 +62,16 @@
         public static function exists($key){
             return (isset($_SESSION[$key])) ? true : false;
         }
+        
+        /**
+         * Rimuove chiave dell'array $_SESSION
+         *
+         * @param mixed $key 
+         * @return boolean
+         */
+        public static function remove($key){
+            return (isset($_SESSION[$key])) ? session_unset($_SESSION[$key]) : false;
+        } 
         
         /**
          * Chiude la sessione ed esegue il redirect
