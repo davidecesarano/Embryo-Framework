@@ -8,7 +8,8 @@ Embryo è un framework MVC per lo sviluppo di applicazioni web in PHP.
 Per eseguire _web application_ scritte con Embryo, è necessario disporre di:
 * **Apache HTTP Server**
 * **PHP 5.4 o superiore** 
-* Modulo **mod_rewrite** attivo. 
+* Modulo **mod_rewrite** attivo
+* **Composer**
 
 Per gli sviluppatori che desiderano utilizzare Embryo, avere conoscenze di programmazione orientata agli oggetti (Object Oriented Programming - OOP) è necessaria.
 
