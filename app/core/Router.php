@@ -899,8 +899,7 @@
             
             $router = new Router;
             $router->getClassController($controller);
-            $router->params = $params;
-            $router->getAction($action, $router->params);
+            $router->getAction($action, $params = null);
             exit;
             
         }
