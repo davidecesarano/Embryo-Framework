@@ -28,25 +28,25 @@
             // output
             switch($output){
                 case 'l, d F Y':
-                    return ucwords(utf8_encode(strftime("%A, %d %B %Y", strtotime($date))));
+                    return ucwords(strftime("%A, %d %B %Y", strtotime($date)));
                     break;
                 case 'l, d F Y, H:i':
-                    return ucwords(utf8_encode(strftime("%A, %d %B %Y, %H:%M", strtotime($date))));
+                    return ucwords(strftime("%A, %d %B %Y, %H:%M", strtotime($date)));
                     break;
                 case 'l, d F Y alle H:i':
-                    return utf8_encode(strftime("%A, %d %B %Y alle %H:%M", strtotime($date)));
+                    return strftime("%A, %d %B %Y alle %H:%M", strtotime($date));
                     break;
                 case 'd F Y':
-                    return utf8_encode(strftime("%d %B %Y", strtotime($date)));
+                    return strftime("%d %B %Y", strtotime($date));
                     break;
                 case 'd-m-Y':
-                    return utf8_encode(strftime("%d-%m-%Y", strtotime($date)));
+                    return strftime("%d-%m-%Y", strtotime($date));
                     break;
                 case 'Y-m-d':
-                    return utf8_encode(strftime("%Y-%m-%d", strtotime($date)));
+                    return strftime("%Y-%m-%d", strtotime($date));
                     break;
                 case 'H:i':
-                    return utf8_encode(strftime("%H:%M", strtotime($date)));
+                    return strftime("%H:%M", strtotime($date));
                     break;
                 default:
                     return $date;
