@@ -47,7 +47,7 @@
                 $name     = $database['name'];
                 $user     = $database['user']; 
                 $password = $database['password'];
-                $dsn      = $engine.':dbname='.$name.";host=".$host.";charset=utf8mb4";
+                $dsn      = $engine.':dbname='.$name.";host=".$host.";charset=utf8mb4"; 
                 $options  = array(
                     PDO::ATTR_PERSISTENT => true,
                     PDO::ATTR_ERRMODE    => PDO::ERRMODE_EXCEPTION
