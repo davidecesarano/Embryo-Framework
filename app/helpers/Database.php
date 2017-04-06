@@ -6,6 +6,7 @@
      * @author Davide Cesarano
      */
     
+    use Exception;
     use PDO;
     use PDOException;
     use Core\Config;
@@ -46,7 +47,7 @@
                 $name     = $database['name'];
                 $user     = $database['user']; 
                 $password = $database['password'];
-                $dsn      = $engine.':dbname='.$name.";host=".$host; 
+                $dsn      = $engine.':dbname='.$name.";host=".$host.";charset=utf8mb4";
                 $options  = array(
                     PDO::ATTR_PERSISTENT => true,
                     PDO::ATTR_ERRMODE    => PDO::ERRMODE_EXCEPTION
