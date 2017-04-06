@@ -104,11 +104,13 @@
             $trace = str_replace(Config::get('database', 'local.user'), '****', $trace);
             $trace = str_replace(Config::get('database', 'local.name'), '****', $trace);
             $date = date('d M, Y - H:i:s');
+            $page = CURRENT_PAGE;
             
             // log
             $log = "\nData: {$date}\n";
             $log .= "Handler: Exception\n";
             $log .= "Descrizione: {$message}\n";
+            $log .= "Pagina: {$page}\n";
             $log .= "Codice: {$code}\n";
             $log .= "File: {$file}\n";
             $log .= "Linea: {$line}\n";
@@ -167,11 +169,15 @@
             // data 
             $date = date('d M, Y - H:i:s');
             
+            // pagina 
+            $page = CURRENT_PAGE;
+            
             // log
             $log = "\nData: $date\n";
             $log .= "Handler: Error\n";
             $log .= "Tipologia: $typename\n";
             $log .= "Descrizione: $description\n";
+            $log .= "Pagina: $page\n";
             $log .= "File: $filename\n";
             $log .= "Linea: $line\n";
             $log .= "--------------------\n";  
@@ -224,6 +230,9 @@
             // data 
             $date = date('d M, Y - H:i:s');
             
+            // pagina 
+            $page = CURRENT_PAGE;
+            
             // errore
             $type = $error['type'];
             $typename = self::errorType($error['type']);
@@ -236,6 +245,7 @@
             $log .= "Handler: Shutdown\n";
             $log .= "Tipologia: $typename\n";
             $log .= "Descrizione: $message\n";
+            $log .= "Pagina: $page\n";
             $log .= "File: $file\n";
             $log .= "Linea: $line\n";
             $log .= "--------------------\n";  
@@ -362,7 +372,7 @@
             
             // template
             $view->render('error');
-            
+
             // esci
             exit;
             
