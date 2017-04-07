@@ -296,3 +296,13 @@
         return $excerpt;
         
     }
+    
+    /**
+     * Converte le virgolette attraverso la codifica UTF-8
+     *
+     * @param string $string 
+     * @return string 
+     */
+    function ent_quotes($string){
+        return htmlentities($string, ENT_QUOTES, 'UTF-8', false);
+    }
