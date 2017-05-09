@@ -53,6 +53,15 @@
         }
         
         /**
+         * Include l'instestazione in output
+         *
+         * @param int $default
+         */
+        public function header($default = 0){
+            return curl_setopt($this->ch, CURLOPT_HEADER, $default);
+        }
+        
+        /**
          * Dati da inviare con metodo POST 
          *
          * @param array $data 
