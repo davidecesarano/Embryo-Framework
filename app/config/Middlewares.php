@@ -10,7 +10,8 @@
     return [ 
         
         'middlewares' => [
-            
+            'Token:name'    => 'Token@index',
+            'Language:code' => 'Language@index'
         ]
         
     ];
