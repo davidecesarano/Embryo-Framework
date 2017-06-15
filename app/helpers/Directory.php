@@ -256,4 +256,22 @@
 			
 		}
         
+        /**
+         * Verifica se la directory è vuota
+         *
+         * @param string $directory 
+         * @param array $exceptions 
+         * @return bool 
+         */
+        public static function is_empty($directory, $exceptions = ['.', '..']){
+        
+            if(!is_dir($directory)) return false;
+            
+            foreach(scandir($directory) as $file){
+                if(!in_array($file, $exceptions)) return false;
+            }
+            return true;
+        
+        }
+        
     }
