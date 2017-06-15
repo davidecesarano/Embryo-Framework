@@ -16,6 +16,7 @@
              */
             'helpers' => [
                 'Date'     => 'Helpers\Date',
+                'Language' => 'Helpers\Language',
                 'Session'  => 'Helpers\Session',
                 'Token'    => 'Helpers\Token',
                 'Widget'   => 'Helpers\Widget'
