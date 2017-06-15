@@ -111,6 +111,16 @@
     }
     
     /**
+     * Path template frontend
+     *
+     * @param string $path
+     * @return string 
+     */
+    function template_path($path){
+        return SITE_BASE_DIR.'/'.FOLDER_TEMPLATE_PUBLIC.'/'.Config::get('app', 'template.public').'/assets/'.$path;
+    }
+    
+    /**
      * Url template backend
      *
      * @param string $path
@@ -148,6 +158,26 @@
      */
     function vendor_url($path){
         return site_url(FOLDER_VENDOR_ASSETS.'/'.$path);
+    }
+    
+    /**
+     * Path vendor
+     *
+     * @param string $path
+     * @return string 
+     */
+    function vendor_path($path){
+        return SITE_BASE_DIR.'/'.FOLDER_VENDOR_ASSETS.'/'.$path;
+    }
+    
+    /**
+     * Url cartella uploads
+     *
+     * @param string $path
+     * @return string 
+     */
+    function upload_url($path){
+        return site_url(FOLDER_UPLOADS.'/'.$path);
     }
     
     /**
@@ -305,4 +335,34 @@
      */
     function ent_quotes($string){
         return htmlentities($string, ENT_QUOTES, 'UTF-8', false);
+    }
+    
+    /**
+     * Versioning per gli assets statici
+     *
+     * @param string $file 
+     * @return string
+     */
+    function versioning($file){
+        return filemtime(template_path($file));
+    }
+    
+    /**
+     * Minify Html 
+     *
+     * @param string $buf 
+     * @return string 
+     */
+    function ob_html_compress($buf){
+        return preg_replace(array('/<!--(.*)-->/Uis', "/[[:blank:]]+/"), array('', ' '), str_replace(array("\n", "\r", "\t"), '', $buf));
+    }
+    
+    /**
+     * Traduce stringa 
+     *
+     * @param string $key 
+     * @return string 
+     */
+    function trans($key){
+        return Language::getMessage($key);
     }
