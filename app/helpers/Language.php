@@ -6,7 +6,6 @@
      * @author Davide Cesarano
      */
 
-    use Core\Config;
     use Helpers\Directory;
     use Helpers\Session;
 
@@ -15,7 +14,7 @@
         /**
          * @var array $messages
          */
-        public static $messages = array();
+        public static $messages = array(); 
         
         /**
          * Inizializza lingua 
@@ -23,21 +22,24 @@
         public static function init(){
 
             // lingua di default
-            $default_language = Config::get('app', 'meta.language');
+            $locale = main_language();
 
             // imposta sessione
             if(!self::get()){
-                Session::set('lang', $default_language);
+                Session::set('lang', $locale);
             }
             
             // codice per codifica
             $code = self::get().'_'.strtoupper(self::get());
             
+            // codifica
+            $encode = $code.'_utf8';
+            
             // crea messaggi
             self::setMessages(self::get());
 
             // lingua per le date
-            setlocale(LC_TIME, "$code.utf8");
+            setlocale(LC_TIME, $locale, $encode);
 
         }
 
@@ -50,15 +52,18 @@
 
             // crea sessione
             Session::set('lang', $lang);
-
-            // crea messaggi
-            self::setMessages($lang);
             
             // codice per codifica
             $code = self::get().'_'.strtoupper(self::get());
+            
+            // codifica
+            $encode = $code.'_utf8';
+            
+            // crea messaggi
+            self::setMessages($lang);
 
             // lingua per le date
-            setlocale(LC_TIME, "$code.utf8");
+            setlocale(LC_TIME, $locale, $encode);
 
         }
 

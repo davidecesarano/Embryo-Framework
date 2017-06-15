@@ -62,10 +62,7 @@
      * Fuso orario
      */
     function setTimezone(){
-        
-        date_default_timezone_set(Config::get('app', 'time.zone'));
-        setlocale(LC_TIME, Config::get('app', 'time.locale'), Config::get('app', 'time.encode'));
-        
+        date_default_timezone_set(Config::get('app', 'timezone'));
     }
     
     /**
@@ -355,6 +352,13 @@
      */
     function ob_html_compress($buf){
         return preg_replace(array('/<!--(.*)-->/Uis', "/[[:blank:]]+/"), array('', ' '), str_replace(array("\n", "\r", "\t"), '', $buf));
+    }
+    
+    /**
+     * Lingua principale
+     */
+    function main_language(){
+        return Config::get('app', 'locale');
     }
     
     /**
