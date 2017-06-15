@@ -37,6 +37,14 @@
             ],
             
             /**
+             * Traduzioni 
+             */
+            'languages' => [
+                'it' => 'Italiano',
+                'en' => 'Inglese'
+            ],
+            
+            /**
              * Time
              */
             'time' => [
