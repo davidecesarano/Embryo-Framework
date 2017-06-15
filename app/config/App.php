@@ -37,21 +37,14 @@
             ],
             
             /**
-             * Traduzioni 
+             * Timezone
              */
-            'languages' => [
-                'it' => 'Italiano',
-                'en' => 'Inglese'
-            ],
+            'timezone' => 'Europe/Rome',
             
             /**
-             * Time
+             * Lingua
              */
-            'time' => [
-                'zone'   => 'Europe/Rome',
-                'locale' => 'ita',
-                'encode' => 'it_IT.utf8'
-            ]
+            'locale' => 'it'
         
         ]
     
