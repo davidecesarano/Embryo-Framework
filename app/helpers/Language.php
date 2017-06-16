@@ -83,7 +83,7 @@
          */
         public static function setMessages($lang){
 			
-            if(Directory::is_empty(FOLDER_LANGUAGES.'/'.$lang.'/')){
+            if(!Directory::is_empty(FOLDER_LANGUAGES.'/'.$lang.'/')){
 
                 $array = array();
                 foreach(glob(FOLDER_LANGUAGES.'/'.$lang.'/*.php') as $file){
