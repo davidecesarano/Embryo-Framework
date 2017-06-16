@@ -63,7 +63,7 @@
             self::setMessages($lang);
 
             // lingua per le date
-            setlocale(LC_TIME, $locale, $encode);
+            setlocale(LC_TIME, $lang, $encode);
 
         }
 
