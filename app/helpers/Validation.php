@@ -284,7 +284,7 @@
         public function displayErrors(){
             
             $html = '';
-            if(!is_array($this->getErrors())){
+            if(is_array($this->getErrors())){
                 
                 $html .= '<ul>';
                     foreach($this->getErrors() as $error){
@@ -304,12 +304,11 @@
          */
         public function result(){
             
-            if(!$this->isSuccess()){
+            if($this->isSuccess() === false){
                
                 foreach($this->getErrors() as $error){
                     echo "$error\n";
                 }
-                exit;
                 
             }else{
                 return true;
