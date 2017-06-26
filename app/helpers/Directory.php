@@ -22,6 +22,7 @@
 			$folders = scandir($dir);
 			
 			// costruzione array
+            $data = [];
 			$i = 0;
 			foreach($folders as $media){
 				
@@ -71,14 +72,14 @@
          * Elenco delle cartelle (e sotto cartelle)
          *
          * @param string $dir 
-         * @param true|false $single
+         * @param bool $single
          * @return array 
          */
         public static function getFolders($dir, $single = false){
             
             $dh = scandir(SITE_BASE_DIR.'/'.$dir);
            
-            $return = array();
+            $data = array();
             foreach($dh as $folder){
                 
                 if($folder != '.' && $folder != '..') {
@@ -86,19 +87,19 @@
                     if(!$single){
                         
                         if (is_dir($dir . '/' . $folder)) {
-                            $return[$folder] = self::listFolders($dir . '/' . $folder);
+                            $data[$folder] = self::getFolders($dir.'/'.$folder);
                         } else {
-                            $return[] = $folder;
+                            $data[] = $folder;
                         }
                         
                     }else{
-                        $return[] = $folder;
+                        $data[] = $folder;
                     }
                     
                 }
             
             }
-            return $return;
+            return $data;
         
         }
         
@@ -179,7 +180,7 @@
         /**
 		 * Elimina
 		 *
-		 * @param string $element
+		 * @param string $directory
 		 */
 		public static function remove($directory){
 			
@@ -215,45 +216,6 @@
 			
 			}
 		
-		}
-        
-        /**
-		 * Breadcrumbs
-		 * @todo da verificare
-		 * @param array $url 
-		 * @return array $breadcrumbs
-		 */
-		public static function breadcrumbs($url){
-			
-			$last = count($url);
-			$tmp = '';
-			
-			foreach($url as $key => $value){
-
-				if($key == 0){				
-					
-					// uploads, prima cartella
-					$breadcrumbs[$value] = $value;
-				
-				}elseif($key > 0 && $key < $last){
-
-					// cartelle intermedie
-					for($i = 0; $i <= $key; $i++){
-						$tmp .= $url[$i].'/';
-					}
-					$breadcrumbs[$value] = substr($tmp, 0, strlen($tmp)-1);
-					$tmp = '';
-				
-				}else{
-					
-					// ultima cartella
-					$breadcrumbs[$value] = implode($url, '/');
-					
-				}
-				
-			}
-			return $breadcrumbs;
-			
 		}
         
         /**

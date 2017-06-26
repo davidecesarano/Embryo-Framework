@@ -16,9 +16,9 @@
     class Session {
         
         /**
-         * @var array $config 
+         * @var mixed $config 
          */
-        protected $config = array();
+        protected $config;
         
         /**
          * @var object $db 

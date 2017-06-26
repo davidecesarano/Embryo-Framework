@@ -24,9 +24,9 @@
          * @var int $height
          * @var string $type
          * @var string $format
-         * @var string $image
+         * @var resource $image
          */
-        private $width, $height, $type, $from, $format, $image;
+        private $width, $height, $type, $format, $image;
         
         /**
          * Qualità dell'immagine salvata/generata
@@ -39,7 +39,6 @@
          * Carica l'immagine
          *
          * @param string $file
-         * @return object $this
          */
         public function __construct($file){
             
@@ -93,7 +92,7 @@
          * al centro della stessa.
          *
          * @param int $max_width
-         * @param int|null $max_height
+         * @param int $max_height
          * @return object
          */
         public function thumbnail($max_width, $max_height){
@@ -176,7 +175,7 @@
          * Salva immagine
          *
          * @param string $folder
-         * @param string $new_filename
+         * @param string|null $new_filename
          * @return boolean
          */
         public function save($folder, $new_filename = null){
@@ -202,8 +201,7 @@
         /**
          * Output immagine senza salvataggio
          *
-         * @param null|string $format
-         * @param int|null $quality
+         * @param string $format
          */
         public function output($format) {
             

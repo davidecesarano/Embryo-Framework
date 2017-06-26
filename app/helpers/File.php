@@ -29,8 +29,6 @@
          * Setta proprietà per operazioni preliminari
          *
          * @param array $file 
-         * @param string $destination
-         * @return $this 
          */
         public function __construct($file){
                
@@ -42,8 +40,7 @@
         /**
          * Cartella di destinazione del file 
          *
-         * @param string $destionation 
-         * @return $this
+         * @param string $destination 
          */
         public function destination($destination){
             
@@ -55,7 +52,7 @@
         /**
          * Estensione del file 
          *
-         * @param string $this->name
+         * @param string $name
          * @return string
          */
         public function getExtension($name){
@@ -65,8 +62,8 @@
         /**
          * Rimuove estensione del file 
          *
-         * @param string $this->name
          * @param string $extension 
+         * @param string $name 
          * @return string 
          */
         public function removeExtension($extension, $name){
@@ -77,7 +74,7 @@
          * Elimina e sostituisce alcuni caratteri dal
          * nome del file 
          *
-         * @param string $file_name 
+         * @param string $name 
          * @return string 
          */
         public function checkName($name){
@@ -105,8 +102,6 @@
         /**
          * Upload
          *
-         * @param array $file 
-         * @param string $destination
          * @return boolean
          */
         public function upload(){

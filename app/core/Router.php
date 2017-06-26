@@ -354,19 +354,19 @@
             
             switch($method){
                 case 'GET':
-                    if(!Request::isGet()) Error::get403('Errore, metodo della richiesta non valido!');
+                    if(Request::isGet() !== null) Error::get403('Errore, metodo della richiesta non valido!');
                     break;
                 case 'AJAXGET':
-                    if(!Request::isGet() && !Request::isAjax()) Error::get403('Errore, metodo della richiesta non valido!');
+                    if(Request::isGet() !== null && Request::isAjax() !== null) Error::get403('Errore, metodo della richiesta non valido!');
                     break;
                 case 'POST':
-                    if(!Request::isPost()) Error::get403('Errore, metodo della richiesta non valido!');
+                    if(Request::isPost() !== null) Error::get403('Errore, metodo della richiesta non valido!');
                     break;
                 case 'AJAXPOST':
-                    if(!Request::isPost() && !Request::isAjax()) Error::get403('Errore, metodo della richiesta non valido!');
+                    if(Request::isPost() !== null && Request::isAjax() !== null) Error::get403('Errore, metodo della richiesta non valido!');
                     break;
                 case 'ANY':
-                    if(!Request::isPost() && !Request::isGet()) Error::get403('Errore, metodo della richiesta non valido!');
+                    if(Request::isPost() !== null && Request::isGet() !== null) Error::get403('Errore, metodo della richiesta non valido!');
                     break; 
             }
             
