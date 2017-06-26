@@ -26,20 +26,8 @@
 
             // imposta sessione
             if(self::get() === false){
-                Session::set('lang', $locale);
+                self::set($locale);
             }
-            
-            // codice per codifica
-            $code = self::get().'_'.strtoupper(self::get());
-            
-            // codifica
-            $encode = $code.'_utf8';
-            
-            // crea messaggi
-            self::setMessages(self::get());
-
-            // lingua per le date
-            setlocale(LC_TIME, $code, $encode);
 
         }
 
@@ -54,7 +42,7 @@
             Session::set('lang', $lang);
             
             // codice per codifica
-            $code = self::get().'_'.strtoupper(self::get());
+            $code = $lang.'_'.strtoupper(self::get());
             
             // codifica
             $encode = $code.'_utf8';

@@ -264,31 +264,35 @@
          * @return boolean
          */
         public function isSuccess(){
-            if(empty($this->errors)) return true;
+            return (empty($this->errors));
         }
         
         /**
          * Errori della validazione
          * 
-         * @return array $this->errors
+         * @return array|null
          */
         public function getErrors(){
-            if(!$this->isSuccess()) return $this->errors;
+            if($this->isSuccess() === false) return $this->errors;
         }
         
         /**
          * Visualizza errori in formato Html
          * 
-         * @return string $html
+         * @return string
          */
         public function displayErrors(){
             
-            $html = '<ul>';
-                foreach($this->getErrors() as $error){
-                    $html .= '<li>'.$error.'</li>';
-                }
-            $html .= '</ul>';
-            
+            $html = '';
+            if($this->getErrors() !== null){
+                
+                $html .= '<ul>';
+                    foreach($this->getErrors() as $error){
+                        $html .= '<li>'.$error.'</li>';
+                    }
+                $html .= '</ul>';
+                
+            }
             return $html;
             
         }
