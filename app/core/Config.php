@@ -41,9 +41,8 @@
         /**
          * Setta un'impostazione
          *
-         * @param string $name 
-         * @param array $values
          * @return array
+         * @throws exception
          */
         public static function set(){
             

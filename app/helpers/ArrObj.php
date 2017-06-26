@@ -37,7 +37,7 @@
         /**
          * Aggiunge elemento all'array 
          *
-         * @param string $value
+         * @param mixed $value
          * @return array 
          */
         public function push($value){
@@ -74,7 +74,7 @@
          * @param mixed $name 
          * @param object $class
          * @param string $method 
-         * @param mixed $obj
+         * @param mixed $param
          * @return array
          */
         public function pushInnerObject($name, $class, $method, $param){
@@ -98,7 +98,7 @@
          * @param mixed $name 
          * @param object $class
          * @param string $method 
-         * @param mixed $obj
+         * @param mixed $param
          * @return array
          */
         public function pushOuterObject($name, $class, $method, $param = null){
@@ -120,7 +120,7 @@
          *
          * @param mixed $key Chiave del campo
          * @param string $operator Operatore di confronto
-         * @param mixed $valure Valore del campo
+         * @param mixed $value Valore del campo
          * @return array 
          */
         public function filter($key, $operator, $value){
@@ -216,7 +216,6 @@
         /**
          * Restituisce un array 
          *
-         * @param boolean $multi
          * @return array 
          */
         public function getArray(){

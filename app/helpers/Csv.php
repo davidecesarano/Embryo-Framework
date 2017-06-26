@@ -50,7 +50,7 @@
         /**
          * Apre il file
          *
-         * @param string    $file
+         * @param string    $file_name
          * @param boolean   $parse_header
          * @param string    $delimiter
          * @param int       $length
@@ -76,7 +76,7 @@
          * Estrae dati
          * 
          * @param  int   $max_lines - se 0 estrae tutto
-         * @return array $data
+         * @return array
          */
         function get($max_lines = 0){
        

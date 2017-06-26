@@ -32,8 +32,9 @@
         /**
          * Connessione al database MySQL
          *
-         * @param array $database
+         * @param string $config_name
          * @return obj
+         * @throws exception
          */
         public function __construct($config_name){
             
@@ -91,8 +92,8 @@
          * Esegue la query
          *
          * @example $this->query('SELECT * FROM table')
-         * @param string $sql
-         * @return this
+         * @param string $query
+         * @return self
          */
         public function query($query){
             
@@ -107,7 +108,7 @@
          * @example $this->value(array('key' => 'value'))
          * @param string $param
          * @param mixed $value
-         * @return this
+         * @return self
          */
         public function value($param, $value){
            
@@ -120,8 +121,8 @@
          * Esegue il bindValue su valori multipli
          *
          * @example $this->values(array('key' => 'value'))
-         * @param array $values bindValue
-         * @return this
+         * @param array $values
+         * @return self
          */
         public function values($values = array()){
             

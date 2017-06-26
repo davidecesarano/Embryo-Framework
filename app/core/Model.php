@@ -21,7 +21,7 @@
         /**
          * Connessione al database MySQL
          *
-         * @param array $database
+         * @param string|null $database
          * @return object $this->db
          */		
         public function database($database = null){

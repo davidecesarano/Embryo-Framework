@@ -221,9 +221,7 @@
         /**
          * Istruzione
          *
-         * @param string $route 
-         * @param array $this->groups 
-         * @return array $this->routes
+         * @param string $route
          * @throws exception
          */
         public function route($route){
@@ -259,7 +257,6 @@
         /**
          * Risposta 
          *
-         * @param array $this->middlewares
          * @param mixed $callback 
          */
         public function callback($callback){
@@ -280,7 +277,6 @@
         /**
          * Ottiene URI
          *
-         * @param array $_GET['url']
          * @return string
          */
         public function request(){
@@ -310,11 +306,6 @@
         
         /**
          * Esegue route
-         *
-         * @param array $this->request
-         * @param array $this->routes
-         * @return mixed
-         * @throws exception
          */
         public function execute(){	
             
@@ -524,7 +515,6 @@
          *
          * @example $router->add('test', 'class@method');
          * @param string $callback
-         * @param array $this->params
          */
         public function getController($callback){
             
@@ -546,7 +536,6 @@
          *
          * @example $router->add('test', function($param){ echo $param; });
          * @param $callback
-         * @param array $this->params
          */
         public function getClosure($callback){
 
@@ -568,8 +557,8 @@
         /**
          * Invoca un middleware 
          *
-         * @param int|string $value
-         * @param array $this->callback 
+         * @param array|string $general
+         * @param array|string|null $group
          * @throws exception 
          */
         public function getMiddleware($general, $group = null){
@@ -644,7 +633,7 @@
          * @param array $route_array 
          * @param array $request_array
          * @param int $position
-         * @return array $this->params
+         * @return array
          */
         public function setParam($route_array, $request_array, $position){ 
             
@@ -678,7 +667,6 @@
          * Carica il controller
          *
          * @param string $name
-         * @return object $this->controller
          * @throws exception
          */
         public function getClassController($name){
@@ -714,7 +702,7 @@
          *
          * @param string $action
          * @param array|null $params
-         * @return object $this->controller->{$action}($param_1, $param_2, ...)
+         * @return object
          * @throws exception
          */
         public function getAction($action, $params = null){
@@ -746,6 +734,7 @@
          *
          * @param string $name
          * @param string $action
+         * @param mixed $param
          * @return object
          * @throws exception
          */
@@ -769,9 +758,6 @@
         /**
          * Se il route non esiste 
          * genera un errore 
-         *
-         * @param boolean $this->found
-         * @thorws exception 
          */
         public function notfound(){
             if(!$this->found) Error::get404('Spiacente, la pagina che stai cercando non esiste!');
@@ -891,7 +877,7 @@
         /**
          * Ottiene controller e action specifici
          *
-         * @param string $string 
+         * @param string $controller 
          * @param string $action 
          * @param array|null $params
          */

@@ -44,7 +44,7 @@
          * le variabili da caricare
          *
          * @param string $name Nome del file
-         * @param string $end 'public' o 'dashboard'
+         * @param string|null $end 'public' o 'dashboard'
          * @throws exception
          */
         public function render($name, $end = null){

@@ -29,6 +29,9 @@
         
         /**
          * Inizializza la sessione di cURL
+         *
+         * @param string $url
+         * @return self
          */
         public function __construct($url){
             

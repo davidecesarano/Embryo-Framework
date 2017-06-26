@@ -18,7 +18,7 @@
         /**
          * Messaggio di errore
          *
-         * @param string $text
+         * @param string|null $text
          * @return string
          */
         public static function message($text = null){
@@ -35,7 +35,6 @@
          * Scrive il report dell'errore
          * in un file di log 
          *
-         * @param string self::$file
          * @param string $log 
          */
         public static function write($log){
@@ -124,8 +123,10 @@
         /**
          * Getione degli Errori
          *
-         * @param exception $exception
-         * @return mixed
+         * @param int $type
+         * @param string $description
+         * @param string $filename
+         * @param int $line
          */
         public static function errorHandler($type, $description, $filename, $line){
             
