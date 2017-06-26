@@ -304,7 +304,7 @@
          */
         public function result(){
             
-            if($this->isSuccess() === false){
+            if($this->isSuccess() === false && is_array($this->getErrors())){
                
                 foreach($this->getErrors() as $error){
                     echo "$error\n";
