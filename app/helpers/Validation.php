@@ -284,7 +284,7 @@
         public function displayErrors(){
             
             $html = '';
-            if($this->getErrors() !== null){
+            if(!is_array($this->getErrors())){
                 
                 $html .= '<ul>';
                     foreach($this->getErrors() as $error){

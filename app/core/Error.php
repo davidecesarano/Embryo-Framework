@@ -94,7 +94,6 @@
             // errore
             $message = $exception->getMessage();
             $code = $exception->getCode();
-            $code = $exception->getCode();
             $file = $exception->getFile();
             $line = $exception->getLine();
             $trace = $exception->getTraceAsString();
@@ -235,7 +234,6 @@
             $page = CURRENT_PAGE;
             
             // errore
-            $type = $error['type'];
             $typename = self::errorType($error['type']);
             $message = $error['message'];
             $file = $error['file'];

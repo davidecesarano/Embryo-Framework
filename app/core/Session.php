@@ -165,6 +165,8 @@
                 $file = $this->path.'/'.$this->config['name'].'_'.$id;
                 if(file_exists($file)){
                     return file_get_contents($file);
+                }else{
+                    return false;
                 }
                 
             }elseif($this->config['driver'] == 'database'){
