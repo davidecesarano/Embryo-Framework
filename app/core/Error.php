@@ -130,7 +130,6 @@
         public static function errorHandler($type, $description, $filename, $line){
             
             switch($type){
-                
                 case E_WARNING:
                 case E_NOTICE:
                 case E_USER_ERROR:
@@ -138,19 +137,11 @@
                 case E_USER_NOTICE:
                 case E_RECOVERABLE_ERROR:
                 case E_ALL:
-                    
-                    // nome errore
-                    $typename = self::errorType($type);
-                    
-                    // report
-                    $report = self::errorReport($typename, $description, $filename, $line);
-                    
-                    // log
-                    self::write($report);
-
-                    // messaggio
-                    self::message($typename.' - '.$description);
-                    
+                    $typename = self::errorType($type);                                     // nome errore
+                    $report = self::errorReport($typename, $description, $filename, $line); // report
+                    self::write($report);                                                   // log
+                    self::message($typename.' - '.$description);                            // messaggio
+                    break;
             }			
             
         }
@@ -197,7 +188,6 @@
             $error = error_get_last();
             
             switch($error['type']){
-                
                 case E_ERROR:
                 case E_PARSE:
                 case E_CORE_ERROR:
@@ -205,16 +195,10 @@
                 case E_COMPILE_ERROR:
                 case E_COMPILE_WARNING:
                 case E_STRICT:
-                
-                    // report errore
-                    $report = self::shutdownReport($error);
-                    
-                    // log
-                    self::write($report);
-                    
-                    // messaggio
-                    self::message(self::errorType($error['type']).' - '.$error['message']);
-                
+                    $report = self::shutdownReport($error);                                 // report errore
+                    self::write($report);                                                   // log
+                    self::message(self::errorType($error['type']).' - '.$error['message']); // messaggio
+                    break;
             }
             
         }
@@ -263,34 +247,49 @@
             switch($type){
                 case E_ERROR:
                     return 'E_ERROR';
+                    break;
                 case E_WARNING:
                     return 'E_WARNING';
+                    break;
                 case E_PARSE:
                     return 'E_PARSE';
+                    break;
                 case E_NOTICE:
                     return 'E_NOTICE';
+                    break;
                 case E_CORE_ERROR:
                     return 'E_CORE_ERROR';
+                    break;
                 case E_CORE_WARNING:
                     return 'E_CORE_WARNING';
+                    break;
                 case E_COMPILE_ERROR:
                     return 'E_COMPILE_ERROR';
+                    break;
                 case E_COMPILE_WARNING:
                     return 'E_COMPILE_WARNING';
+                    break;
                 case E_USER_ERROR:
                     return 'E_USER_ERROR';
+                    break;
                 case E_USER_WARNING:
                     return 'E_USER_WARNING';
+                    break;
                 case E_USER_NOTICE:
                     return 'E_USER_NOTICE';
+                    break;
                 case E_STRICT:
                     return 'E_STRICT';
+                    break;
                 case E_RECOVERABLE_ERROR:
                     return 'E_RECOVERABLE_ERROR';
+                    break;
                 case E_DEPRECATED:
                     return 'E_DEPRECATED';
+                    break;
                 case E_USER_DEPRECATED:
                     return 'E_USER_DEPRECATED';
+                    break;
             }
             return "";
         
