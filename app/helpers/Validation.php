@@ -14,6 +14,21 @@
     class Validation {
         
         /**
+         * @var string $name 
+         */
+        public $name;
+        
+        /**
+         * @var mixed $value 
+         */
+        public $value
+        
+        /**
+         * @var string $file
+         */
+        public $file
+        
+        /**
          * @var array $patterns
          */
         public $patterns = array(
@@ -139,7 +154,7 @@
          * Lunghezza minima
          * del valore del campo
          * 
-         * @param int $min
+         * @param int $length
          * @return this
          */
         public function min($length){
@@ -165,7 +180,7 @@
          * Lunghezza massima
          * del valore del campo
          * 
-         * @param int $max
+         * @param int $length
          * @return this
          */
         public function max($length){

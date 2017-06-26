@@ -22,9 +22,9 @@
          *
          * @var int $width
          * @var int $height
-         * @var string $type
+         * @var int $type
          * @var string $format
-         * @var resource $image
+         * @var mixed $image
          */
         private $width, $height, $type, $format, $image;
         
@@ -39,6 +39,7 @@
          * Carica l'immagine
          *
          * @param string $file
+         * @return self
          */
         public function __construct($file){
             
@@ -204,6 +205,8 @@
          * @param string $format
          */
         public function output($format) {
+            
+            $mimetype = '';
             
             // determina mimetype
             switch (strtolower($format)) {

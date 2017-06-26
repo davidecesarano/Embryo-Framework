@@ -82,11 +82,12 @@
        
             $data = array();
             $line_count = ($max_lines > 0) ? 0 : -1;
-
+            
             while($line_count < $max_lines && ($row = fgetcsv($this->fp, $this->length, $this->delimiter)) !== FALSE){
                 
                 if($this->parse_header){
                     
+                    $row_new = [];
                     foreach ($this->header as $i => $heading_i){
                         $row_new[$heading_i] = $row[$i];
                     }
