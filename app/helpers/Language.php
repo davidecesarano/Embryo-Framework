@@ -25,7 +25,7 @@
             $locale = main_language();
 
             // imposta sessione
-            if(!self::get()){
+            if(self::get() === false){
                 Session::set('lang', $locale);
             }
             

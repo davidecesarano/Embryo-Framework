@@ -73,7 +73,7 @@
                 
                 if($token_session == $token){
                 
-                    if($timelife){
+                    if($timelife !== null){
                         
                         $limit = time() - ($timelife * 24);
                         return ($token_time > $limit) ? true : false;

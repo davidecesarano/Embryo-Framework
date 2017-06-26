@@ -122,8 +122,7 @@
 		 * Elimina campo dall'array della richiesta
 		 *
 		 * @param mixed $key 
-		 * @param array $this->dataArray
-		 * @return array $this->dataArray
+		 * @return array
 		 */
 		public function delete($key){
 			
@@ -141,7 +140,7 @@
 		/**
 		 * Ritorna array
 		 *
-		 * @return array $this->dataArray
+		 * @return array
 		 */
 		public function getArray(){
 			return $this->dataArray;

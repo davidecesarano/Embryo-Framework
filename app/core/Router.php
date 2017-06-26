@@ -77,7 +77,7 @@
          * Segnala istruzione trovata
          * per la specifica richiesta HTTP
          *
-         * @var boolena $found
+         * @var bool $found
          */
         private $found = false;
         
@@ -86,14 +86,14 @@
          * ottenuti tramite i filtri delle
          * istruzioni
          *
-         * @var array $params 
+         * @var array|null $params 
          */
         private $params = array();
         
         /**
          * Controller 
          *
-         * @var string $controller 
+         * @var object $controller 
          */
         private $controller;
         

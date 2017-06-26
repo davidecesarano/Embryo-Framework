@@ -53,7 +53,7 @@
             extract($this->vars);
             
             // include il file del template
-            if($end == 'public' || $end == null){
+            if($end == 'public' || $end === null){
                 $template = template_folder($name.'.php');
             }elseif($end == 'dashboard'){
                 $template = template_admin_folder($name.'.php');

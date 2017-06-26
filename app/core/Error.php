@@ -23,7 +23,7 @@
          */
         public static function message($text = null){
             
-            if(!$text || Config::get('error', 'display') == 0){
+            if($text === null || Config::get('error', 'display') == 0){
                 echo "<h1>Si &egrave; verificato un errore!</h1>";
             }else{
                 echo '<p>'.$text.'</p>';

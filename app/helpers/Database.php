@@ -20,12 +20,12 @@
         private static $instance = [];
         
         /**
-         * @var obj $dbh 
+         * @var object $dbh 
          */
         private $dbh;
         
         /**
-         * @var obj $stmt 
+         * @var object $stmt 
          */
         private $stmt;
         
