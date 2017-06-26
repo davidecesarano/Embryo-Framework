@@ -85,7 +85,7 @@
             session_destroy();
             
             // redirect
-            if($redirect){
+            if($redirect !== null){
                 redirect($redirect);
             }
         

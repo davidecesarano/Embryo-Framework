@@ -21,12 +21,12 @@
         /**
          * @var mixed $value 
          */
-        public $value
+        public $value;
         
         /**
          * @var string $file
          */
-        public $file
+        public $file;
         
         /**
          * @var array $patterns

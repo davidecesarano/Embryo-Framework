@@ -11,22 +11,34 @@
     class Image {
         
         /**
-         * File dell'immagine da manipolare
-         *
          * @var string $file
          */
         private $file;
         
         /**
-         * Informazioni immagine
-         *
          * @var int $width
+         */
+        private $width;
+        
+        /**
          * @var int $height
+         */
+        private $height;
+        
+        /**
          * @var int $type
+         */
+        private $type;
+         
+        /**
          * @var string $format
+         */
+        private $format;
+        
+        /**
          * @var mixed $image
          */
-        private $width, $height, $type, $format, $image;
+        private $image;
         
         /**
          * Qualità dell'immagine salvata/generata
@@ -45,7 +57,6 @@
             
             $this->file = SITE_BASE_DIR.'/'.$file;
             $this->load();
-            return $this;
         
         }
         
@@ -61,6 +72,7 @@
             $this->width = $info[0];
             $this->height = $info[1];
             $this->type = $info[2];
+            $this->format = '';
             
             switch($this->type){
                 
