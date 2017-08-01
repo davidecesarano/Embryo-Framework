@@ -27,6 +27,8 @@
             // imposta sessione
             if(self::get() === false){
                 self::set($locale);
+            }else{
+                self::set(self::get());
             }
 
         }
@@ -42,7 +44,7 @@
             Session::set('lang', $lang);
             
             // codice per codifica
-            $code = $lang.'_'.strtoupper(self::get());
+            $code = $lang.'_'.strtoupper($lang);
             
             // codifica
             $encode = $code.'_utf8';
