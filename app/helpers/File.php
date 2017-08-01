@@ -37,7 +37,7 @@
         /**
          * Cartella di destinazione del file 
          *
-         * @param string $destination 
+         * @param string $destination
          */
         public function destination($destination){
             

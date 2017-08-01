@@ -12,7 +12,7 @@
     class ArrObj {
         
         /**
-         * @var array $vars
+         * @var array $array
          */
         public $array = array();
 
@@ -20,7 +20,6 @@
          * Crea array
          *
          * @param array $array 
-         * @return array
          */
         public function __construct($array){
             
@@ -37,8 +36,7 @@
         /**
          * Aggiunge elemento all'array 
          *
-         * @param mixed $value
-         * @return array 
+         * @param string $value
          */
         public function push($value){
             array_push($this->array, $value);
@@ -48,7 +46,6 @@
          * Aggiunge array all'array 
          *
          * @param array $array 
-         * @return array 
          */
         public function pushArray($array){
             
@@ -75,7 +72,6 @@
          * @param object $class
          * @param string $method 
          * @param mixed $param
-         * @return array
          */
         public function pushInnerObject($name, $class, $method, $param){
             
@@ -99,7 +95,6 @@
          * @param object $class
          * @param string $method 
          * @param mixed $param
-         * @return array
          */
         public function pushOuterObject($name, $class, $method, $param = null){
             
@@ -121,7 +116,6 @@
          * @param mixed $key Chiave del campo
          * @param string $operator Operatore di confronto
          * @param mixed $value Valore del campo
-         * @return array 
          */
         public function filter($key, $operator, $value){
             
@@ -182,7 +176,7 @@
         /**
          * Verifica se l'array è multidimensionale
          *
-         * @return boolean
+         * @return bool
          */
         public function is_multi(){
             
