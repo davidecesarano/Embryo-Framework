@@ -19,7 +19,7 @@
         "components/font-awesome": "4.7.0",
         "datatables/datatables": "1.10.15",
         "davidecesarano/gapi": "dev-master",
-        "phpmailer/phpmailer": "v5.2.23"
+        "phpmailer/phpmailer": "v5.2.24"
     },
     "autoload": {
         "psr-4": {
