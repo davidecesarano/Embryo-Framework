@@ -60,24 +60,32 @@
             );
             
             // imposta parametri da php.ini
+            ini_set('session.use_strict_mode',          1);
             ini_set('session.auto_start',               0);
             ini_set('session.gc_probability',           1);
             ini_set('session.gc_divisor',               100);
             ini_set('session.save_path',                $this->path);
             ini_set('session.gc_maxlifetime',           $this->config['timelife']);
-            ini_set('session.referer_check',            '');
             ini_set('session.use_cookies',              1);
             ini_set('session.use_only_cookies',         1);
             ini_set('session.use_trans_sid',            0);
-            ini_set('session.hash_function',            1);
-            ini_set('session.hash_bits_per_character',  5);
+            ini_set('session.entropy_file',             '/dev/urandom');
+            ini_set('session.entropy_length',           128);
+            ini_set('session.hash_function',            'sha512');
             ini_set('session.cookie_httponly',          1);
             
             // disabilita client/proxy caching
             session_cache_limiter('nocache');
-        
+            
+            // parametri cookie 
+            $timelife = $this->config['timelife'];
+            $path     = '/';
+            $domain   = $_SERVER['SERVER_NAME'];
+            $secure   = (SITE_PROTOCOL === 'https://') ? true : false;
+            $httponly = true;
+             
             // imposta parametri del cookie
-            session_set_cookie_params($this->config['timelife']);
+            session_set_cookie_params($timelife, $path, $domain, $secure, $httponly);
             
             // imposta nome della sessione
             session_name($this->config['name']);
@@ -103,10 +111,8 @@
                 
             }elseif($this->config['driver'] == 'database'){
                 
-                
                 $this->db = Database::connection();
                 $this->table = $this->config['table'];
-                
                 
             }else{
                 throw new Exception("Configurazione non valida!");
@@ -166,7 +172,7 @@
                 if(file_exists($file)){
                     return file_get_contents($file);
                 }else{
-                    return false;
+                    return '';
                 }
                 
             }elseif($this->config['driver'] == 'database'){
@@ -178,7 +184,7 @@
                     'id', $id
                 )->single();
                 
-                return ($obj) ? $obj->data : false;
+                return ($obj) ? $obj->data : '';
                 
             }
         
