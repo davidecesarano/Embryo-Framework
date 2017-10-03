@@ -69,10 +69,22 @@
             ini_set('session.use_cookies',              1);
             ini_set('session.use_only_cookies',         1);
             ini_set('session.use_trans_sid',            0);
-            ini_set('session.entropy_file',             '/dev/urandom');
-            ini_set('session.entropy_length',           128);
-            ini_set('session.hash_function',            'sha512');
             ini_set('session.cookie_httponly',          1);
+
+            // imposta durezza id di sessione
+            if(version_compare(PHP_VERSION, '7.1', '<')){
+                
+                // PHP < 7.1
+                ini_set('session.entropy_file', '/dev/urandom');
+                ini_set('session.entropy_length', 128);
+                ini_set('session.hash_function', 'sha512');
+
+            } else {
+                
+                // PHP >= 7.1
+                ini_set('session.sid_length', 128);
+            
+            }
             
             // disabilita client/proxy caching
             session_cache_limiter('nocache');
