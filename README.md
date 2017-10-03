@@ -1,5 +1,5 @@
 # Embryo
-[![PHP](https://img.shields.io/badge/php->%3D%205.4-blue.svg?style=flat-square&colorB=8892BF)](https://secure.php.net/) [![Packagist](https://img.shields.io/packagist/v/davidecesarano/embryo-framework.svg?style=flat-square)](https://packagist.org/packages/davidecesarano/embryo-framework) [![Dependency Status](https://www.versioneye.com/user/projects/5814b830d33a7126ff24ee66/badge.svg?style=flat-square)](https://www.versioneye.com/user/projects/5814b830d33a7126ff24ee66) [![Travis](https://img.shields.io/travis/davidecesarano/Embryo-Framework.svg?style=flat-square)](https://travis-ci.org/davidecesarano/Embryo-Framework)
+[![PHP](https://img.shields.io/badge/php->%3D%205.5-blue.svg?style=flat-square&colorB=8892BF)](https://secure.php.net/) [![Packagist](https://img.shields.io/packagist/v/davidecesarano/embryo-framework.svg?style=flat-square)](https://packagist.org/packages/davidecesarano/embryo-framework) [![Dependency Status](https://www.versioneye.com/user/projects/5814b830d33a7126ff24ee66/badge.svg?style=flat-square)](https://www.versioneye.com/user/projects/5814b830d33a7126ff24ee66) [![Travis](https://img.shields.io/travis/davidecesarano/Embryo-Framework.svg?style=flat-square)](https://travis-ci.org/davidecesarano/Embryo-Framework)
 
 ## Cos'è Embryo?
 Embryo è un framework MVC per lo sviluppo di applicazioni web in PHP.
@@ -7,7 +7,7 @@ Embryo è un framework MVC per lo sviluppo di applicazioni web in PHP.
 ## Requisiti
 Per eseguire _web application_ scritte con Embryo, è necessario disporre di:
 * **Apache HTTP Server**
-* **PHP 5.4 o superiore** 
+* **PHP 5.5 o superiore** 
 * Modulo **mod_rewrite** attivo
 * **Composer**
 
