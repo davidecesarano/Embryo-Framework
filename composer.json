@@ -17,9 +17,9 @@
         "mnsami/composer-custom-directory-installer": "1.1.*",
         "components/bootstrap": "3.3.7",
         "components/font-awesome": "4.7.0",
-        "datatables/datatables": "1.10.15",
+        "datatables/datatables": "1.10.16",
         "davidecesarano/gapi": "dev-master",
-        "phpmailer/phpmailer": "v5.2.24"
+        "phpmailer/phpmailer": "v6.0.1"
     },
     "autoload": {
         "psr-4": {
