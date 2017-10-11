@@ -162,12 +162,7 @@
          * @return boolean 
          */
         public function close(){
-            
-            if($this->config['driver'] == 'database'){
-                $this->db->close();
-            }
             return true;
-            
         }
         
         /**
