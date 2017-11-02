@@ -41,8 +41,12 @@
             if(strstr($name, '\\')){ 
                 
                 $exp = explode('\\', $name);
-                $class = 'Models\\'.ucfirst($exp[0]).'\\'.ucfirst($exp[1]);
-                $name_model = $exp[1].'_model';
+                $class = 'Models\\';
+                foreach($exp as $key => $value){
+                    $class .= ucfirst($value).'\\';
+                }
+                $class = rtrim($class, '\\');
+                $name_model = end($exp).'_model';
             
             }else{
                 
