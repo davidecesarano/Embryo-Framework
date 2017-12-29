@@ -21,6 +21,9 @@
         "davidecesarano/gapi": "dev-master",
         "phpmailer/phpmailer": "v6.0.1"
     },
+    "require-dev": {
+        "phpunit/phpunit": "^4.0"
+    },
     "autoload": {
         "psr-4": {
             "Controllers\\": "app/controllers/",
