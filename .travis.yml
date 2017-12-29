@@ -1,8 +1,4 @@
-sudo: false
-
 language: php
-
-dist: trusty
 
 php:
   - 5.5
@@ -13,13 +9,15 @@ php:
 install:
   - composer require php-coveralls/php-coveralls
   - composer install
-  
-script:
+
+before_script:
   - mkdir -p build/logs
-  - vendor/bin/phpunit --coverage-clover buld/logs/clover.xml
+
+script:
+  - php vendor/bin/phpunit --coverage-clover build/logs/clover.xml
 
 after_success:
-- travis_retry php vendor/bin/php-coveralls
+- travis_retry php vendor/bin/php-coveralls -v
 
 notifications:
   email:
