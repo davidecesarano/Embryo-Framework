@@ -24,6 +24,7 @@
 		public function account($account){
 
 			$this->isSMTP();
+            $this->CharSet = "UTF-8";
 			$this->SMTPDebug = 0;
 			$this->Debugoutput = 'html';
 			$this->Host = $account['host'];
