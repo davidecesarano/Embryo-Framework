@@ -188,10 +188,10 @@
          * Salva immagine
          *
          * @param string $folder
-         * @param string|null $new_filename
+         * @param string $new_filename
          * @return boolean
          */
-        public function save($folder, $new_filename = null){
+        public function save($folder, $new_filename){
             
             switch($this->type){
                 

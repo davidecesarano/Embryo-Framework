@@ -70,7 +70,13 @@
          * @return boolean
          */
         public static function remove($key){
-            return (isset($_SESSION[$key])) ? session_unset($_SESSION[$key]) : false;
+            
+            if(self::exists($key)){
+                unset($_SESSION[$key]);
+            }else{
+                return null;
+            }
+            
         } 
         
         /**
