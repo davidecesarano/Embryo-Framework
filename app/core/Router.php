@@ -9,6 +9,7 @@
      * @author Davide Cesarano
      */
     
+    use \Closure;
     use \Exception;
     use Core\Config;
     use Core\Error;
@@ -191,7 +192,7 @@
                 array_push($this->middlewares, $callback['middleware']);
                 
                 // invoca gruppo
-                call_user_func($callback[0]);
+                call_user_func(Closure::bind($callback[0], $this));
                 
                 // ripristina route successivi
                 array_pop($this->middlewares);
@@ -199,7 +200,7 @@
             }else{
                 
                 // assenza middleware
-                call_user_func($callback);
+                call_user_func(Closure::bind($callback, $this));
             
             }
             
