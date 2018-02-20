@@ -283,13 +283,20 @@
         public function request(){
             
             if($this->malicious_request() != true){
-            
+
                 if($_SERVER['QUERY_STRING'] !== ''){
+                    
+                    if(isset($_GET['url'])){
                         
-                    $request = preg_replace('/[&]/', '?', $_SERVER['QUERY_STRING'], 1);
-                    $request = preg_replace('/url=/', '', $request, 1);
-                    $request = preg_replace('/[?]_=([0-9]+)/', '', $request, 1);
-                    $request = preg_replace('/[&]_=([0-9]+)/', '', $request, 1);
+                        $request = preg_replace('/[&]/', '?', $_SERVER['QUERY_STRING'], 1);
+                        $request = preg_replace('/url=/', '', $request, 1);
+                        $request = preg_replace('/[?]_=([0-9]+)/', '', $request, 1);
+                        $request = preg_replace('/[&]_=([0-9]+)/', '', $request, 1);
+
+                    }else{
+                        $request = $_SERVER['QUERY_STRING'];
+                    }
+
                     return filter_var(rtrim($request, '/'), FILTER_SANITIZE_URL);
 
                 }else{
