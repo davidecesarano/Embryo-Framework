@@ -277,8 +277,10 @@
             
                 $files = $this->path.'/'.$this->config['name'].'_*';
                 foreach(glob($files) as $file){
-                    if(filemtime($file) + $maxlifetime < time() && file_exists($file)){
-                        unlink($file);
+                    if (file_exists($file)) {
+                        if(filemtime($file) + $maxlifetime < time()){
+                            unlink($file);
+                        }
                     }
                 }
                 
