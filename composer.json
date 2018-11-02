@@ -1,7 +1,7 @@
 {
     "name": "davidecesarano/embryo-framework",
     "type": "project",
-    "description": "Embryo is a simple MVC PHP Framework for building web applications.",
+    "description": "Embryo is a simple PHP framework for building web applications.",
     "homepage": "https://github.com/davidecesarano/Embryo-Framework",
     "license": "MIT",
     "authors": [
@@ -12,50 +12,22 @@
         }
     ],
     "require": {
-        "php": ">=5.5.0",
-        "robloach/component-installer": "*",
-        "mnsami/composer-custom-directory-installer": "1.1.*",
-        "components/bootstrap": "3.3.7",
-        "components/font-awesome": "4.7.0",
-        "datatables/datatables": "1.10.16",
-        "davidecesarano/gapi": "dev-master",
-        "phpmailer/phpmailer": "v6.0.1"
-    },
-    "require-dev": {
-        "phpunit/phpunit": "^4.0"
+        "php": ">=7.1",
+        "davidecesarano/embryo-http": "dev-master",
+        "davidecesarano/embryo-middleware": "dev-master",
+        "davidecesarano/embryo-container": "dev-master",
+        "davidecesarano/embryo-emitter": "dev-master",
+        "davidecesarano/embryo-session": "dev-master",
+        "davidecesarano/embryo-routing": "dev-master"
     },
     "autoload": {
         "psr-4": {
-            "Controllers\\": "app/controllers/",
-            "Core\\": "app/core/",
-            "Helpers\\": "app/helpers/",
-            "Middleware\\": "app/middleware/",
-            "Models\\": "app/models/"
-        }
-    },
-    "config": {
-        "component-dir": "vendor/assets"
-    },
-    "extra": {
-        "component": {
-            "datatables/datatables": {
-                "scripts": [
-                    "media/js/*.js"
-                ],
-                "styles": [
-                    "media/css/*.css"
-                ],
-                "files": [
-                    "media/images/*.png"
-                ]
-            }
+            "App\\": "app/",
+            "Embryo\\": "src/"
         },
-        "installer-paths": {
-            "./vendor/libs/{$name}": [
-                "davidecesarano/gapi", 
-                "phpmailer/phpmailer"
-            ]
-        }
+        "files": [
+            "src/Helpers/app.php"        
+        ]
     },
     "minimum-stability": "dev"
 }

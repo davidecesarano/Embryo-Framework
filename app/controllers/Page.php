@@ -1,43 +1,36 @@
-<?php namespace Controllers;
-	
-	/**
-	 * Page
-	 *
-	 * @author Davide Cesarano
-	 */
-	
-	use Core\Controller;
-	
-	class Page extends Controller{
-        
-        /**
-		 * Home Page
-		 */
-		public function index(){
+<?php 
+    
+    namespace App\Controllers;
+    
+    use Embryo\Application\Controller;
+    
+    class Page extends Controller
+    {        
+        public function index($request, $response)
+        {
+            $base = $this->container->get('baseUrl');
+            return $response->write('Controller '.$base);
+        }
 
-			// variabili seo
-			$this->view->title = title();
-			$this->view->keywords = keywords();
-			$this->view->description = description();
-			
-			// template
-			$this->loadView('home');
-			
-		}
-        
-        /**
-         * Page 
-         */
-		public function example(){
+        public function param($request, $response, $param)
+        {
+            return $response->write('Controller con parametro '.$param);
+        }
 
-			// variabili seo
-			$this->view->title = 'Example - '.title();
-			$this->view->keywords = keywords();
-			$this->view->description = description();
-			
-			// template
-			$this->loadView('pages/single');
-			
-		}
-        
-	}
+        public function int($request, $response, $int)
+        {
+            return $response->write('Controller con parametro intero '.$int);
+        }
+
+        public function middleware($request, $response, $int)
+        {
+            return $response->write('Controller con parametro intero '.$int.' e middleware');
+        }
+
+        public function optional($request, $response, $param = 'Test')
+        {
+            return $response->write('Optional '.$param);
+        }
+    }
+
+    

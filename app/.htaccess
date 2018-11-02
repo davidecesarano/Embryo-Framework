@@ -1,5 +1,0 @@
-deny from all
-<FilesMatch "\.(html|js|json|css|eot|svg|ttf|woff|woff2|png|jpg|jpeg|gif)$">
-    order deny,allow
-    allow from all
-</FilesMatch>
