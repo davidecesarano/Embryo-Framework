@@ -18,7 +18,8 @@
         "davidecesarano/embryo-container": "dev-master",
         "davidecesarano/embryo-emitter": "dev-master",
         "davidecesarano/embryo-session": "dev-master",
-        "davidecesarano/embryo-routing": "dev-master"
+        "davidecesarano/embryo-routing": "dev-master",
+        "davidecesarano/embryo-view": "dev-master"
     },
     "autoload": {
         "psr-4": {
@@ -26,7 +27,7 @@
             "Embryo\\": "src/"
         },
         "files": [
-            "src/Helpers/app.php"        
+            "src/Application/Helpers.php"        
         ]
     },
     "minimum-stability": "dev"
