@@ -1,5 +1,5 @@
 <!doctype html>
-<html lang="en">
+<html lang="en" class="h-100">
     <head>
         <!-- Required meta tags -->
         <meta charset="utf-8">
@@ -9,4 +9,4 @@
         <link rel="stylesheet" href="<?php echo $css; ?>" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
         <title>Hello, world!</title>
     </head>
-    <body>
+    <body class="h-100">
