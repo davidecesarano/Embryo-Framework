@@ -1,14 +1,16 @@
 <?php 
 
-    use Embryo\Container\Container;
+    use Embryo\Application\Facades\Container;
 
-    function container($key)
+    function site_url($path = null)
     {
-        $container = Container::getInstance();
-        return $container[$key];
+        $url = Container::get('baseUrl');
+        return (!$path) ? $url : $url.'/'.trim($path, '/');
     }
 
-    function site_url()
+    function template_path($path = null)
     {
-        
+        $settings      = Container::get('settings');
+        $template_path = $settings['view']['path']; 
+        return (!$path) ? $template_path : $template_path.'/'.trim($path, '/');
     }
