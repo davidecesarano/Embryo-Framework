@@ -6,46 +6,49 @@
 
     namespace Embryo\Error\Middleware;
 
-    use Embryo\Error\Exceptions\HttpErrorException;
-    use Embryo\Error\Handlers\{ExceptionHandler, HttpErrorHandler};
+    use Embryo\Error\ErrorHandler;
     use Psr\Http\Message\{ServerRequestInterface, ResponseInterface};
     use Psr\Http\Server\{MiddlewareInterface, RequestHandlerInterface};
 
     class ErrorHandlerMiddleware implements MiddlewareInterface
     {
+
+        private $handler;
+
+        public function setHandler($handler)
+        {
+            $this->handler = $handler;
+            return $this;
+        }
+
         public function process(ServerRequestInterface $request, RequestHandlerInterface $handler): ResponseInterface 
         {
-            ob_start();
-            $level = ob_get_level();
-
             try {
                 
-                $response   = $handler->handle($request);
-                $statusCode = $response->getStatusCode();
-                if ($statusCode >= 400 && $statusCode < 600) {
-                    $exception = new HttpErrorException($response->getReasonPhrase(), $response->getStatusCode());
-                    return $this->handleError($request, $exception);
+                $response = $handler->handle($request);                
+                if ($response->getStatusCode() >= 400 && $response->getStatusCode() <= 599) {
+                    
+                    $exception = new \Exception($response->getReasonPhrase(), $response->getStatusCode());
+                    return $this->handleError($request, $exception);    
+
+                } else {
+                    return $response;
                 }
-                return $response;
-            
-            } catch (HttpErrorException $exception) {
-                return $this->handleError($request, $exception);
+                
             } catch (\Throwable $exception) {
-                return $this->handleError($request, new HttpErrorException('', 500, $exception));
-            } finally {
-                while (ob_get_level() >= $level) {
-                    ob_end_clean();
-                }
+                return $this->handleError($request, $exception);
             }
         }
 
         /**
          * Execute the error handler.
+         * 
+         * @param Throwable $exception
+         * @return ResponseInterface
          */
-        private function handleError(ServerRequestInterface $request, HttpErrorException $exception): ResponseInterface
+        private function handleError(ServerRequestInterface $request, \Throwable $exception): ResponseInterface
         {
-            $request = $request->withAttribute('errorInfo', $exception);
-            $handler = new HttpErrorHandler;
-            return $handler->handle($request);
+            $handler = ($this->handler) ? $this->handler : new ErrorHandler;
+            return $handler->process($request, $exception);
         }
     }
