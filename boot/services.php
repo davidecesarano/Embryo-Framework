@@ -18,3 +18,5 @@
     $app->service(App\Services\MiddlewareDispatcherService::class);
     $app->service(App\Services\RouterService::class);
     $app->service(App\Services\ViewService::class);
+    $app->service(App\Services\LoggerService::class);
+    $app->service(App\Services\ErrorHandlerService::class);

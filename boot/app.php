@@ -1,6 +1,7 @@
 <?php 
 
     use Embryo\Application\Application as App;
+    use Embryo\Application\Facade;
 
     /**
      * ------------------------------------------------------------
@@ -28,6 +29,14 @@
 
     /**
      * ------------------------------------------------------------
+     * FACADES
+     * ------------------------------------------------------------
+     */
+    
+    Facade::init($app->getContainer());
+
+    /**
+     * ------------------------------------------------------------
      * MIDDLEWARE
      * ------------------------------------------------------------
      */
@@ -41,8 +50,7 @@
      */
 
     require_once ROOT_PATH.'routes/app.php';
-    require_once ROOT_PATH.'routes/group.php';
-    require_once ROOT_PATH.'routes/controller.php';
+    require_once ROOT_PATH.'routes/api.php';
 
     /**
      * ------------------------------------------------------------
