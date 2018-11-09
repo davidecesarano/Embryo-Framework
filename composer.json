@@ -19,7 +19,8 @@
         "davidecesarano/embryo-emitter": "dev-master",
         "davidecesarano/embryo-session": "dev-master",
         "davidecesarano/embryo-routing": "dev-master",
-        "davidecesarano/embryo-view": "dev-master"
+        "davidecesarano/embryo-view": "dev-master",
+        "davidecesarano/embryo-logger": "dev-master"
     },
     "autoload": {
         "psr-4": {
