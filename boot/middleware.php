@@ -4,11 +4,6 @@
     |--------------------------------------------------------------------------
     | Middleware PSR-15
     |--------------------------------------------------------------------------
-    |
-    | Registra i middleware dell'applicazione. Gli oggetti devono essere
-    | instanze di MiddlewareInterface (PSR 15).
-    | 
-    |
     */
 
     $container = $app->getContainer();
@@ -18,7 +13,7 @@
     // error middleware
     $app->addMiddleware(
         (new Embryo\Error\Middleware\ErrorHandlerMiddleware)
-        ->setHandler($container['errorHandler'])
+            ->setErrorHandler($container['errorHandler'])
     );
 
     // session middleware
