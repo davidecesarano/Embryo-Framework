@@ -20,7 +20,7 @@
         {
             $this->container->set('view', function($container){
                 $settings = $container->get('settings');
-                return new View($settings['view']['path']);
+                return new View($settings['view']['templatePath'], $settings['view']['compilerPath']);
             });
         }
     }

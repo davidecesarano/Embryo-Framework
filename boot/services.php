@@ -20,3 +20,5 @@
     $app->service(App\Services\ViewService::class);
     $app->service(App\Services\LoggerService::class);
     $app->service(App\Services\ErrorHandlerService::class);
+    //$app->service(App\Services\ConnectionService::class);
+    //$app->service(App\Services\PDOService::class);

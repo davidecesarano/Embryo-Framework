@@ -7,7 +7,7 @@
         <link rel="shortcut icon" href="#">
 
         <!-- Bootstrap CSS -->
-        <link rel="stylesheet" href="<?php echo $css; ?>" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
-        <title>Hello, world!</title>
+        <link rel="stylesheet" href="{{ $css }}" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
+        <title>{{ $title }}</title>
     </head>
     <body class="h-100">
