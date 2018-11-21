@@ -27,12 +27,31 @@
         private $settings = [];
         
         /**
-         * Bootstrap application
+         * Bootstrap application.
+         * 
+         * @param array $settings
          */
         public function __construct(array $settings = [])
         {
             $this->container = new Container;
             $this->setSettings($settings);
+        }
+
+        /**
+         * Set settings application.
+         *
+         * @param array $settings
+         * @return void
+         */
+        private function setSettings(array  $settings = [])
+        {
+            if (!empty($settings)) {
+                if (!$this->container->has('settings')) {
+                    $this->container->set('settings', function () use ($settings) {
+                        return $settings;
+                    });
+                }
+            }
         }
         
         /**
@@ -42,7 +61,7 @@
          */
 
         /**
-         * Returns container.
+         * Return container.
          * 
          * @return ContainerInterface
          */
@@ -58,7 +77,7 @@
          */
 
         /**
-         * Adds service.
+         * Add service.
          * 
          * @param string $service
          * @return void
@@ -244,88 +263,5 @@
             $response = $this->container['middlewareDispatcher']->dispatch($request, $response);
             $emitter  = new Emitter;
             $emitter->emit($response);
-        }
-
-        private function exceptionHandler(Exception $e, ServerRequestInterface $request, ResponseInterface $response)
-        {
-            $handler = $this->container['exceptionHandler'];
-            return call_user_func_array($handler, [$request, $response, $e]);
-        }
-
-        /**
-         * ------------------------------------------------------------
-         * RESPONSE
-         * ------------------------------------------------------------
-         */
-        
-        private function sendResponse(ResponseInterface $response)
-        {
-            // protocollo, stato e frase
-            $http_line = sprintf('HTTP/%s %s %s',
-                $response->getProtocolVersion(),
-                $response->getStatusCode(),
-                $response->getReasonPhrase()
-            );
-            
-            // modifica header
-            header($http_line, true, $response->getStatusCode());
-            foreach ($response->getHeaders() as $name => $values) {
-                foreach ($values as $value) {
-                    header("$name: $value", false);
-                }
-            }
-            
-            // stream
-            $stream = $response->getBody();
-            if ($stream->isSeekable()) {
-                $stream->rewind();
-            }
-            
-            // scrive
-            while (!$stream->eof()) {
-                echo $stream->read(1024 * 8);
-            }
-        }    
-        
-        /**
-         * ------------------------------------------------------------
-         * BOOT
-         * ------------------------------------------------------------
-         */
-
-        private function setSettings(array  $settings = [])
-        {
-            if (!empty($settings)) {
-                if (!$this->container->has('settings')) {
-                    $this->container->set('settings', function () use ($settings) {
-                        return $settings;
-                    });
-                }
-            }
-        }
-
-        private function setServices()
-        {
-            $services = $this->container['settings']['services'];
-            foreach($services as $service) {
-                $this->service($service);
-            }
-        }
-
-        private function setMiddleware()
-        {
-            $middlewares = $this->container['settings']['middleware'];
-            foreach($middlewares as $middleware) {
-                $this->middleware($middleware);
-            }
-        }
-
-        private function mapRoutes()
-        {
-            $app = $this;
-            $routes = require $this->container['paths']['routes'].'group.php';
-            return function ($app) use ($routes) {
-                require $routes;
-            };
         }
     }
