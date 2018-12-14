@@ -21,7 +21,11 @@
         "davidecesarano/embryo-routing": "dev-master",
         "davidecesarano/embryo-view": "dev-master",
         "davidecesarano/embryo-logger": "dev-master",
-        "davidecesarano/embryo-error": "dev-master"
+        "davidecesarano/embryo-error": "dev-master",
+        "davidecesarano/embryo-cache": "dev-master",
+        "davidecesarano/embryo-pdo": "dev-master",
+        "davidecesarano/embryo-validation": "dev-master",
+        "phpmailer/phpmailer": "~6.0"
     },
     "autoload": {
         "psr-4": {
