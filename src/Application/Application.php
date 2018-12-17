@@ -248,13 +248,9 @@
          */
 
         /**
-         * Runs application.
+         * Run application.
          * 
-         * Definisce la request e un funzione con la response. Esegue il
-         * dispatcher delle rotte allegando la rotta al dispatcher dei
-         * middleware. Esegue ....
-         * 
-         * @return ResponseInterface
+         * @return void
          */
         public function run()
         {
