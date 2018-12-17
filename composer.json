@@ -25,6 +25,7 @@
         "davidecesarano/embryo-cache": "dev-master",
         "davidecesarano/embryo-pdo": "dev-master",
         "davidecesarano/embryo-validation": "dev-master",
+        "davidecesarano/embryo-csrf": "dev-master",
         "vlucas/phpdotenv": "v2.5.1",
         "phpmailer/phpmailer": "~6.0"
     },
