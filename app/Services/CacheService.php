@@ -1,15 +1,15 @@
 <?php 
 
     /**
-     * LoggerService
+     * CacheService
      */
 
     namespace App\Services;
 
     use Embryo\Container\ServiceProvider;
-    use Embryo\Log\StreamLogger;
+    use Embryo\Cache\Cache;
     
-    class LoggerService extends ServiceProvider
+    class CacheService extends ServiceProvider
     {
         /**
          * Registers service provider.
@@ -18,9 +18,9 @@
          */
         public function register()
         {
-            $this->container->set('logger', function($container){
+            $this->container->set('cache', function($container){
                 $settings = $container->get('settings');
-                return new StreamLogger($settings['logger']['logPath']);
+                return new Cache($settings['cache']['cachePath']);
             });
         }
     }

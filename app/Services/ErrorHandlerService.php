@@ -22,8 +22,9 @@
                 
                 $settings = $container->get('settings');
                 $logger   = $container->get('logger');
-                $error    = new ErrorHandler($settings['errors']['displayDetails'], $settings['errors']['logErrors']);
+                $errors   = $settings['errors'];
                 
+                $error = new ErrorHandler($errors['displayDetails'], $errors['logErrors']);
                 $error->setLogger($logger);
                 return $error;
                 

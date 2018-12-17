@@ -21,7 +21,7 @@
             $this->container->set('response', function(){
                 $response = new ResponseFactory;
                 $response = $response->createResponse(200);
-                return $response->withHeader('Content-Type', 'text/html; charset=UTF-8');
+                return $response->withHeader('Content-Type', 'text/html;charset=UTF-8');
             });
         }
     }
