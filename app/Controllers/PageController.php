@@ -6,9 +6,9 @@
     
     class PageController extends Controller
     {        
-        public function index()
+        public function index($name)
         {
             $view = $this->get('view');
-            return $view->render($response, 'home', ['title' => 'Embryo 2']);
+            return $view->render($this->response(), 'home', ['title' => 'Hello '.$name]);
         }
     }
