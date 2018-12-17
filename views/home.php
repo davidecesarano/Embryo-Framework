@@ -5,7 +5,7 @@
 
     <div class="d-flex flex-column justify-content-center h-100 text-center">
         <h1 class="display-1">{{ $title }}</h1>
-        <div class="h5 text-muted mt-4">A PSR and MVC framework for PHP</div>
+        <div class="h5 text-muted mt-4">A PSR compatible and MVC framework for PHP</div>
     </div>
 
 @include('partials/footer', [
