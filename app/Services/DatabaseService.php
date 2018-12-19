@@ -18,10 +18,12 @@
          */
         public function register()
         {
-            $this->container->set('database', function($container){
+            $this->container->set(Database::class, function($container){
                 $settings = $container['settings'];
                 $database = $settings['database'];
                 return new Database($database);
             });
+
+            $this->container->alias('database', Database::class);
         }
     }

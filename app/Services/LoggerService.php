@@ -18,9 +18,11 @@
          */
         public function register()
         {
-            $this->container->set('logger', function($container){
+            $this->container->set(StreamLogger::class, function($container){
                 $settings = $container->get('settings');
                 return new StreamLogger($settings['logger']['logPath']);
             });
+
+            $this->container->alias('logger', StreamLogger::class);
         }
     }

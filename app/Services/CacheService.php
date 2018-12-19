@@ -18,9 +18,11 @@
          */
         public function register()
         {
-            $this->container->set('cache', function($container){
+            $this->container->set(Cache::class, function($container){
                 $settings = $container->get('settings');
                 return new Cache($settings['cache']['cachePath']);
             });
+
+            $this->container->alias('cache', Cache::class);
         }
     }

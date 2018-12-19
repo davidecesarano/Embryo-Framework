@@ -18,9 +18,11 @@
          */
         public function register()
         {
-            $this->container->set('mail', function($container){
+            $this->container->set(Mail::class, function($container){
                 $settings = $container->get('settings');
                 return new Mail($settings['mail']);
             });
+
+            $this->container->alias('mail', Mail::class);
         }
     }
