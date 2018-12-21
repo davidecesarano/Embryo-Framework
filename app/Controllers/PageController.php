@@ -13,6 +13,6 @@
         public function index($name)
         {
             $view = $this->get('view');
-            return $view->render($this->response(), 'home', ['title' => 'Hello '.$name]);
+            return $view->render($this->response(), 'home', ['title' => trans('hello').' '.$name]);
         }
     }

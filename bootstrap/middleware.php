@@ -31,6 +31,12 @@
     // csrf middleware
     $app->addMiddleware(Embryo\CSRF\CsrfMiddleware::class);
 
+    // set locale language middleware
+    $app->addMiddleware(
+        (new App\Middleware\SetLocaleMiddleware)
+            ->setLanguage($settings['app']['locale'])
+    );
+
     // minify html
     $app->addMiddleware(Embryo\View\Middleware\MinifyHtmlMiddleware::class);
 

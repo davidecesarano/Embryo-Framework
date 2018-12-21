@@ -19,3 +19,4 @@
     $app->service(App\Services\DatabaseService::class);
     $app->service(App\Services\MailService::class);
     $app->service(App\Services\ValidationService::class);
+    $app->service(App\Services\TranslateService::class);

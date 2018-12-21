@@ -121,5 +121,15 @@
         'errors' => [
             'displayDetails' => getenv('ERROR_DISPLAY', true),
             'logErrors'      => getenv('ERROR_LOG', true)
+        ],
+
+        /*
+        |--------------------------------------------------------------------------
+        | Translate
+        |--------------------------------------------------------------------------
+        */
+
+        'translate' => [
+            'languagePath' => ROOT_PATH.'lang'
         ]
     ];
