@@ -14,6 +14,7 @@
     $app->service(App\Services\RouterService::class);
     $app->service(App\Services\LoggerService::class);
     $app->service(App\Services\ErrorHandlerService::class);
+    $app->service(App\Services\SessionService::class);
     $app->service(App\Services\CacheService::class);
     $app->service(App\Services\ViewService::class);
     $app->service(App\Services\DatabaseService::class);
