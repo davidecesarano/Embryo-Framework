@@ -13,6 +13,8 @@
         public function index($name)
         {
             $view = $this->get('view');
-            return $view->render($this->response(), 'home', ['title' => trans('hello').' '.$name]);
+            return $view->render($this->response(), 'home', [
+                'title' => trans('hello', ['name' => ucfirst($name)])
+            ]);
         }
     }

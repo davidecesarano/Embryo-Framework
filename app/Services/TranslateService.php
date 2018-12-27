@@ -6,7 +6,7 @@
 
     namespace App\Services;
 
-    use App\Helpers\Translate;
+    use Embryo\Translate\Translate;
     use Embryo\Container\ServiceProvider;
 
     class TranslateService extends ServiceProvider

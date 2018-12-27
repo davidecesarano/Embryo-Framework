@@ -1,6 +1,6 @@
 <?php 
 
     return [
-        'hello' => 'Ciao',
-        'embryo_description' => 'Embryo è un framework MVC per PHP e compatibile con PSR'
+        'hello' => 'Ciao {name}',
+        'embryo_description' => 'Embryo è un framework MVC per PHP compatibile con PSR'
     ];
