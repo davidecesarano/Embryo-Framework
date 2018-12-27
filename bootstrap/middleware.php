@@ -9,38 +9,50 @@
     $container = $app->getContainer();
     $settings  = $container['settings'];
     $error     = $container['errorHandler'];
-    $session   = $settings['session'];
+    $view      = $container['view'];
+    $session   = $container['session'];
     $router    = $container['router'];
 
-    // secure headers middleware
-    $app->addMiddleware(App\Middleware\SecureHeadersMiddleware::class);
+    // RenderHttpErrorMiddleware
+    $app->addMiddleware(
+        (new App\Middleware\RenderHttpErrorMiddleware)
+            ->setView($view)
+    );
 
-    // error middleware
+    // ErrorHandlerMiddleware
     $app->addMiddleware(
         (new Embryo\Error\Middleware\ErrorHandlerMiddleware)
             ->setErrorHandler($error)
     );
 
-    // session middleware
+    // SecureHeadersMiddleware
+    $app->addMiddleware(App\Middleware\SecureHeadersMiddleware::class);
+
+    // SessionMiddleware
     $app->addMiddleware(
         (new Embryo\Session\Middleware\SessionMiddleware)
-            ->setName($session['name'])
-            ->setOptions($session['options'])
+            ->setSession($session)
+            ->setName($settings['session']['name'])
+            ->setOptions($settings['session']['options'])
     );
 
-    // csrf middleware
+    // CsrfMiddleware
     $app->addMiddleware(Embryo\CSRF\CsrfMiddleware::class);
 
-    // set locale language middleware
+    // SetLocaleMiddleware
     $app->addMiddleware(
-        (new App\Middleware\SetLocaleMiddleware)
+        (new Embryo\Translate\Middleware\SetLocaleMiddleware)
             ->setLanguage($settings['app']['locale'])
     );
 
-    // minify html
+    // MinifyHtmlMiddleware
     $app->addMiddleware(Embryo\View\Middleware\MinifyHtmlMiddleware::class);
 
-    // routing middlewares
+    // MethodOverrideMiddleware
     $app->addMiddleware(Embryo\Routing\Middleware\MethodOverrideMiddleware::class);
+    
+    // RoutingMiddleware
     $app->addMiddleware(new Embryo\Routing\Middleware\RoutingMiddleware($router));
+
+    // RequestHandlerMiddleware
     $app->addMiddleware(new Embryo\Routing\Middleware\RequestHandlerMiddleware($container));
