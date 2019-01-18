@@ -23,9 +23,6 @@
                 return new View($settings['view']['templatePath'], $settings['view']['compilerPath']);
             });
 
-            // alias
-            $this->container->set('view', function($container){
-                return $container[View::class];
-            });
+            $this->container->alias('view', View::class);
         }
     }
