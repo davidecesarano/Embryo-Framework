@@ -58,8 +58,8 @@
     |--------------------------------------------------------------------------
     */
 
+    require_once ROOT_PATH.'routes/api.php';    
     require_once ROOT_PATH.'routes/app.php';
-    require_once ROOT_PATH.'routes/api.php';
 
     /*
     |--------------------------------------------------------------------------
