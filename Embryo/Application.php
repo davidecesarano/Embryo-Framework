@@ -13,6 +13,8 @@
     
     use Embryo\Container\Container;
     use Embryo\Http\Emitter\Emitter;
+    use Embryo\Http\Factory\ResponseFactory;
+    use Embryo\Routing\Exceptions\{NotFoundException, MethodNotAllowed};
     use Psr\Container\ContainerInterface;
     use Psr\Http\Message\{ResponseInterface, ServerRequestInterface};
     use Psr\Http\Server\MiddlewareInterface;
@@ -270,8 +272,31 @@
         {
             $request  = $this->container['request'];
             $response = $this->container['response'];
-            $response = $this->container['router']->dispatch($request, $response);
-            $emitter  = new Emitter;
-            $emitter->emit($response);
+
+            try {
+                
+                $response = $this->container['router']->dispatch($request, $response);
+            
+            } catch (NotFoundException $e) {
+                
+                $response = (new ResponseFactory)->createResponse(404);
+                $response = $this->container['requestHandler']->dispatch($request, $response);
+
+            } catch (MethodNotAllowed $e) {
+                
+                $response = (new ResponseFactory)->createResponse(405);
+                $response = $this->container['requestHandler']->dispatch($request, $response);
+            
+            } catch (\Exception $e) {
+
+                $response = (new ResponseFactory)->createResponse(500);
+                $response = $this->container['requestHandler']->dispatch($request, $response);
+                
+            } finally {
+                
+                $emitter = new Emitter;
+                $emitter->emit($response);
+
+            }
         }
     }
