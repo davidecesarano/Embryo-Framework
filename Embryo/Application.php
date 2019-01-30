@@ -115,7 +115,7 @@
          */
         public function addMiddleware($middleware)
         {
-            $this->container['middlewareDispatcher']->add($middleware);
+            $this->container['requestHandler']->add($middleware);
         }
 
         /**

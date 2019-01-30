@@ -9,7 +9,7 @@
     use Embryo\Container\ServiceProvider;
     use Embryo\Http\Server\RequestHandler;
 
-    class MiddlewareDispatcherService extends ServiceProvider
+    class RequestHandlerService extends ServiceProvider
     {
         /**
          * Registers service provider.
