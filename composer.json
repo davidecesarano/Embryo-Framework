@@ -2,7 +2,7 @@
     "name": "davidecesarano/embryo-framework",
     "type": "project",
     "description": "Embryo is a simple PHP framework for building web applications.",
-    "homepage": "https://github.com/davidecesarano/Embryo-Framework",
+    "homepage": "https://github.com/davidecesarano/embryo-framework",
     "license": "MIT",
     "authors": [
         {
@@ -13,7 +13,6 @@
     ],
     "require": {
         "php": ">=7.1",
-        "davidecesarano/embryo-application": "dev-master",
         "davidecesarano/embryo-http": "dev-master",
         "davidecesarano/embryo-middleware": "dev-master",
         "davidecesarano/embryo-container": "dev-master",
@@ -27,14 +26,15 @@
         "davidecesarano/embryo-pdo": "dev-master",
         "davidecesarano/embryo-validation": "dev-master",
         "davidecesarano/embryo-csrf": "dev-master",
-        "davidecesarano/embryo-translate": "dev-master",
-        "vlucas/phpdotenv": "v2.5.1",
-        "phpmailer/phpmailer": "~6.0"
+        "davidecesarano/embryo-translate": "dev-master"
     },
     "autoload": {
         "psr-4": {
-            "App\\": "app/"
-        }
+            "Embryo\\": "Embryo/"
+        },
+        "files": [
+            "Embryo/Helpers.php"        
+        ]
     },
     "minimum-stability": "dev"
 }

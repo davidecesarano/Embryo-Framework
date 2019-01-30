@@ -1,1 +1,2 @@
-# Embryo Framework 2.x-dev
+# Embryo-Application
+Kernel for Embryo Framework.
