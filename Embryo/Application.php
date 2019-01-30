@@ -82,13 +82,24 @@
         /**
          * Add service.
          * 
-         * @param string $service
+         * @param string|callable $service
          * @return void
+         * @throws InvalidArgumentException
          */
-        public function service(string $service)
+        public function service($service)
         {
-            $service = new $service($this->container);
-            $service->register();
+            if(!is_string($service) && !is_callable($service)) {
+                throw new \InvalidArgumentException('Service must be a string or callable.');
+            }
+
+            if (is_string($service)) {
+                $service = new $service($this->container);
+                $service->register();
+            }
+            
+            if (is_callable($service)) {
+                call_user_func($service, $this->container);
+            }
         }
 
         /**
