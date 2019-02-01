@@ -40,11 +40,8 @@
     });
 
     $app->service(function($container){
-        $container->set('requestHandler', function($container){
-            return new Embryo\Http\Server\RequestHandler([
-                new Embryo\Routing\Middleware\MethodOverrideMiddleware,
-                new Embryo\Routing\Middleware\RoutingMiddleware($container)
-            ]);
+        $container->set('requestHandler', function(){
+            return new Embryo\Http\Server\RequestHandler;
         });
     });
 
@@ -72,7 +69,19 @@
 
     /*
     |--------------------------------------------------------------------------
-    | 5 - Run the Embryo application
+    | 5 - Define the basic Embryo application middleware
     |--------------------------------------------------------------------------
     */
+
+    $container = $app->getContainer();
+    $app->addMiddleware(new Embryo\Routing\Middleware\MethodOverrideMiddleware);
+    $app->addMiddleware(new Embryo\Routing\Middleware\RoutingMiddleware($container['router']));
+    $app->addMiddleware(new Embryo\Routing\Middleware\RequestHandlerMiddleware($container));                
+
+    /*
+    |--------------------------------------------------------------------------
+    | 6 - Run the Embryo application
+    |--------------------------------------------------------------------------
+    */
+
     $app->run();
