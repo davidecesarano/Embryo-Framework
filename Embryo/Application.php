@@ -6,7 +6,7 @@
      * Embryo Framework kernel.
      * 
      * @author Davide Cesarano <davide.cesarano@unipegaso.it>
-     * @link https://github.com/davidecesarano/embryo-application 
+     * @link https://github.com/davidecesarano/embryo-framework 
      */
 
     namespace Embryo;
@@ -17,7 +17,6 @@
     use Embryo\Routing\Exceptions\{NotFoundException, MethodNotAllowed};
     use Psr\Container\ContainerInterface;
     use Psr\Http\Message\{ResponseInterface, ServerRequestInterface};
-    use Psr\Http\Server\MiddlewareInterface;
     
     class Application 
     {
@@ -272,31 +271,8 @@
         {
             $request  = $this->container['request'];
             $response = $this->container['response'];
-
-            try {
-                
-                $response = $this->container['router']->dispatch($request, $response);
-            
-            } catch (NotFoundException $e) {
-                
-                $response = (new ResponseFactory)->createResponse(404);
-                $response = $this->container['requestHandler']->dispatch($request, $response);
-
-            } catch (MethodNotAllowed $e) {
-                
-                $response = (new ResponseFactory)->createResponse(405);
-                $response = $this->container['requestHandler']->dispatch($request, $response);
-            
-            } catch (\Exception $e) {
-
-                $response = (new ResponseFactory)->createResponse(500);
-                $response = $this->container['requestHandler']->dispatch($request, $response);
-                
-            } finally {
-                
-                $emitter = new Emitter;
-                $emitter->emit($response);
-
-            }
+            $response = $this->container['requestHandler']->dispatch($request, $response);
+            $emitter  = new Emitter;
+            $emitter->emit($response);
         }
     }
