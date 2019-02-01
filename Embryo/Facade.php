@@ -7,7 +7,7 @@
      * in the application's service container.
      * 
      * @author Davide Cesarano <davide.cesarano@unipegaso.it>
-     * @link https://github.com/davidecesarano/embryo-application
+     * @link https://github.com/davidecesarano/embryo-framework
      */
 
     namespace Embryo;
