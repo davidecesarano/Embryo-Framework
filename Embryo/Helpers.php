@@ -6,7 +6,7 @@
      * Helper PHP function.
      * 
      * @author Davide Cesarano <davide.cesarano@unipegaso.it>
-     * @link https://github.com/davidecesarano/embryo-application
+     * @link https://github.com/davidecesarano/embryo-framework
      */
 
     use Embryo\Facades\Container;
@@ -110,8 +110,13 @@
      */
     function trans(string $key, array $context = [])
     {
-        $locale   = Container::get('settings')['app']['locale'];
-        $language = Container::get('request')->getAttribute('session')->get('language', $locale);
-        $messages = Container::get('translate')->getMessages($language);
-        return $messages->get($key, $context);
+        $locale = Container::get('settings')['app']['locale'];
+        $session = Container::get('request')->getAttribute('session');
+        
+        if ($session) {
+            $language = $session->get('language', $locale);
+            $messages = Container::get('translate')->getMessages($language);
+            return $messages->get($key, $context);
+        }
+        return $key;
     }
