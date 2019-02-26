@@ -21,9 +21,12 @@
 
                 $settings = $container['settings']['app'];
                 if ($settings['path'] == '') {
+
                     $server   = $container['request']->getServerParams();
                     $script   = parse_url($server['SCRIPT_NAME'], PHP_URL_PATH);
                     $basePath = dirname($script);
+                    $basePath = str_replace('"\"', '/', $basePath);
+
                 } else {
                     $basePath = $settings['path'];
                 }
