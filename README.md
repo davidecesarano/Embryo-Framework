@@ -1,2 +1,2 @@
-# Embryo-Application
-Kernel for Embryo Framework.
+# Embryo-Framework
+Coming soon...
