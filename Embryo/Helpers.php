@@ -12,6 +12,12 @@
     use Embryo\Facades\Container;
 
     /**
+     * ------------------------------------------------------------
+     * INFORMATION ABOUT A VARIABLE
+     * ------------------------------------------------------------
+     */
+
+    /**
      * Debug for information about 
      * a variable.
      *
@@ -39,13 +45,19 @@
     }
 
     /**
+     * ------------------------------------------------------------
+     * SETTINGS APP
+     * ------------------------------------------------------------
+     */
+
+    /**
      * Generate a fully qualified URL 
      * from to app url.
      *
      * @param string|null $path
      * @return string
      */
-    function site_url(string $path = null)
+    function app_url(string $path = null)
     {
         $url = Container::get('baseUrl');
         return (!$path) ? $url : $url.'/'.trim($path, '/');
@@ -66,6 +78,57 @@
     }
 
     /**
+     * Get App name.
+     *
+     * @param string $prepend
+     * @return string
+     */
+    function app_name(string $prepend = null)
+    {
+        $settings = Container::get('settings');
+        return (!$append) ? $append.' - '.$settings['app']['name'] : $settings['app']['name'];
+    }
+
+    /**
+     * Get app locale.
+     *
+     * @return string
+     */
+    function app_locale()
+    {
+        $settings = Container::get('settings');
+        return $settings['app']['locale'];
+    }
+
+    /**
+     * Get app charset.
+     *
+     * @return string
+     */
+    function app_charset()
+    {
+        $settings = Container::get('settings');
+        return $settings['app']['charset'];
+    }
+
+    /**
+     * Alias of app_url()
+     *
+     * @param string|null $path
+     * @return string
+     */
+    function site_url(string $path = null)
+    {
+        return app_url($path);
+    }
+
+    /**
+     * ------------------------------------------------------------
+     * ASSETS
+     * ------------------------------------------------------------
+     */
+
+    /**
      * Generate a fully qualified URL
      * from the asset resources.
      * 
@@ -80,11 +143,17 @@
     {
         if ($versioning) {
             $res = filemtime(app_path('public/assets/'.trim($path, '/')));
-            return site_url('assets/'.$path.'?v='.$res);
+            return app_url('assets/'.$path.'?v='.$res);
         } else {
-            return site_url('assets/'.$path);
+            return app_url('assets/'.$path);
         }
     }
+
+    /**
+     * ------------------------------------------------------------
+     * EMBRYO CSRF
+     * ------------------------------------------------------------
+     */
 
     /**
      * Return CSRF token from request session 
@@ -97,9 +166,15 @@
     {
         $request = Container::get('request');
         $session = $request->getAttribute('session');
-        $tokens  = $session->get('csrf_token', []);
+        $tokens  = $session->get($name, []);
         return '<input type="hidden" name="'.$name.'" value="'.end($tokens).'">';
     }
+
+    /**
+     * ------------------------------------------------------------
+     * EMBRYO TRANSLATE
+     * ------------------------------------------------------------
+     */
 
     /**
      * Return message translation.
