@@ -46,8 +46,8 @@
     });
 
     $app->service(function($container){
-        $container->set('router', function($container){
-            return new Embryo\Routing\Router($container['requestHandler']);
+        $container->set('router', function(){
+            return new Embryo\Routing\Router;
         });
     });
 
