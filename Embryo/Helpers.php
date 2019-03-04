@@ -80,13 +80,12 @@
     /**
      * Get App name.
      *
-     * @param string $prepend
      * @return string
      */
-    function app_name(string $prepend = null)
+    function app_name()
     {
         $settings = Container::get('settings');
-        return (!$append) ? $append.' - '.$settings['app']['name'] : $settings['app']['name'];
+        return $settings['app']['name'];
     }
 
     /**
