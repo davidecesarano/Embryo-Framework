@@ -35,5 +35,7 @@
         "files": [
             "Embryo/Helpers.php"        
         ]
-    }
+    },
+    "minimum-stability": "dev",
+    "prefer-stable": true
 }
