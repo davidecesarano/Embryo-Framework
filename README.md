@@ -2,16 +2,16 @@
 Embryo is a simple PHP framework for building web applications.
 
 ## Features
-### :white_check_mark: PSR Support
+### PSR Support
 Embryo support [PSR-7](https://www.php-fig.org/psr/psr-7) HTTP Message, [PSR-17](https://www.php-fig.org/psr/psr-17) HTTP Factories, [PSR-15](https://www.php-fig.org/psr/psr-15) HTTP Handlers, [PSR-16](https://www.php-fig.org/psr/psr-16) Simple Cache and [PSR-11](https://www.php-fig.org/psr/psr-11) Container. 
 
-### :white_check_mark: HTTP Router
+### HTTP Router
 Embryo provides a PSR compatible router that maps route callbacks to specific HTTP request methods and URIs. It supports parameters and pattern matching. See [Embryo Routing](https://github.com/davidecesarano/Embryo-Routing). 
 
-### :white_check_mark: Middleware
+### Middleware
 Embryo uses Middleware to manipulate the Request and Response object of application. Embryo support middlewares that implement PSR-15 HTTP Handlers. See [Embryo Middleware](https://github.com/davidecesarano/Embryo-Middleware). 
 
-### :white_check_mark: Dependency Injection
+### Dependency Injection
 Embryo uses a dependency container to create, manage ad inject application dependencies. Embryo support containers that implement PSR-11 Container Interface. See [Embryo Container](https://github.com/davidecesarano/Embryo-Container) 
 
 ## Requirements
