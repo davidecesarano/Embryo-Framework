@@ -77,3 +77,6 @@ $ cd example
 $ php -S localhost:8080
 ```
 Going to http://localhost:8080 will now display "Hello World!".
+
+## Application
+The easiest way to start working with Embryo is to create a project using [Embryo Skeleton Application](https://github.com/davidecesarano/Embryo) as a base.
