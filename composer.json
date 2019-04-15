@@ -31,10 +31,7 @@
     "autoload": {
         "psr-4": {
             "Embryo\\": "Embryo/"
-        },
-        "files": [
-            "Embryo/Helpers.php"        
-        ]
+        }
     },
     "minimum-stability": "dev",
     "prefer-stable": true
