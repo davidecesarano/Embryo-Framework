@@ -20,9 +20,9 @@
     |--------------------------------------------------------------------------
     | 3 - Define the basic Embryo application services
     |
-    | -> PSR-7 Request
-    | -> PSR-7 Response
-    | -> PSR-15 RequestHandler
+    | -> PSR Request
+    | -> PSR Response
+    | -> PSR RequestHandler
     | -> Router
     |--------------------------------------------------------------------------
     */
