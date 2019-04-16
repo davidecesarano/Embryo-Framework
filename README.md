@@ -21,7 +21,7 @@ Embryo uses a dependency container to create, manage ad inject application depen
 ## Installation
 Using Composer:
 ```
-$ composer require davidecesarano/embryo-framework
+$ composer require davidecesarano/embryo-framework 2.x
 ```
 
 ## Example
