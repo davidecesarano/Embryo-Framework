@@ -73,10 +73,10 @@ Now, create PSR-15 middleware queue adding required routing middlewares:
 * `RequestHandlerMiddleware` for executing request handlers discovered by router.
 
 ```php
-    $container = $app->getContainer();
-    $app->addMiddleware(new Embryo\Routing\Middleware\MethodOverrideMiddleware);
-    $app->addMiddleware(new Embryo\Routing\Middleware\RoutingMiddleware($container['router']));
-    $app->addMiddleware(new Embryo\Routing\Middleware\RequestHandlerMiddleware($container));      
+$container = $app->getContainer();
+$app->addMiddleware(new Embryo\Routing\Middleware\MethodOverrideMiddleware);
+$app->addMiddleware(new Embryo\Routing\Middleware\RoutingMiddleware($container['router']));
+$app->addMiddleware(new Embryo\Routing\Middleware\RequestHandlerMiddleware($container));      
 ```
 
 Finally, run application:
