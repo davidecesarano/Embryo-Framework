@@ -1,9 +1,20 @@
 # Embryo Framework
 Embryo is a simple PHP framework for building web applications.
+```php
+require 'vendor/autoload.php';
+
+$app = new Embryo\Application;
+
+$app->get('/', function ($request, $response) {
+    return $response->write('Hello World!');
+});
+
+$app->run();
+```
 
 ## Features
 ### PSR Support
-Embryo support [PSR-7](https://www.php-fig.org/psr/psr-7) HTTP Message, [PSR-17](https://www.php-fig.org/psr/psr-17) HTTP Factories, [PSR-15](https://www.php-fig.org/psr/psr-15) HTTP Handlers, [PSR-16](https://www.php-fig.org/psr/psr-16) Simple Cache and [PSR-11](https://www.php-fig.org/psr/psr-11) Container. 
+Embryo support [PSR-7](https://www.php-fig.org/psr/psr-7) HTTP Message, [PSR-17](https://www.php-fig.org/psr/psr-17) HTTP Factories, [PSR-15](https://www.php-fig.org/psr/psr-15) HTTP Server Request Handlers and [PSR-11](https://www.php-fig.org/psr/psr-11) Container. 
 
 ### HTTP Router
 Embryo provides a PSR compatible router that maps route callbacks to specific HTTP request methods and URIs. It supports parameters and pattern matching. See [Embryo Routing](https://github.com/davidecesarano/Embryo-Routing). 
@@ -21,69 +32,10 @@ Embryo uses a dependency container to create, manage ad inject application depen
 ## Installation
 Using Composer:
 ```
-$ composer require davidecesarano/embryo-framework 2.x
+$ composer require davidecesarano/embryo-framework 2.*
 ```
 
 ## Example
-First, instantiate the Embryo application: 
-```php
-$app = new Embryo\Application;
-```
-
-Later, you need to create the `Request`, `Response`, `RequestHandler` and `Router` services:
-```php
-$app->service(function($container){
-    $container->set('request', function(){
-        return (new Embryo\Http\Factory\ServerRequestFactory)->createServerRequestFromServer();
-    });
-});
-
-$app->service(function($container){
-    $container->set('response', function(){
-        return (new Embryo\Http\Factory\ResponseFactory)->createResponse(200);
-    });
-});
-
-$app->service(function($container){
-    $container->set('requestHandler', function(){
-        return new Embryo\Http\Server\RequestHandler;
-    });
-});
-
-$app->service(function($container){
-    $container->set('router', function(){
-        return new Embryo\Routing\Router;
-    });
-});
-```
-
-Now, you can define the Embryo application routes:
-```php
-$app->get('/', function ($request, $response) {
-    return $response->write('Hello World!');
-});
-
-//...
-```
-
-Now, create PSR-15 middleware queue adding required routing middlewares:
-
-* `MethodOverrideMiddleware` for overriding the HTTP Request Method.
-* `RoutingMiddleware` for match route and handler discovery.
-* `RequestHandlerMiddleware` for executing request handlers discovered by router.
-
-```php
-$container = $app->getContainer();
-$app->addMiddleware(new Embryo\Routing\Middleware\MethodOverrideMiddleware);
-$app->addMiddleware(new Embryo\Routing\Middleware\RoutingMiddleware($container['router']));
-$app->addMiddleware(new Embryo\Routing\Middleware\RequestHandlerMiddleware($container));      
-```
-
-Finally, run application:
-```php
-$app->run();
-```
-
 You may quickly test this using the built-in PHP server:
 ```
 $ cd example
