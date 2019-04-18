@@ -15,6 +15,7 @@
     use Embryo\Http\Emitter\Emitter;
     use Embryo\Http\Factory\ResponseFactory;
     use Embryo\Routing\Exceptions\{NotFoundException, MethodNotAllowed};
+    use Embryo\Routing\Middleware\{MethodOverrideMiddleware, RoutingMiddleware, RequestHandlerMiddleware};
     use Psr\Container\ContainerInterface;
     use Psr\Http\Message\{ResponseInterface, ServerRequestInterface};
     
@@ -24,38 +25,32 @@
          * @var ContainerInterface $container
          */
         private $container;
-
-        /**
-         * @var array $settings 
-         */
-        private $settings = [];
         
         /**
-         * Bootstrap application.
+         * Set container and application boot.
          * 
          * @param array $settings
          */
         public function __construct(array $settings = [])
         {
             $this->container = new Container;
-            $this->setSettings($settings);
+            $this->bootstrap($settings);
         }
 
         /**
-         * Set settings application.
+         * Boot application.
          *
          * @param array $settings
          * @return void
          */
-        private function setSettings(array  $settings = [])
+        private function bootstrap(array $settings = [])
         {
-            if (!empty($settings)) {
-                if (!$this->container->has('settings')) {
-                    $this->container->set('settings', function () use ($settings) {
-                        return $settings;
-                    });
-                }
-            }
+            $this->container->set('settings', function () use ($settings) {
+                return $settings;
+            });
+
+            $services = new Services($this->container);
+            $services->register();
         }
         
         /**
@@ -269,6 +264,10 @@
          */
         public function run()
         {
+            $this->addMiddleware(new MethodOverrideMiddleware);
+            $this->addMiddleware(new RoutingMiddleware($this->container['router']));
+            $this->addMiddleware(new RequestHandlerMiddleware($this->container));        
+
             $request  = $this->container['request'];
             $response = $this->container['response'];
             $response = $this->container['requestHandler']->dispatch($request, $response);

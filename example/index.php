@@ -2,7 +2,7 @@
 
     /*
     |--------------------------------------------------------------------------
-    | 1 - Require Composer's autoload
+    | Require Composer's autoload
     |--------------------------------------------------------------------------
     */
     
@@ -10,7 +10,7 @@
 
     /*
     |--------------------------------------------------------------------------
-    | 2 - Instantiate a Embryo application
+    | Instantiate a Embryo application
     |--------------------------------------------------------------------------
     */
 
@@ -18,42 +18,7 @@
 
     /*
     |--------------------------------------------------------------------------
-    | 3 - Define the basic Embryo application services
-    |
-    | -> PSR Request
-    | -> PSR Response
-    | -> PSR RequestHandler
-    | -> Router
-    |--------------------------------------------------------------------------
-    */
-
-    $app->service(function($container){
-        $container->set('request', function(){
-            return (new Embryo\Http\Factory\ServerRequestFactory)->createServerRequestFromServer();
-        });
-    });
-
-    $app->service(function($container){
-        $container->set('response', function(){
-            return (new Embryo\Http\Factory\ResponseFactory)->createResponse(200);
-        });
-    });
-
-    $app->service(function($container){
-        $container->set('requestHandler', function(){
-            return new Embryo\Http\Server\RequestHandler;
-        });
-    });
-
-    $app->service(function($container){
-        $container->set('router', function(){
-            return new Embryo\Routing\Router;
-        });
-    });
-
-    /*
-    |--------------------------------------------------------------------------
-    | 4 - Define the Embryo application routes
+    | Define the Embryo application routes
     |--------------------------------------------------------------------------
     */
 
@@ -69,18 +34,7 @@
 
     /*
     |--------------------------------------------------------------------------
-    | 5 - Define the basic Embryo application middleware
-    |--------------------------------------------------------------------------
-    */
-
-    $container = $app->getContainer();
-    $app->addMiddleware(new Embryo\Routing\Middleware\MethodOverrideMiddleware);
-    $app->addMiddleware(new Embryo\Routing\Middleware\RoutingMiddleware($container['router']));
-    $app->addMiddleware(new Embryo\Routing\Middleware\RequestHandlerMiddleware($container));                
-
-    /*
-    |--------------------------------------------------------------------------
-    | 6 - Run the Embryo application
+    | Run the Embryo application
     |--------------------------------------------------------------------------
     */
 
