@@ -17,16 +17,7 @@
         "davidecesarano/embryo-middleware": "dev-master",
         "davidecesarano/embryo-container": "dev-master",
         "davidecesarano/embryo-emitter": "dev-master",
-        "davidecesarano/embryo-session": "dev-master",
-        "davidecesarano/embryo-routing": "dev-master",
-        "davidecesarano/embryo-view": "dev-master",
-        "davidecesarano/embryo-logger": "dev-master",
-        "davidecesarano/embryo-error": "dev-master",
-        "davidecesarano/embryo-cache": "dev-master",
-        "davidecesarano/embryo-pdo": "dev-master",
-        "davidecesarano/embryo-validation": "dev-master",
-        "davidecesarano/embryo-csrf": "dev-master",
-        "davidecesarano/embryo-translate": "dev-master"
+        "davidecesarano/embryo-routing": "dev-master"
     },
     "autoload": {
         "psr-4": {
