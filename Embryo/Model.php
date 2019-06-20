@@ -45,7 +45,7 @@
          * @param string $connection
          * @return Database
          */
-        final protected function connection(string $connection = 'local'): Database
+        final protected function connection(string $connection = 'local')
         {
            return $this->database->connection($connection);
         }
