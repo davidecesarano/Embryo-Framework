@@ -78,23 +78,36 @@
         /**
          * Add service.
          * 
-         * @param string|callable $service
+         * @param array|string|callable $service
          * @return void
-         * @throws InvalidArgumentException
+         * @throws \InvalidArgumentException
          */
         public function service($service)
         {
-            if(!is_string($service) && !is_callable($service)) {
-                throw new \InvalidArgumentException('Service must be a string or callable.');
+            if(!is_string($service) && !is_callable($service) && !is_array($service)) {
+                throw new \InvalidArgumentException('Service must be a string, array or callable');
             }
 
             if (is_string($service)) {
                 $service = new $service($this->container);
                 $service->register();
             }
-            
+
             if (is_callable($service)) {
                 call_user_func($service, $this->container);
+            }
+
+            if (is_array($service)) {
+                foreach ($service as $s) {
+                    if (is_callable($s)) {
+                        call_user_func($s, $this->container);        
+                    } else if (is_string($s)) {
+                        $s = new $s($this->container);
+                        $s->register();
+                    } else {
+                        throw new \InvalidArgumentException('Service must be a string or callable in array services');
+                    }
+                }
             }
         }
 
@@ -107,7 +120,8 @@
         /**
          * Add middleware.
          *
-         * @param string|MiddlewareInterface $middleware 
+         * @param string|MiddlewareInterface $middleware
+         * @return void 
          */
         public function addMiddleware($middleware)
         {
