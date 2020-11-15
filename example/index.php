@@ -26,7 +26,7 @@
         return $response->write('Hello World!');
     });
 
-    $app->get('/hello[/{name}]', function ($request, $response, $name) {
+    $app->get('/hello[/{name}]', function ($request, $response, $name = null) {
         return $response->withJson([
             'result' => 'Hello '.$name
         ]);

@@ -11,20 +11,22 @@
 
     namespace Embryo;
     
-    use Embryo\Container\Container;
+    use Embryo\Container\ContainerBuilder;
+    use Embryo\Container\Interfaces\ContainerBuilderInterface;
     use Embryo\Http\Emitter\Emitter;
     use Embryo\Http\Factory\ResponseFactory;
-    use Embryo\Routing\Exceptions\{NotFoundException, MethodNotAllowed};
     use Embryo\Routing\Middleware\{MethodOverrideMiddleware, RoutingMiddleware, RequestHandlerMiddleware};
+    use Embryo\Routing\Interfaces\RouteInterface;
     use Psr\Container\ContainerInterface;
     use Psr\Http\Message\{ResponseInterface, ServerRequestInterface};
+    use Psr\Http\Server\MiddlewareInterface;
     
     class Application 
     {
         /**
-         * @var ContainerInterface $container
+         * @var ContainerBuilderInterface $containerBuilder
          */
-        private $container;
+        private $containerBuilder;
         
         /**
          * Set container and application boot.
@@ -33,7 +35,7 @@
          */
         public function __construct(array $settings = [])
         {
-            $this->container = new Container;
+            $this->containerBuilder = new ContainerBuilder;
             $this->bootstrap($settings);
         }
 
@@ -45,11 +47,11 @@
          */
         private function bootstrap(array $settings = [])
         {
-            $this->container->set('settings', function () use ($settings) {
+            $this->containerBuilder->set('settings', function() use($settings) {
                 return $settings;
             });
 
-            $services = new Services($this->container);
+            $services = new Services($this->containerBuilder);
             $services->register();
         }
         
@@ -66,7 +68,7 @@
          */
         public function getContainer(): ContainerInterface
         {
-            return $this->container;
+            return $this->containerBuilder->build();
         }
 
         /**
@@ -87,22 +89,23 @@
             if(!is_string($service) && !is_callable($service) && !is_array($service)) {
                 throw new \InvalidArgumentException('Service must be a string, array or callable');
             }
+            $container = $this->containerBuilder->build();
 
             if (is_string($service)) {
-                $service = new $service($this->container);
+                $service = new $service($container);
                 $service->register();
             }
 
             if (is_callable($service)) {
-                call_user_func($service, $this->container);
+                call_user_func($service, $container);
             }
 
             if (is_array($service)) {
                 foreach ($service as $s) {
                     if (is_callable($s)) {
-                        call_user_func($s, $this->container);        
+                        call_user_func($s, $container);        
                     } else if (is_string($s)) {
-                        $s = new $s($this->container);
+                        $s = new $s($container);
                         $s->register();
                     } else {
                         throw new \InvalidArgumentException('Service must be a string or callable in array services');
@@ -125,7 +128,7 @@
          */
         public function addMiddleware($middleware)
         {
-            $this->container['requestHandler']->add($middleware);
+            $this->containerBuilder->get('requestHandler')->add($middleware);
         }
 
         /**
@@ -139,10 +142,11 @@
          *
          * @param string $pattern
          * @param mixed $callback
+         * @return RouteInterface
          */
-        public function get($pattern, $callback)
+        public function get($pattern, $callback): RouteInterface
         {
-            return $this->container['router']->get($pattern, $callback);
+            return $this->containerBuilder->get('router')->get($pattern, $callback);
         }
 
         /**
@@ -150,10 +154,11 @@
          *
          * @param string $pattern
          * @param mixed $callback
+         * @return RouteInterface
          */
-        public function post($pattern, $callback)
+        public function post($pattern, $callback): RouteInterface
         {
-            return $this->container['router']->post($pattern, $callback);
+            return $this->containerBuilder->get('router')->post($pattern, $callback);
         }
         
         /**
@@ -161,10 +166,11 @@
          *
          * @param string $pattern
          * @param mixed $callback
+         * @return RouteInterface
          */
-        public function put($pattern, $callback)
+        public function put($pattern, $callback): RouteInterface
         {
-            return $this->container['router']->put($pattern, $callback);
+            return $this->containerBuilder->get('router')->put($pattern, $callback);
         }
 
         /**
@@ -172,10 +178,11 @@
          *
          * @param string $pattern
          * @param mixed $callback
+         * @return RouteInterface
          */
-        public function patch($pattern, $callback)
+        public function patch($pattern, $callback): RouteInterface
         {
-            return $this->container['router']->patch($pattern, $callback);
+            return $this->containerBuilder->get('router')->patch($pattern, $callback);
         }
         
         /**
@@ -183,10 +190,11 @@
          *
          * @param string $pattern
          * @param mixed $callback
+         * @return RouteInterface
          */
-        public function delete($pattern, $callback)
+        public function delete($pattern, $callback): RouteInterface
         {
-            return $this->container['router']->delete($pattern, $callback);
+            return $this->containerBuilder->get('router')->delete($pattern, $callback);
         }
 
         /**
@@ -194,22 +202,24 @@
          *
          * @param string $pattern
          * @param mixed $callback
+         * @return RouteInterface
          */
-        public function options($pattern, $callback)
+        public function options($pattern, $callback): RouteInterface
         {
-            return $this->container['router']->options($pattern, $callback);
+            return $this->containerBuilder->get('router')->options($pattern, $callback);
         }
 
         /**
          * MAP
          *
-         * @param array $methdos
+         * @param array $methods
          * @param string $pattern
          * @param mixed $callback
+         * @return RouteInterface
          */
-        public function map(array $methods, $pattern, $callback)
+        public function map(array $methods, $pattern, $callback): RouteInterface
         {
-            return $this->container['router']->map($methods, $pattern, $callback);
+            return $this->containerBuilder->get('router')->map($methods, $pattern, $callback);
         }
 
         /**
@@ -217,40 +227,44 @@
          *
          * @param string $pattern
          * @param mixed $callback
+         * @return RouteInterface
          */
-        public function all($pattern, $callback)
+        public function all($pattern, $callback): RouteInterface
         {
-            return $this->container['router']->all($pattern, $callback);     
+            return $this->containerBuilder->get('router')->all($pattern, $callback);     
         }
 
         /**
          * PREFIX
          *
          * @param string $prefix
+         * @return RouteInterface
          */
-        public function prefix($prefix)
+        public function prefix($prefix): RouteInterface
         {
-            return $this->container['router']->prefix($prefix);     
+            return $this->containerBuilder->get('router')->prefix($prefix);     
         }
 
         /**
          * MIDDLEWARE
          *
          * @param string|array|MiddlewareInterface $middleware
+         * @return RouteInterface
          */
-        public function middleware($middleware)
+        public function middleware($middleware): RouteInterface
         {
-            return $this->container['router']->middleware($middleware);     
+            return $this->containerBuilder->get('router')->middleware($middleware);     
         }
 
         /**
          * GROUP
          *
          * @param callable $callback
+         * @return RouteInterface
          */
-        public function group($callback)
+        public function group($callback): RouteInterface
         {
-            return $this->container['router']->group($callback);     
+            return $this->containerBuilder->get('router')->group($callback);     
         }
 
         /**
@@ -259,10 +273,11 @@
          * @param string $pattern
          * @param string $location
          * @param int $code
+         * @return mixed
          */
         public function redirect($pattern, $location, $code = 302)
         {
-            return $this->container['router']->redirect($pattern, $location, $code);     
+            return $this->containerBuilder->get('router')->redirect($pattern, $location, $code);     
         }
 
         /**
@@ -279,12 +294,12 @@
         public function run()
         {
             $this->addMiddleware(new MethodOverrideMiddleware);
-            $this->addMiddleware(new RoutingMiddleware($this->container['router']));
-            $this->addMiddleware(new RequestHandlerMiddleware($this->container));        
+            $this->addMiddleware(new RoutingMiddleware($this->containerBuilder->get('router')));
+            $this->addMiddleware(new RequestHandlerMiddleware($this->containerBuilder));        
 
-            $request  = $this->container['request'];
-            $response = $this->container['response'];
-            $response = $this->container['requestHandler']->dispatch($request, $response);
+            $request  = $this->containerBuilder->get('request');
+            $response = $this->containerBuilder->get('response');
+            $response = $this->containerBuilder->get('requestHandler')->dispatch($request, $response);
             $emitter  = new Emitter;
             $emitter->emit($response);
         }

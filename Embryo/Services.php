@@ -11,26 +11,26 @@
 
     namespace Embryo;
 
+    use Embryo\Container\Interfaces\ContainerBuilderInterface;
     use Embryo\Http\Factory\{ResponseFactory, ServerRequestFactory};
     use Embryo\Http\Server\RequestHandler;
     use Embryo\Routing\Router;
-    use Psr\Container\ContainerInterface;
 
     class Services 
     {
         /**
-         * @var ContainerInterface $container
+         * @var ContainerBuilderInterface $containerBuilder
          */
-        private $container;
+        private $containerBuilder;
 
         /**
          * Set container.
          *
-         * @param ContainerInterface $container
+         * @param ContainerBuilderInterface $containerBuilder
          */
-        public function __construct(ContainerInterface $container)
+        public function __construct(ContainerBuilderInterface $containerBuilder)
         {
-            $this->container = $container;
+            $this->containerBuilder = $containerBuilder;
         }
 
         /**
@@ -53,7 +53,7 @@
          */
         private function setRequestService()
         {
-            $this->container->set('request', function(){
+            $this->containerBuilder->set('request', function(){
                 return (new ServerRequestFactory)->createServerRequestFromServer();
             });
         }
@@ -65,7 +65,7 @@
          */
         private function setResponseService()
         {
-            $this->container->set('response', function(){
+            $this->containerBuilder->set('response', function(){
                 return (new ResponseFactory)->createResponse(200);
             });
         }
@@ -77,7 +77,7 @@
          */
         private function setRequestHandlerService()
         {
-            $this->container->set('requestHandler', function(){
+            $this->containerBuilder->set('requestHandler', function(){
                 return new RequestHandler;
             });
         }
@@ -89,7 +89,7 @@
          */
         private function setRouterService()
         {
-            $this->container->set('router', function(){
+            $this->containerBuilder->set('router', function(){
                 return new Router;
             });
         }
