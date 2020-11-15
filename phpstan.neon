@@ -1,0 +1,7 @@
+parameters:
+	checkMissingIterableValueType: false
+	treatPhpDocTypesAsCertain: false
+	level: max
+	paths:
+		- Embryo
+		- example

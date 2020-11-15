@@ -25,6 +25,7 @@
          * Set Container.
          *
          * @param ContainerInterface $container
+         * @return void
          */
         public static function init(ContainerInterface $container)
         {
