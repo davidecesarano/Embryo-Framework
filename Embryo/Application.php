@@ -16,7 +16,7 @@
     use Embryo\Http\Emitter\Emitter;
     use Embryo\Http\Factory\ResponseFactory;
     use Embryo\Routing\Middleware\{MethodOverrideMiddleware, RoutingMiddleware, RequestHandlerMiddleware};
-    use Embryo\Routing\Interfaces\RouteInterface;
+    use Embryo\Routing\Interfaces\{RouteInterface, RouterInterface};
     use Psr\Container\ContainerInterface;
     use Psr\Http\Message\{ResponseInterface, ServerRequestInterface};
     use Psr\Http\Server\MiddlewareInterface;
@@ -89,23 +89,22 @@
             if(!is_string($service) && !is_callable($service) && !is_array($service)) {
                 throw new \InvalidArgumentException('Service must be a string, array or callable');
             }
-            $container = $this->containerBuilder->build();
 
             if (is_string($service)) {
-                $service = new $service($container);
+                $service = new $service($this->containerBuilder);
                 $service->register();
             }
 
             if (is_callable($service)) {
-                call_user_func($service, $container);
+                call_user_func($service, $this->containerBuilder);
             }
 
             if (is_array($service)) {
                 foreach ($service as $s) {
                     if (is_callable($s)) {
-                        call_user_func($s, $container);        
+                        call_user_func($s, $this->containerBuilder);        
                     } else if (is_string($s)) {
-                        $s = new $s($container);
+                        $s = new $s($this->containerBuilder);
                         $s->register();
                     } else {
                         throw new \InvalidArgumentException('Service must be a string or callable in array services');
@@ -238,9 +237,9 @@
          * PREFIX
          *
          * @param string $prefix
-         * @return RouteInterface
+         * @return RouterInterface
          */
-        public function prefix($prefix): RouteInterface
+        public function prefix($prefix): RouterInterface
         {
             return $this->containerBuilder->get('router')->prefix($prefix);     
         }
@@ -249,9 +248,9 @@
          * MIDDLEWARE
          *
          * @param string|array|MiddlewareInterface $middleware
-         * @return RouteInterface
+         * @return RouterInterface
          */
-        public function middleware($middleware): RouteInterface
+        public function middleware($middleware): RouterInterface
         {
             return $this->containerBuilder->get('router')->middleware($middleware);     
         }
@@ -260,9 +259,9 @@
          * GROUP
          *
          * @param callable $callback
-         * @return RouteInterface
+         * @return RouterInterface
          */
-        public function group($callback): RouteInterface
+        public function group($callback): RouterInterface
         {
             return $this->containerBuilder->get('router')->group($callback);     
         }
