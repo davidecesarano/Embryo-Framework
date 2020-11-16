@@ -12,16 +12,16 @@
     namespace Embryo\Facades;
 
     use Embryo\Facade;
-    use Psr\Container\ContainerInterface;
+    use Embryo\Container\Interfaces\ContainerBuilderInterface;
 
     class Container extends Facade 
     {
         /**
          * Return container.
          *
-         * @return ContainerInterface
+         * @return ContainerBuilderInterface
          */
-        public static function self(): ContainerInterface
+        public static function self(): ContainerBuilderInterface
         {
             return self::$container;
         }

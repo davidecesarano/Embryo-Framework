@@ -21,33 +21,27 @@
         protected $connection = 'local';
         
         /**
-         * @var Database $database
-         */
-        private $database;
-        
-        /**
-         * @var Database $pdo
+         * @var \Embryo\PDO\Database $pdo
          */
         protected $pdo;
 
         /**
-         * Set database and pdo connection.
+         * Set pdo connection.
          */
         public function __construct()
         {
-            $this->database = Container::get('database');
-            $this->pdo      = $this->database->connection($this->connection);
+            $this->pdo = Container::get('database')->connection($this->connection);
         }
 
         /**
          * Set connection.
          *
          * @param string $connection
-         * @return Database
+         * @return \Embryo\PDO\Connection
          */
-        final protected function connection(string $connection = 'local')
+        final protected function connection(string $connection)
         {
-           return $this->database->connection($connection);
+           return Container::get('database')->connection($connection);
         }
 
         /**

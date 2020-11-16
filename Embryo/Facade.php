@@ -12,22 +12,22 @@
 
     namespace Embryo;
 
-    use Psr\Container\ContainerInterface;
+    use Embryo\Container\Interfaces\ContainerBuilderInterface;
 
     class Facade 
     {
         /**
-         * @var ContainerInterface $container
+         * @var ContainerBuilderInterface $container
          */
         public static $container;
 
         /**
          * Set Container.
          *
-         * @param ContainerInterface $container
+         * @param ContainerBuilderInterface $container
          * @return void
          */
-        public static function init(ContainerInterface $container)
+        public static function init(ContainerBuilderInterface $container)
         {
             Facade::$container = $container;
         }
@@ -42,5 +42,15 @@
         public static function __callStatic(string $method, $args)
         {
             return static::self()->$method(...$args);
+        }
+
+        /**
+         * Set the instance which needs facades.
+         * 
+         * @return ContainerBuilderInterface
+         */
+        public static function self(): ContainerBuilderInterface
+        {
+            return Facade::$container;
         }
     }

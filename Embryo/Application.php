@@ -17,7 +17,6 @@
     use Embryo\Http\Factory\ResponseFactory;
     use Embryo\Routing\Middleware\{MethodOverrideMiddleware, RoutingMiddleware, RequestHandlerMiddleware};
     use Embryo\Routing\Interfaces\{RouteInterface, RouterInterface};
-    use Psr\Container\ContainerInterface;
     use Psr\Http\Message\{ResponseInterface, ServerRequestInterface};
     use Psr\Http\Server\MiddlewareInterface;
     
@@ -64,11 +63,11 @@
         /**
          * Return container.
          * 
-         * @return ContainerInterface
+         * @return ContainerBuilderInterface
          */
-        public function getContainer(): ContainerInterface
+        public function getContainer(): ContainerBuilderInterface
         {
-            return $this->containerBuilder->build();
+            return $this->containerBuilder;
         }
 
         /**
