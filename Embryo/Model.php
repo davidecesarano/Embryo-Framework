@@ -19,6 +19,11 @@
          * @var string $connection
          */
         protected $connection = 'local';
+
+        /**
+         * @var string $table
+         */
+        protected $table;
         
         /**
          * @var \Embryo\PDO\Database $pdo
@@ -28,7 +33,7 @@
         /**
          * Set pdo connection.
          */
-        public function __construct()
+        final public function __construct()
         {
             $this->pdo = Container::get('database')->connection($this->connection);
         }
@@ -53,5 +58,18 @@
         final protected function get(string $key)
         {
             return Container::get($key);
+        }
+
+        /**
+         * Facade.
+         * 
+         * @param string $method 
+         * @param string[] $args 
+         * @return mixed
+         */
+        public static function __callStatic(string $method, $args)
+        {
+            $model = new static();
+            return $model->connection($model->connection)->table($model->table)->$method(...$args);
         }
     }
