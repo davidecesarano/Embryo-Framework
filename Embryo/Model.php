@@ -70,6 +70,6 @@
         public static function __callStatic(string $method, $args)
         {
             $model = new static();
-            return $model->connection($model->connection)->table($model->table)->$method(...$args);
+            return $model->pdo->table($model->table)->$method(...$args);
         }
     }
