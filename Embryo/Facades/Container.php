@@ -14,7 +14,13 @@
     use Embryo\Facade;
     use Embryo\Container\Interfaces\ContainerBuilderInterface;
 
-    class Container extends Facade 
+    /**
+     * Container
+     * 
+     * @method static mixed get($key)
+     */
+    
+     class Container extends Facade 
     {
         /**
          * Return container.

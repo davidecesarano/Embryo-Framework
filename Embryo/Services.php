@@ -12,6 +12,7 @@
     namespace Embryo;
 
     use Embryo\Container\Interfaces\ContainerBuilderInterface;
+    use Embryo\Error\ErrorHandler;
     use Embryo\Http\Factory\{ResponseFactory, ServerRequestFactory};
     use Embryo\Http\Server\RequestHandler;
     use Embryo\Routing\Router;
@@ -44,6 +45,7 @@
             $this->setResponseService();
             $this->setRequestHandlerService();
             $this->setRouterService();
+            $this->setErrorHandlerService();
         }
 
         /**
@@ -91,6 +93,18 @@
         {
             $this->containerBuilder->set('router', function(){
                 return new Router;
+            });
+        }
+
+        /**
+         * Set Error Handler Service.
+         * 
+         * @return void
+         */
+        private function setErrorHandlerService()
+        {
+            $this->containerBuilder->set('errorHandler', function(){
+                return new ErrorHandler(true, false);
             });
         }
     }

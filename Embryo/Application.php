@@ -13,6 +13,7 @@
     
     use Embryo\Container\ContainerBuilder;
     use Embryo\Container\Interfaces\ContainerBuilderInterface;
+    use Embryo\Error\Middleware\ErrorHandlerMiddleware;
     use Embryo\Http\Emitter\Emitter;
     use Embryo\Http\Factory\ResponseFactory;
     use Embryo\Routing\Middleware\{MethodOverrideMiddleware, RoutingMiddleware, RequestHandlerMiddleware};
@@ -26,6 +27,11 @@
          * @var ContainerBuilderInterface $containerBuilder
          */
         private $containerBuilder;
+
+        /**
+         * @var bool $errorMiddlewareAdded
+         */
+        private $errorMiddlewareAdded = false;
         
         /**
          * Set container and application boot.
@@ -53,6 +59,66 @@
             $services = new Services($this->containerBuilder);
             $services->register();
         }
+
+        /**
+         * Include application file.
+         * 
+         * @param string|array $files
+         * @return void
+         * @throws \RuntimeException
+         * @throws \InvalidArgumentException
+         * @throws \Exception
+         */
+        public function import($files): void 
+        {
+            try {
+
+                if (is_string($files)) {
+                    
+                    if (file_exists($files)) {
+                        $closure = function($app) use($files) {
+                            return include $files;
+                        };
+                        call_user_func($closure, $this);
+                    } else {
+                        throw new \RuntimeException("File $files does not exists");
+                    }
+
+                } elseif (is_array($files)) {
+                    
+                    foreach ($files as $file) {
+                        if (file_exists($file)) {
+                            $closure = function($app) use($file) {
+                                return include $file;
+                            };
+                            call_user_func($closure, $this);
+                        } else {
+                            throw new \RuntimeException("File $file does not exists");
+                        }
+                    } 
+
+                } else {
+                    throw new \InvalidArgumentException("Files must be string or array");
+                } 
+                
+            } catch (\Throwable $e) {
+                $this->throwApplicationError($e);
+            }
+        }
+
+        /**
+         * Throw internal application error.
+         * 
+         * @param \Throwable $error 
+         * @return mixed
+         */
+        private function throwApplicationError(\Throwable $error) 
+        {
+            $errorHandler = $this->containerBuilder->get('errorHandler');
+            $request = $this->containerBuilder->get('request');
+            $response = $errorHandler->process($request, $error);
+            return $this->emit($response);
+        }
         
         /**
          * ------------------------------------------------------------
@@ -72,7 +138,7 @@
 
         /**
          * ------------------------------------------------------------
-         * SERVICE
+         * SERVICES
          * ------------------------------------------------------------
          */
 
@@ -130,8 +196,42 @@
         }
 
         /**
+         * Add error handler middleware.
+         * 
+         * It's possible prepend a custom error 
+         * handler middleware.
+         *
+         * @param string|MiddlewareInterface $middleware
+         * @return void 
+         */
+        public function addErrorMiddleware(MiddlewareInterface $middleware = null)
+        {
+            $requestHandler = $this->containerBuilder->get('requestHandler');
+            $errorHandler = $this->containerBuilder->get('errorHandler');
+            $errorHandlerMiddleware = (new ErrorHandlerMiddleware)->setErrorHandler($errorHandler);
+            $requestHandler->prepend($errorHandlerMiddleware);
+            
+            if ($middleware) {
+                $requestHandler->prepend($middleware);
+            }
+            $this->errorMiddlewareAdded = true;
+        }
+
+        /**
+         * Add routing middlewares.
+         * 
+         * @return void
+         */
+        private function addRoutingMiddleware() 
+        {
+            $this->addMiddleware(new MethodOverrideMiddleware);
+            $this->addMiddleware(new RoutingMiddleware($this->containerBuilder->get('router')));
+            $this->addMiddleware(new RequestHandlerMiddleware($this->containerBuilder)); 
+        }
+
+        /**
          * ------------------------------------------------------------
-         * ROUTING PROXY
+         * ROUTING
          * ------------------------------------------------------------
          */
 
@@ -285,20 +385,33 @@
          */
 
         /**
+         * Emit response.
+         * 
+         * @param ResponseInterface $response 
+         * @return mixed
+         */
+        private function emit(ResponseInterface $response)
+        {
+            $emitter = new Emitter;
+            $emitter->emit($response);
+        }
+
+        /**
          * Run application.
          * 
          * @return mixed
          */
         public function run()
-        {
-            $this->addMiddleware(new MethodOverrideMiddleware);
-            $this->addMiddleware(new RoutingMiddleware($this->containerBuilder->get('router')));
-            $this->addMiddleware(new RequestHandlerMiddleware($this->containerBuilder));        
+        {       
+            if (!$this->errorMiddlewareAdded) {
+                $this->addErrorMiddleware();
+            }
+            $this->addRoutingMiddleware();
 
             $request  = $this->containerBuilder->get('request');
             $response = $this->containerBuilder->get('response');
             $response = $this->containerBuilder->get('requestHandler')->dispatch($request, $response);
-            $emitter  = new Emitter;
-            $emitter->emit($response);
+            
+            return $this->emit($response);
         }
     }

@@ -13,5 +13,27 @@
     namespace Embryo;
 
     use Embryo\Routing\Controller as RoutingController;
+    use Psr\Http\Message\{ServerRequestInterface, ResponseInterface};
     
-    class Controller extends RoutingController {}
+    class Controller extends RoutingController 
+    {
+        /**
+         * ServerRequest
+         * 
+         * @return ServerRequestInterface
+         */
+        protected function request(): ServerRequestInterface
+        {
+            return $this->request;
+        }
+
+        /**
+         * Response
+         * 
+         * @return ResponseInterface
+         */
+        protected function response(): ResponseInterface
+        {
+            return $this->response;
+        }
+    }

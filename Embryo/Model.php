@@ -26,7 +26,7 @@
         protected $table;
         
         /**
-         * @var \Embryo\PDO\Database $pdo
+         * @var \Embryo\PDO\Connection $pdo
          */
         protected $pdo;
 
