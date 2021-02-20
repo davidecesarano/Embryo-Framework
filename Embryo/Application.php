@@ -201,7 +201,7 @@
          * It's possible prepend a custom error 
          * handler middleware.
          *
-         * @param string|MiddlewareInterface $middleware
+         * @param MiddlewareInterface $middleware
          * @return void 
          */
         public function addErrorMiddleware(MiddlewareInterface $middleware = null)
