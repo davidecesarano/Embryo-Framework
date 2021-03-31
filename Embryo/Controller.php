@@ -22,7 +22,7 @@
          * 
          * @return ServerRequestInterface
          */
-        protected function request(): ServerRequestInterface
+        final protected function request(): ServerRequestInterface
         {
             return $this->request;
         }
@@ -32,7 +32,7 @@
          * 
          * @return ResponseInterface
          */
-        protected function response(): ResponseInterface
+        final protected function response(): ResponseInterface
         {
             return $this->response;
         }

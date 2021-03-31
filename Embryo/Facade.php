@@ -45,12 +45,23 @@
         }
 
         /**
+         * Set the service name to static proxy.
+         * 
+         * @return string
+         */
+        protected static function getFacadeAccessor(): string
+        {
+            return '';
+        }
+
+        /**
          * Set the instance which needs facades.
          * 
-         * @return ContainerBuilderInterface
+         * @return mixed
          */
-        public static function self(): ContainerBuilderInterface
+        public static function self()
         {
-            return Facade::$container;
+            $key = static::getFacadeAccessor();
+            return empty($key) ? Facade::$container : Facade::$container->get($key);
         }
     }

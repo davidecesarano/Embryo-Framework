@@ -12,23 +12,16 @@
     namespace Embryo\Facades;
 
     use Embryo\Facade;
-    use Embryo\Container\Interfaces\ContainerBuilderInterface;
-
-    /**
-     * Cache
-     * 
-     * @method static mixed get($key)
-     */
     
     class Cache extends Facade 
     {
         /**
-         * Return container.
+         * Return service name.
          *
-         * @return ContainerBuilderInterface
+         * @return string
          */
-        public static function self(): ContainerBuilderInterface
+        public static function getFacadeAccessor(): string
         {
-            return self::$container->get('cache');
+            return 'cache';
         }
     }

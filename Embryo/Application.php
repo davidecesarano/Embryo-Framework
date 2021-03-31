@@ -99,7 +99,9 @@
 
                 } else {
                     throw new \InvalidArgumentException("Files must be string or array");
-                } 
+                }
+
+                Facade::init($this->containerBuilder);
                 
             } catch (\Throwable $e) {
                 $this->throwApplicationError($e);
@@ -176,6 +178,8 @@
                     }
                 }
             }
+
+            Facade::init($this->containerBuilder);
         }
 
         /**
