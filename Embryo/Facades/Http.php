@@ -13,7 +13,7 @@
 
     use Embryo\Facade;
     
-    class Gttp extends Facade 
+    class Http extends Facade 
     {
         /**
          * Return service name.
