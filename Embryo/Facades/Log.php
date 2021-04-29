@@ -22,6 +22,6 @@
          */
         public static function getFacadeAccessor(): string
         {
-            return 'log';
+            return 'logger';
         }
     }
