@@ -32,16 +32,8 @@ Embryo uses a dependency container to create, manage ad inject application depen
 ## Installation
 Using Composer:
 ```
-$ composer require davidecesarano/embryo-framework 2.*
+$ composer require davidecesarano/embryo-framework
 ```
-
-## Example
-You may quickly test this using the built-in PHP server:
-```
-$ cd example
-$ php -S localhost:8080
-```
-Going to http://localhost:8080 will now display "Hello World!".
 
 ## Application
 The easiest way to start working with Embryo is to create a project using [Embryo Skeleton Application](https://github.com/davidecesarano/Embryo) as a base.
