@@ -27,7 +27,8 @@
         "davidecesarano/embryo-validation": "dev-master",
         "davidecesarano/embryo-translate": "dev-master",
         "davidecesarano/embryo-assets": "dev-master",
-        "davidecesarano/embryo-client": "dev-master"
+        "davidecesarano/embryo-client": "dev-master",
+        "davidecesarano/embryo-cors": "dev-master"
     },
     "autoload": {
         "psr-4": {
