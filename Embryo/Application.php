@@ -13,13 +13,14 @@
     
     use Embryo\Container\ContainerBuilder;
     use Embryo\Container\Interfaces\ContainerBuilderInterface;
+    use Embryo\Error\Interfaces\ErrorRendererInterface;
     use Embryo\Error\Middleware\ErrorHandlerMiddleware;
     use Embryo\Http\Emitter\Emitter;
-    use Embryo\Http\Factory\ResponseFactory;
     use Embryo\Routing\Middleware\{MethodOverrideMiddleware, RoutingMiddleware, RequestHandlerMiddleware};
     use Embryo\Routing\Interfaces\{RouteInterface, RouterInterface};
-    use Psr\Http\Message\{ResponseInterface, ServerRequestInterface};
+    use Psr\Http\Message\ResponseInterface;
     use Psr\Http\Server\MiddlewareInterface;
+    use Throwable;
     
     class Application 
     {
@@ -27,6 +28,11 @@
          * @var ContainerBuilderInterface $containerBuilder
          */
         private $containerBuilder;
+
+        /**
+         * @var bool $internalApplicationError
+         */
+        private $internalApplicationError = false;
 
         /**
          * @var bool $errorMiddlewareAdded
@@ -103,7 +109,7 @@
 
                 Facade::init($this->containerBuilder);
                 
-            } catch (\Throwable $e) {
+            } catch (Throwable $e) {
                 $this->throwApplicationError($e);
             }
         }
@@ -111,14 +117,16 @@
         /**
          * Throw internal application error.
          * 
-         * @param \Throwable $error 
+         * @param Throwable $error 
          * @return mixed
          */
-        private function throwApplicationError(\Throwable $error) 
+        private function throwApplicationError(Throwable $error) 
         {
             $errorHandler = $this->containerBuilder->get('errorHandler');
-            $request = $this->containerBuilder->get('request');
-            $response = $errorHandler->process($request, $error);
+            $request      = $this->containerBuilder->get('request');
+            $response     = $errorHandler->process($request, $error);
+
+            $this->internalApplicationError = true;
             return $this->emit($response);
         }
         
@@ -205,19 +213,21 @@
          * It's possible prepend a custom error 
          * handler middleware.
          *
-         * @param MiddlewareInterface $middleware
+         * @param string|ErrorRendererInterface $renderer
          * @return void 
          */
-        public function addErrorMiddleware(MiddlewareInterface $middleware = null)
+        public function addErrorMiddleware($renderer = null)
         {
-            $requestHandler = $this->containerBuilder->get('requestHandler');
-            $errorHandler = $this->containerBuilder->get('errorHandler');
-            $errorHandlerMiddleware = (new ErrorHandlerMiddleware)->setErrorHandler($errorHandler);
-            $requestHandler->prepend($errorHandlerMiddleware);
-            
-            if ($middleware) {
-                $requestHandler->prepend($middleware);
+            if ($renderer && !is_string($renderer) && !$renderer instanceof ErrorRendererInterface) {
+                throw new \InvalidArgumentException('Error Renderer must be a string or an instance of ErrorRendererInterface');
             }
+
+            $errorRenderer  = is_string($renderer) ? new $renderer : $renderer;
+            $requestHandler = $this->containerBuilder->get('requestHandler');
+            $errorHandler   = $this->containerBuilder->get('errorHandler')->setRenderer($errorRenderer);
+            $middleware     = (new ErrorHandlerMiddleware)->setErrorHandler($errorHandler);
+            
+            $requestHandler->prepend($middleware);
             $this->errorMiddlewareAdded = true;
         }
 
@@ -406,16 +416,18 @@
          * @return mixed
          */
         public function run()
-        {       
-            if (!$this->errorMiddlewareAdded) {
-                $this->addErrorMiddleware();
-            }
-            $this->addRoutingMiddleware();
+        {   
+            if (!$this->internalApplicationError) {
+                if (!$this->errorMiddlewareAdded) {
+                    $this->addErrorMiddleware();
+                }
+                $this->addRoutingMiddleware();
 
-            $request  = $this->containerBuilder->get('request');
-            $response = $this->containerBuilder->get('response');
-            $response = $this->containerBuilder->get('requestHandler')->dispatch($request, $response);
-            
-            return $this->emit($response);
+                $request  = $this->containerBuilder->get('request');
+                $response = $this->containerBuilder->get('response');
+                $response = $this->containerBuilder->get('requestHandler')->dispatch($request, $response);
+                
+                return $this->emit($response);
+            }
         }
     }
