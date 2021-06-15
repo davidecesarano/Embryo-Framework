@@ -16,7 +16,7 @@
     /**
      * View
      * 
-     * @method static Psr\Http\Message\ResponseInterface render(Psr\Http\Message\ResponseInterface $response, string $template, array $data)
+     * @method static \Psr\Http\Message\ResponseInterface render(\Psr\Http\Message\ResponseInterface $response, string $template, array $data)
      */
     
     class View extends Facade 
