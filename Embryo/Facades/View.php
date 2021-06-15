@@ -12,6 +12,12 @@
     namespace Embryo\Facades;
 
     use Embryo\Facade;
+
+    /**
+     * View
+     * 
+     * @method static Psr\Http\Message\ResponseInterface render(Psr\Http\Message\ResponseInterface $response, string $template, array $data)
+     */
     
     class View extends Facade 
     {
