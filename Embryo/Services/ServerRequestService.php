@@ -8,6 +8,7 @@
 
     use Embryo\Container\ServiceProvider;
     use Embryo\Http\Factory\ServerRequestFactory;
+    use Embryo\Http\Message\ServerRequest;
     
     class ServerRequestService extends ServiceProvider
     {
@@ -21,5 +22,7 @@
             $this->container->set('request', function() {
                 return (new ServerRequestFactory)->createServerRequestFromServer();
             });
+
+            $this->container->alias(ServerRequest::class, 'request');
         }
     }
