@@ -72,4 +72,17 @@
             $model = new static();
             return $model->pdo->table($model->table)->$method(...$args);
         }
+
+        /**
+         * Invoking inaccessible methods in 
+         * an object context.
+         * 
+         * @param string $method 
+         * @param string[] $args 
+         * @return mixed
+         */
+        public function __call(string $method, $args)
+        {
+            return $this->pdo->table($this->table)->$method(...$args);
+        }
     }
